@@ -1,19 +1,18 @@
-# Specification
+# Specification directory
 
-This directory contains the top-level Aura Protocol Specification (APS-001), which is the root normative document for all protocol behavior.
+This directory contains SPEC documents derived from the accepted Architecture Baseline (ARC-001…ARC-025).
 
-## Documents
+Purpose
+- SPEC documents are the canonical normative sections that will be aggregated into APS-001 (the umbrella Protocol Specification) for Specification v1.0.
+- Each SPEC is strictly derived from one or more ARC documents and MUST include an explicit ARC → SPEC traceability mapping.
 
-| File | Title | Status |
-|------|-------|--------|
-| [APS-001_PROTOCOL_SPECIFICATION.md](APS-001_PROTOCOL_SPECIFICATION.md) | Protocol Specification | TODO |
+Workflow (Sprint 2 - Specification Freeze)
+- Never more than one SPEC document in active authoring at a time.
+- Cycle: Issue → Branch → Document → Review → PR → Merge → Index update.
+- SPEC documents begin as DRAFT and progress to REVIEW → APPROVED → FROZEN in accordance with GOVERNANCE.md.
 
-## Relationship to /aps/
+Location of work
+- Create SPEC files in this directory using templates/SPEC_TEMPLATE.md.
+- Do not add implementation artifacts, conformance tests, or CI configurations during this sprint.
 
-The `/specification/` directory contains APS-001 — the root behavioral specification. All numbered APS documents (APS-100 and above) derive their authority from APS-001. They are housed in `/aps/` for organizational clarity.
-
-APS-001 is kept in this dedicated directory because of its special role as the root authority document — it is referenced by every other APS document.
-
-## Status
-
-APS-001 does not yet exist. It is the highest-priority specification gap. See [ROADMAP.md](../ROADMAP.md) Milestone 1.
+See also: ../arc/README.md, ../compliance/ARC_TO_SPEC_MAPPING.md
