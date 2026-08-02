@@ -11,7 +11,9 @@ Workflow
 - Each ARC file MUST include an explicit mapping to one or more SPEC documents describing the normative requirements extracted from the architecture baseline.
 
 Status tracking
-- ARC-001 … ARC-025 are represented here as discrete files (one ARC per file). During Sprint 2 we will add ARC stubs and then sync them into SPEC documents one-by-one.
+- ARC-001 … ARC-025 will be synchronized into this directory incrementally during Sprint 2.
+
+Each ARC document will be introduced through its own Issue, Branch, Pull Request, Review and Merge cycle.
 
 Location of work
 - Do NOT place normative policy or implementation details in this directory. ARC files are architecture records only.

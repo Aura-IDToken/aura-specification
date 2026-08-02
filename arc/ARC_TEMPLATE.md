@@ -21,9 +21,12 @@ List SPEC sections (SPEC-001 …) that implement or depend on this ARC. Use the 
 Scope & Non-goals:
 Define the architecture scope and explicit non-goals.
 
-Related ADRs / References:
-- ADR-xxx if relevant
-- Links to external documents
+Related Documents:
+- Constitution
+- APS documents
+- GOVERNANCE.md
+- RFC-xxx (if relevant)
+- Other ARC-xxx (if relevant)
 
 Acceptance Evidence:
 Describe what counts as acceptance for this ARC (meeting minutes, signatures, board resolution).

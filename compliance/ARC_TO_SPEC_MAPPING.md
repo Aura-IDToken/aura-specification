@@ -10,13 +10,7 @@ Guidelines
 - SPEC documents MUST reference the ARC IDs they implement.
 - Changes to ARC → SPEC mapping MUST be made via the Issue → Branch → PR workflow.
 
-Current mapping (canonical source: compliance/arc_to_spec_mapping.yaml):
-
-| ARC ID | SPEC ID(s) | Summary |
-|--------|------------|---------|
-| ARC-001 | SPEC-001 | System Identity (placeholder mapping) |
-| ARC-002 |  | 
-| ARC-003 |  | 
-
+Reserved.
+Mapping will be established when SPEC-001 is approved.
 
 Machine-readable mapping: arc_to_spec_mapping.yaml

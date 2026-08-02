@@ -1,6 +1,3 @@
-# arc_to_spec_mapping
-
-# This YAML file is the machine-readable ARC -> SPEC mapping used during Specification Freeze.
-# Maintain this file in sync with compliance/ARC_TO_SPEC_MAPPING.md.
+version: 1.0
 
 mappings: []
