@@ -1,25 +1,48 @@
 # SPEC-002 — Constitution Artifact Contract
 
 Document ID: SPEC-002
-Version: 0.1-DRAFT
+Version: 0.2-DRAFT
 Status: DRAFT
-Classification: Normative Specification Contract
+Classification: Normative Contract for Constitution Artifact Specification
 Owner: Protocol Custodian
 Authority: AURA Constitution v1.0 (FROZEN) · APS-000 · APS-200 · APS-300 · APS-400 · APS-900
 Last Review: 2026-08-10
 
+**Normative effect: NONE until APPROVED.**
+No requirement in this document, including any REQ-002-* identifier, constitutes an approved architectural or implementation decision while this document remains in DRAFT status. All requirements defined herein express what a future normative specification MUST determine; they do not themselves constitute that determination.
+
 ---
 
 > **DRAFT ONLY / SPECIFICATION WORK**
-> This document defines the contract surface for a future Constitution Artifact and Constitution Vector. It MUST NOT be used to implement, generate, register, or freeze a Constitution Artifact or Constitution Vector until all blocking architectural decisions are explicitly approved.
+> This document defines the contract surface for a future Constitution Artifact and Constitution Vector specification. It MUST NOT be used to implement, generate, register, or freeze a Constitution Artifact or Constitution Vector until all blocking architectural decisions are explicitly approved and this document has advanced beyond DRAFT through the proper governance mechanism.
+
+---
+
+## Governing Direction
+
+The direction of authority in this specification is:
+
+```
+normative requirement
+        ↓
+architecture decision
+        ↓
+approved specification
+        ↓
+implementation
+        ↓
+conformance evidence
+```
+
+This direction MUST NOT be reversed. Implementation behaviour does not constitute normative evidence unless an approved governance artifact explicitly grants that implementation normative authority.
 
 ---
 
 ## 1. Purpose
 
-SPEC-002 defines the normative contract required for an independent implementer to later construct and verify exactly one canonical Constitution Artifact from the authoritative Constitution source.
+SPEC-002 defines the normative contract surface that a future approved specification MUST address in order to make Constitution Artifact construction deterministic and independently reproducible.
 
-This document does not approve any candidate algorithm, numeric encoding, dictionary, serialization format, or implementation behavior that is not already established by an existing normative source.
+This document does not itself approve any algorithm, encoding, format, numeric representation, dictionary, serialization convention, hash formula, or implementation behavior. It identifies what an approved normative source MUST decide before any Constitution Artifact construction can be considered deterministic and verifiable.
 
 ---
 
@@ -29,39 +52,51 @@ This document does not approve any candidate algorithm, numeric encoding, dictio
 
 SPEC-002 covers the required contract surface for:
 
-- Source Identity
-- Source canonicalization
-- Transformation
-- Normalization
-- Embedding
-- Dictionary identity and versioning
-- Numeric representation
-- Vector identity
-- Canonical serialization
-- Canonical byte sequence
-- SHA-256 input and calculation
-- Artifact identity
-- Source-to-artifact binding
-- Artifact-to-vector binding
-- Commit/execution provenance binding
+- Source Set, Source Boundary, and Source Document Identity
+- Source Version, Source Status, Source Encoding
+- Source Canonicalization and Inclusion/Exclusion Boundaries
+- Source Integrity Reference
+- Transformation Pipeline
+- Normalization Rules
+- Embedding Method Identity
+- Dictionary or Embedding Dependency Identity and Versioning
+- Numeric Representation of Vector Values
+- Constitution Document Identity
+- Constitution Artifact Identity
+- Constitution Vector Identity
+- Execution / Commit Provenance Identity
+- Inter-Identity Binding Fields
+- Hash Domain Definitions
+- Canonical Serialization
+- Canonical Byte Sequence
+- Artifact-to-Source Binding
+- Artifact-to-Vector Binding
+- Provenance Binding
 - Versioning
-- Lineage
-- `supersedes`
+- Lineage and `supersedes`
 - Registration
 - Freeze
-- Verification
-- Failure conditions
+- Positive Determinism Verification
+- Negative Integrity Verification
+- Failure Conditions
 
 ### 2.2 Non-Goals
 
 This document MUST NOT:
 
 - Modify `aura-poc-a-core-v3.3`
+- Modify `aura-guard-v1.3`
 - Implement CR-007
 - Generate a Constitution Vector
+- Generate a Constitution Artifact
 - Create or register `constitution.json`, `vector.json`, or any equivalent canonical artifact
+- Create canonical fixtures
+- Calculate or publish any hash value
+- Approve any hash formula, serialization format, or numeric representation
 - Treat any unapproved alias as equivalent to the authoritative Constitution identifier
+- Treat `AURA-CONSTITUTION-001` as equivalent to `AURA-CON-001` unless an approved governance artifact explicitly establishes that relationship
 - Promote candidate architectural decisions to normative requirements without explicit governance authority
+- Resolve contradictions by assumption; contradictions MUST be recorded as UNRESOLVED or EVIDENCE GAP
 
 ---
 
@@ -70,159 +105,392 @@ This document MUST NOT:
 1. The contract defined by SPEC-002 MUST preserve **Specification First** and **Architecture Before Implementation** per AURA Constitution Article IV.
 2. The contract MUST fail closed when any required input, dependency, identity binding, or verification step is ambiguous, missing, or inconsistent.
 3. Any algorithmic degree of freedom that could allow two conformant implementations to produce different vectors, different canonical bytes, or different hashes MUST be eliminated before SPEC-002 can become READY.
-4. Candidate choices including `32`, `100000`, `signed int32`, `little-endian`, `Dictionary-Based Embedding`, and `round-half-to-even` are non-normative in this draft unless and until explicit architectural authority approves them.
+4. Candidate choices including `32`, `100000`, `signed int32`, `little-endian`, `Dictionary-Based Embedding`, and `round-half-to-even` are non-normative in this draft unless and until explicit architectural authority approves them. **No candidate choice listed in this document constitutes a recommendation, preference, default, or implied architectural decision.**
+5. If an existing normative source is insufficient to resolve a requirement, the gap MUST be recorded as UNRESOLVED or EVIDENCE GAP. It MUST NOT be resolved by assumption or by reference to implementation behaviour.
 
 ---
 
 ## 4. Normative Contract Requirements
 
-### 4.1 Source Identity
+### 4.1 Source Boundary
 
-- **REQ-002-001**: SPEC-002 MUST identify exactly one authoritative Constitution source by immutable identifier, version, status, and repository location.
-- **REQ-002-002**: Any alternate label, filename, alias, or informal name MUST be treated as distinct unless an approved governance artifact explicitly establishes equivalence.
+The future normative specification MUST explicitly define all of the following. SPEC-002 MUST NOT assume any particular answer to any of these questions.
 
-### 4.2 Source Canonicalization, Transformation, and Normalization
+- **REQ-002-001**: The future specification MUST define the exact **Source Set**: which documents, files, or data constitute the authoritative input to Constitution Artifact construction.
+- **REQ-002-002**: The future specification MUST define the exact **Source Boundary**: the precise inclusion and exclusion rules that determine what is and is not part of the authoritative source.
+- **REQ-002-003**: The future specification MUST define **Source Document Identity**: the immutable identifier, version, status, and repository location of each document in the Source Set.
+- **REQ-002-004**: The future specification MUST define **Source Version** semantics and which version of each Source Document is authoritative.
+- **REQ-002-005**: The future specification MUST define **Source Status** constraints: which document lifecycle statuses are permissible as inputs.
+- **REQ-002-006**: The future specification MUST define **Source Encoding**: the character encoding, line-ending convention, and byte-order convention of each source document.
+- **REQ-002-007**: The future specification MUST define **Source Canonicalization**: the deterministic procedure that transforms source documents into a canonical form prior to any further processing, or MUST explicitly declare that the authoritative source is already canonical.
+- **REQ-002-008**: The future specification MUST define **Source Integrity Reference**: the cryptographic or integrity-binding mechanism that ties the authoritative source identity to artifact construction.
+- **REQ-002-009**: Any alternate label, filename, alias, or informal name MUST be treated as distinct from the authoritative identifier unless an approved governance artifact explicitly establishes equivalence. In particular, the identifier `AURA-CON-001` MUST NOT be silently replaced, aliased, or equated with `AURA-CONSTITUTION-001` without such explicit approval.
 
-- **REQ-002-003**: SPEC-002 MUST define one deterministic source canonicalization procedure, or explicitly declare that the authoritative source is already canonical.
-- **REQ-002-004**: SPEC-002 MUST define the complete transformation pipeline from authoritative source to artifact-ready intermediate representation, including ordered steps and step boundaries.
-- **REQ-002-005**: SPEC-002 MUST define all normalization rules that affect the intermediate representation, including whitespace, line endings, encoding, heading treatment, metadata treatment, and inclusion/exclusion boundaries.
+> **ARCHITECTURE NOTE — Source Boundary is UNRESOLVED (AD-CA-001).**
+> The future normative specification MUST NOT assume that the source is: only `AURA_CONSTITUTION.md`; Constitution plus APS documents; the entire repository; or any other collection of files. The exact source boundary is an explicit architectural decision that remains unresolved.
+
+### 4.2 Canonicalization, Transformation, and Normalization
+
+- **REQ-002-010**: The future specification MUST define the complete ordered transformation pipeline from authoritative source to artifact-ready intermediate representation, including each step, its inputs, its outputs, and its step boundaries.
+- **REQ-002-011**: The future specification MUST define all normalization rules that affect the intermediate representation, including whitespace treatment, line-ending treatment, encoding normalization, heading treatment, metadata treatment, and all inclusion/exclusion boundaries.
 
 ### 4.3 Embedding, Dictionary, and Numeric Representation
 
-- **REQ-002-006**: SPEC-002 MUST identify exactly one embedding method by immutable identifier, version, and status.
-- **REQ-002-007**: SPEC-002 MUST define the dictionary or equivalent embedding dependency by immutable identifier, version, status, and integrity binding, or MUST explicitly state that no external dictionary is permitted.
-- **REQ-002-008**: SPEC-002 MUST define one numeric representation for vector values, including domain, width, sign, scale, rounding behavior, overflow behavior, and byte order where applicable.
+- **REQ-002-012**: The future specification MUST identify exactly one embedding method by immutable identifier, version, and status.
+- **REQ-002-013**: The future specification MUST define the dictionary or equivalent embedding dependency by immutable identifier, version, status, and integrity binding, or MUST explicitly state that no external dictionary is permitted.
+- **REQ-002-014**: The future specification MUST define one numeric representation for vector values, including domain, width, sign, scale, rounding behavior, overflow behavior, and byte order where applicable. Candidate values (`32`, `100000`, `signed int32`, `little-endian`, `round-half-to-even`) remain unapproved until an explicit architecture decision is made.
 
-### 4.4 Vector Identity and Serialization
+### 4.4 Identity Separation
 
-- **REQ-002-009**: SPEC-002 MUST define how the Constitution Vector is uniquely identified and how that identity binds to the authoritative source, embedding method, dictionary dependency, and numeric representation.
-- **REQ-002-010**: SPEC-002 MUST define exactly one canonical serialization format for the Constitution Vector and Constitution Artifact, including field set, field order, encoding, and representation of absent or optional fields.
-- **REQ-002-011**: SPEC-002 MUST define exactly one canonical byte sequence for every hash-bearing Constitution Artifact and Constitution Vector representation.
-- **REQ-002-012**: SPEC-002 MUST define the SHA-256 input bytes, calculation procedure, and output representation used for identity and integrity values.
+The future normative specification MUST explicitly define and maintain separate identities for each of the following. These identities MUST NOT be collapsed into a single identifier without an explicit approved architecture decision.
 
-### 4.5 Identity and Binding
+**A. Constitution Document Identity**
+The identity of the authoritative normative source document, as defined under §4.1 (Source Boundary).
 
-- **REQ-002-013**: SPEC-002 MUST define the immutable identity fields of the Constitution Artifact and MUST require those fields to be unique and versioned.
-- **REQ-002-014**: SPEC-002 MUST define the required binding from authoritative source to Constitution Artifact, including source identifier, source version, source status, source location, and source integrity reference.
-- **REQ-002-015**: SPEC-002 MUST define the required binding from Constitution Artifact to Constitution Vector, including vector identity, dependency identities, canonical bytes reference, and integrity reference.
-- **REQ-002-016**: SPEC-002 MUST define the required commit/execution provenance binding for artifact construction, including the repository revision and the deterministic generation context needed for independent verification.
+**B. Constitution Artifact Identity**
+The identity of the constructed artifact: the output of applying the approved transformation pipeline to the authoritative Constitution source.
 
-### 4.6 Versioning, Lineage, Registration, and Freeze
+**C. Constitution Vector Identity**
+The identity of the Constitution Vector derived from the Constitution Artifact via the approved embedding and numeric representation procedures.
 
-- **REQ-002-017**: SPEC-002 MUST define versioning rules for the Constitution Artifact and Constitution Vector that are consistent with repository lifecycle rules and immutable artifact principles.
-- **REQ-002-018**: SPEC-002 MUST define lineage fields, including `supersedes` semantics and the conditions under which a new artifact supersedes an older artifact.
-- **REQ-002-019**: SPEC-002 MUST define registration requirements, including the authoritative registry location, required registry fields, and required integrity checks at registration time.
-- **REQ-002-020**: SPEC-002 MUST define freeze requirements, including who may authorize freeze, what status transition constitutes freeze, and what evidence is required to verify frozen status.
+**D. Execution / Commit Provenance Identity**
+The identity of the specific construction event: repository revision, execution context, and deterministic generation context required for independent reproduction.
 
-### 4.7 Verification and Failure Conditions
+The conceptual relationship between these identities is:
 
-- **REQ-002-021**: SPEC-002 MUST define an independent verification procedure that does not require inspection of any Reference Implementation.
-- **REQ-002-022**: SPEC-002 MUST define failure conditions that invalidate the Constitution Artifact, the Constitution Vector, registration, or frozen status.
-- **REQ-002-023**: SPEC-002 MUST remain NOT READY if any conformant independent implementation can legitimately produce more than one vector, more than one canonical byte sequence, or more than one SHA-256 value from the same authoritative source and approved dependencies.
+```
+Constitution Document Identity
+        ↓
+Constitution Artifact Identity
+        ↓
+Constitution Vector Identity
+
+Execution / Commit Identity
+        ↓
+provenance binding
+```
+
+- **REQ-002-015**: The future specification MUST NOT equate or merge Constitution Document Identity, Artifact Identity, Vector Identity, and Provenance Identity (e.g., `constitution_id = artifact_id = vector_id`) unless a future approved architecture decision explicitly establishes such equivalence.
+- **REQ-002-016**: The future specification MUST specify which fields bind these identities together.
+
+### 4.5 Hash Domains
+
+The future normative specification MUST define each hash domain completely and independently. Hash domain definitions MUST be independently reproducible without reference to any implementation.
+
+- **REQ-002-017**: The future specification MUST explicitly define the **Vector Hash** domain: the exact bytes that constitute the hash input, the serialization that precedes hashing, the hash algorithm, the output encoding, and the output representation.
+- **REQ-002-018**: The future specification MUST explicitly define the **Artifact Hash** domain: the exact bytes that constitute the hash input, the serialization that precedes hashing, the hash algorithm, the output encoding, and the output representation.
+- **REQ-002-019**: The future specification MUST explicitly state which fields are included in and excluded from each hash input.
+- **REQ-002-020**: Hash domain definitions MUST be sufficient for an independent implementer to reproduce the exact byte sequence fed to each hash function without inspecting any Reference Implementation.
+
+> **ARCHITECTURE NOTE — Hash Domain is UNRESOLVED (AD-CA-007, AD-CA-008).**
+> This draft MUST NOT itself approve any concrete hash formula such as `VECTOR HASH = SHA-256(canonical_vector_bytes)` or `ARTIFACT HASH = SHA-256(canonical_artifact_bytes)`. Such formulas do not exist in any approved normative source. The future architecture decision MUST define each hash domain completely.
+>
+> **Governing principle:** Hash domain MUST be explicitly defined and independently reproducible.
+
+### 4.6 Canonical Serialization and Byte Sequence
+
+- **REQ-002-021**: The future specification MUST define exactly one canonical serialization format for the Constitution Vector and Constitution Artifact, including field set, field order, encoding, and representation of absent or optional fields.
+- **REQ-002-022**: The future specification MUST define exactly one canonical byte sequence for every hash-bearing Constitution Artifact and Constitution Vector representation.
+
+### 4.7 Artifact and Vector Binding
+
+- **REQ-002-023**: The future specification MUST define the required binding from authoritative source to Constitution Artifact, including source identifier, source version, source status, source location, and source integrity reference.
+- **REQ-002-024**: The future specification MUST define the required binding from Constitution Artifact to Constitution Vector, including vector identity, dependency identities, canonical bytes reference, and integrity reference.
+- **REQ-002-025**: The future specification MUST define the required commit/execution provenance binding for artifact construction, including the repository revision and the deterministic generation context needed for independent verification.
+
+### 4.8 Versioning and Lineage
+
+- **REQ-002-026**: The future specification MUST define versioning rules for the Constitution Artifact and Constitution Vector that are consistent with repository lifecycle rules and immutable artifact principles.
+- **REQ-002-027**: The future specification MUST define lineage fields, including `supersedes` semantics and the conditions under which a new artifact supersedes an older artifact.
+
+### 4.9 Registration
+
+Registration and Freeze are separate governance concepts. Registration MUST NOT automatically imply Freeze. Freeze MUST NOT be assumed merely because an artifact is registered.
+
+- **REQ-002-028**: The future specification MUST define registration requirements independently of freeze requirements, including:
+  - The authoritative registry and its location
+  - Required registry fields
+  - Required integrity checks at registration time
+  - Required identity checks at registration time
+  - Required provenance checks at registration time
+
+### 4.10 Freeze
+
+- **REQ-002-029**: The future specification MUST define freeze requirements independently of registration requirements, including:
+  - The authority who may authorize freeze
+  - The status transition that constitutes freeze
+  - The evidence required prior to freeze authorization
+  - The immutability semantics of frozen status
+  - The verification procedure for confirming frozen status
+
+### 4.11 Verification and Failure Conditions
+
+- **REQ-002-030**: The future specification MUST define an independent verification procedure that does not require inspection of any Reference Implementation, including `aura-poc-a-core-v3.3`, `aura-guard-v1.3`, or any other implementation-specific source code.
+- **REQ-002-031**: The future specification MUST define failure conditions that invalidate the Constitution Artifact, the Constitution Vector, registration, or frozen status.
+- **REQ-002-032**: The future specification MUST remain NOT READY if any conformant independent implementation can legitimately produce more than one vector, more than one canonical byte sequence, or more than one hash value from the same authoritative source and approved dependencies.
 
 ---
 
-## 5. Proposed Verification Model
+## 5. Verification Model
 
-An independent verifier of a future Constitution Artifact MUST be able to perform all of the following using only approved normative specifications and explicitly referenced normative artifacts:
+### 5.1 Positive Determinism Verification
 
-1. Resolve the one authoritative Constitution source.
-2. Apply the one approved canonicalization, transformation, and normalization pipeline.
-3. Resolve the one approved embedding method and every required dependency.
-4. Derive exactly one Constitution Vector.
-5. Serialize the vector and artifact into exactly one canonical byte sequence.
-6. Reproduce the same SHA-256 values.
-7. Verify artifact identity, lineage, registration, and frozen status.
-8. Reject the result if any required element is missing, ambiguous, unapproved, or inconsistent.
+An independent implementation, using only approved normative specifications and explicitly referenced normative artifacts, MUST satisfy the following chain without requiring inspection of any Reference Implementation:
+
+```
+same authoritative source
+        ↓
+same Constitution Artifact
+        ↓
+same Constitution Vector
+        ↓
+same canonical bytes
+        ↓
+same hash values
+```
+
+The PASS condition requires that any two conformant independent implementations produce identical artifacts, vectors, canonical byte sequences, and hash values from the same authoritative source and approved dependencies.
+
+### 5.2 Negative Integrity Verification
+
+The verification model MUST also verify the rejection of altered inputs or artifacts. The future normative specification MUST define tests covering at minimum:
+
+1. **Modified authoritative source** → verification failure
+2. **Modified Constitution Artifact** → artifact integrity/identity failure
+3. **Modified Constitution Vector** → vector integrity/identity failure
+4. **Modified dictionary or embedding dependency** → dependency/integrity failure
+5. **Wrong provenance / repository revision / execution binding** → provenance verification failure
+6. **Ambiguous or unapproved dependency** → fail closed
+
+### 5.3 Distinction: Determinism vs. Integrity
+
+These are separate properties and MUST NOT be conflated:
+
+**DETERMINISM**: same valid inputs → same valid outputs
+
+**INTEGRITY**: modified or invalid inputs → detectable verification failure
+
+A specification that achieves determinism but not integrity, or integrity but not determinism, is incomplete. Both properties MUST be independently specified and independently verifiable.
 
 ---
 
 ## 6. Explicit Unresolved Architectural Decisions
 
-The following items are unresolved architectural decisions. The identifiers below are local placeholders for this draft only and MUST be replaced by approved architecture decisions before SPEC-002 advances beyond DRAFT.
+The following items are unresolved architectural decision domains. The identifiers below are local placeholders for this draft only and MUST be replaced by approved architecture decisions before SPEC-002 advances beyond DRAFT. **No candidate choice listed in this table constitutes a recommendation, preference, default, or implied architectural decision.**
 
-| Placeholder | Decision Required | Current Status | Candidate Choices Mentioned in Problem Statement | Blocking Effect |
+| Placeholder | Decision Domain | Current Status | Candidate Choices (Non-Normative) | Blocking Effect |
 |---|---|---|---|---|
-| AD-CA-001 | Authoritative Constitution source identity and exact source scope | UNRESOLVED | None approved | Blocks REQ-002-001 through REQ-002-005 |
-| AD-CA-002 | Canonicalization procedure for the authoritative Constitution source | UNRESOLVED | None approved | Blocks REQ-002-003 through REQ-002-005 |
-| AD-CA-003 | Transformation pipeline from source to artifact-ready representation | UNRESOLVED | None approved | Blocks REQ-002-004 through REQ-002-005 |
-| AD-CA-004 | Normalization rules affecting deterministic output | UNRESOLVED | None approved | Blocks REQ-002-005, REQ-002-010 through REQ-002-012 |
-| AD-CA-005 | Embedding method identity and versioning model | UNRESOLVED | `Dictionary-Based Embedding` is candidate only | Blocks REQ-002-006, REQ-002-009, REQ-002-015 |
-| AD-CA-006 | Dictionary identity, versioning, integrity, and change policy | UNRESOLVED | None approved | Blocks REQ-002-007, REQ-002-009, REQ-002-015 |
-| AD-CA-007 | Numeric representation of vector values | UNRESOLVED | `32`, `100000`, `signed int32`, `little-endian`, `round-half-to-even` are candidate only | Blocks REQ-002-008 through REQ-002-012 |
-| AD-CA-008 | Canonical serialization format and canonical byte sequence | UNRESOLVED | None approved | Blocks REQ-002-010 through REQ-002-012 |
-| AD-CA-009 | Artifact and vector identity schema | UNRESOLVED | None approved | Blocks REQ-002-009, REQ-002-013 through REQ-002-015 |
-| AD-CA-010 | Commit/execution provenance binding schema | UNRESOLVED | None approved | Blocks REQ-002-016, REQ-002-021, REQ-002-022 |
-| AD-CA-011 | Registration model and authoritative registry semantics | UNRESOLVED | None approved | Blocks REQ-002-019 through REQ-002-022 |
-| AD-CA-012 | Freeze evidence and frozen-status verification model | UNRESOLVED | None approved | Blocks REQ-002-020 through REQ-002-022 |
+| AD-CA-001 | Authoritative Constitution source identity, Source Set, and exact Source Boundary | UNRESOLVED | None approved | Blocks REQ-002-001 through REQ-002-011 |
+| AD-CA-002 | Canonicalization procedure for the authoritative Constitution source | UNRESOLVED | None approved | Blocks REQ-002-007, REQ-002-010, REQ-002-011 |
+| AD-CA-003 | Transformation pipeline from source to artifact-ready representation | UNRESOLVED | None approved | Blocks REQ-002-010, REQ-002-011 |
+| AD-CA-004 | Normalization rules affecting deterministic output | UNRESOLVED | None approved | Blocks REQ-002-011, REQ-002-021, REQ-002-022 |
+| AD-CA-005 | Embedding method identity and versioning model | UNRESOLVED | `Dictionary-Based Embedding` is candidate only | Blocks REQ-002-012, REQ-002-016, REQ-002-024 |
+| AD-CA-006 | Dictionary identity, versioning, integrity, and change policy | UNRESOLVED | None approved | Blocks REQ-002-013, REQ-002-016, REQ-002-024 |
+| AD-CA-007 | Numeric representation of vector values | UNRESOLVED | `32`, `100000`, `signed int32`, `little-endian`, `round-half-to-even` are candidate only | Blocks REQ-002-014, REQ-002-017 through REQ-002-022 |
+| AD-CA-008 | Canonical serialization format, canonical byte sequence, and hash domain definitions | UNRESOLVED | None approved | Blocks REQ-002-017 through REQ-002-022 |
+| AD-CA-009 | Constitution Document Identity, Artifact Identity, Vector Identity schema and inter-identity binding fields | UNRESOLVED | None approved | Blocks REQ-002-015, REQ-002-016, REQ-002-023, REQ-002-024 |
+| AD-CA-010 | Commit/execution provenance binding schema | UNRESOLVED | None approved | Blocks REQ-002-025, REQ-002-030, REQ-002-031 |
+| AD-CA-011 | Registration model, authoritative registry, registry fields, and registration integrity semantics | UNRESOLVED | None approved | Blocks REQ-002-028, REQ-002-030, REQ-002-031 |
+| AD-CA-012 | Freeze evidence, frozen-status verification model, and immutability semantics | UNRESOLVED | None approved | Blocks REQ-002-029 through REQ-002-031 |
 
 ---
 
 ## 7. Traceability Matrix
 
-| Requirement | Requirement Summary | Existing Normative Source | Requires New Architecture Decision |
-|---|---|---|---|
-| REQ-002-001 | One authoritative Constitution source identity | AURA Constitution Article IV Principles 8-10; APS-000 §4, §7 | AD-CA-001 |
-| REQ-002-002 | Alias equivalence requires explicit approval | AURA Constitution Article IV Principle 8; APS-000 §4 | AD-CA-001 |
-| REQ-002-003 | One deterministic source canonicalization procedure | AURA Constitution Article IV Principles 1, 2, 8; INV-003; APS-200 §8 | AD-CA-002 |
-| REQ-002-004 | Complete ordered transformation pipeline | AURA Constitution Article IV Principles 1, 2, 8, 10 | AD-CA-003 |
-| REQ-002-005 | Explicit normalization rules | AURA Constitution Article IV Principles 2, 8; INV-003 | AD-CA-004 |
-| REQ-002-006 | One embedding method identity and version | AURA Constitution Article IV Principles 1, 2, 8, 9 | AD-CA-005 |
-| REQ-002-007 | Dictionary identity, version, and integrity binding | AURA Constitution Article IV Principle 9; APS-000 §7 | AD-CA-006 |
-| REQ-002-008 | One numeric representation | AURA Constitution Article IV Principles 2, 8; INV-006; INV-007 | AD-CA-007 |
-| REQ-002-009 | Vector identity binding model | APS-000 §4; INV-015 | AD-CA-005, AD-CA-006, AD-CA-009 |
-| REQ-002-010 | One canonical serialization format | INV-003; APS-200 §8 | AD-CA-008 |
-| REQ-002-011 | One canonical byte sequence | INV-003; INV-011; APS-200 §4; APS-300 §5 | AD-CA-008 |
-| REQ-002-012 | SHA-256 input and calculation procedure | INV-011; APS-200 §4; APS-300 §5, §9 | AD-CA-007, AD-CA-008 |
-| REQ-002-013 | Artifact immutable identity fields | APS-000 TERM-011, §4, §7; INV-015 | AD-CA-009 |
-| REQ-002-014 | Source-to-artifact binding | APS-900 §3-§4; INV-005; INV-015 | AD-CA-001, AD-CA-002, AD-CA-009 |
-| REQ-002-015 | Artifact-to-vector binding | APS-900 §3-§4; INV-005; INV-011; INV-015 | AD-CA-005, AD-CA-006, AD-CA-007, AD-CA-009 |
-| REQ-002-016 | Commit/execution provenance binding | AURA Constitution Article X; APS-900 §2, §4; APS-950 §6 | AD-CA-010 |
-| REQ-002-017 | Versioning rules | AURA Constitution Article IV Principle 9; VERSIONING.md §3-§4, §9 | None beyond requirements already listed |
-| REQ-002-018 | Lineage and `supersedes` semantics | VERSIONING.md §3; AURA Constitution Article XI | AD-CA-009, AD-CA-011, AD-CA-012 |
-| REQ-002-019 | Registration model and registry fields | APS-000 §7; APS-900 §4 | AD-CA-011 |
-| REQ-002-020 | Freeze requirements and frozen-status verification | AURA Constitution Article VIII, Article XI; VERSIONING.md §3 | AD-CA-012 |
-| REQ-002-021 | Independent verification procedure | AURA Constitution Article III, Article IV Principles 2, 4, 8; APS-300 §9; APS-900 §9 | AD-CA-010, AD-CA-011, AD-CA-012 |
-| REQ-002-022 | Failure conditions | AURA Constitution Article IV Principle 6; APS-300 §12; INV-008 | AD-CA-010, AD-CA-011, AD-CA-012 |
-| REQ-002-023 | NOT READY until one outcome is forced | AURA Constitution Article IV Principles 1, 2, 8; INV-001; INV-002; INV-003; INV-011 | All unresolved decisions above if still open |
+The following matrix uses mechanically addressable references. Where a Conformance Test ID or Evidence ID does not yet exist, it is marked as FUTURE REF (not yet assigned). Broad normative source references alone are insufficient; section-level citations are required where available.
+
+| Req ID | Requirement Summary | Source Doc ID | Source Version | Source Section / Clause | Architecture Decision ID | Conformance Test ID | Evidence ID |
+|---|---|---|---|---|---|---|---|
+| REQ-002-001 | Define exact Source Set | AURA-CON-001 | v1.0-FROZEN | Article IV Principles 8–10 | AD-CA-001 | FUTURE REF | FUTURE REF |
+| REQ-002-002 | Define exact Source Boundary | AURA-CON-001; APS-000 | v1.0-FROZEN; current | Article IV P8; §4 | AD-CA-001 | FUTURE REF | FUTURE REF |
+| REQ-002-003 | Define Source Document Identity | APS-000 | current | §4, §7 | AD-CA-001 | FUTURE REF | FUTURE REF |
+| REQ-002-004 | Define Source Version semantics | VERSIONING.md | current | §3–§4 | AD-CA-001 | FUTURE REF | FUTURE REF |
+| REQ-002-005 | Define Source Status constraints | VERSIONING.md | current | §3 | AD-CA-001 | FUTURE REF | FUTURE REF |
+| REQ-002-006 | Define Source Encoding | AURA-CON-001 | v1.0-FROZEN | Article IV P2, P8 | AD-CA-002 | FUTURE REF | FUTURE REF |
+| REQ-002-007 | Define Source Canonicalization | AURA-CON-001; APS-200 | v1.0-FROZEN; current | Article IV P1,P2,P8; §8 | AD-CA-002 | FUTURE REF | FUTURE REF |
+| REQ-002-008 | Define Source Integrity Reference | APS-000 | current | §7 | AD-CA-001, AD-CA-002 | FUTURE REF | FUTURE REF |
+| REQ-002-009 | Alias equivalence requires explicit approval | AURA-CON-001; APS-000 | v1.0-FROZEN; current | Article IV P8; §4 | AD-CA-001 | FUTURE REF | FUTURE REF |
+| REQ-002-010 | Complete ordered transformation pipeline | AURA-CON-001 | v1.0-FROZEN | Article IV P1,P2,P8,P10 | AD-CA-003 | FUTURE REF | FUTURE REF |
+| REQ-002-011 | Explicit normalization rules | AURA-CON-001; APS-200 | v1.0-FROZEN; current | Article IV P2,P8; §8 | AD-CA-004 | FUTURE REF | FUTURE REF |
+| REQ-002-012 | One embedding method identity and version | AURA-CON-001 | v1.0-FROZEN | Article IV P1,P2,P8,P9 | AD-CA-005 | FUTURE REF | FUTURE REF |
+| REQ-002-013 | Dictionary identity, version, and integrity binding | AURA-CON-001; APS-000 | v1.0-FROZEN; current | Article IV P9; §7 | AD-CA-006 | FUTURE REF | FUTURE REF |
+| REQ-002-014 | One numeric representation | AURA-CON-001 | v1.0-FROZEN | Article IV P2,P8 | AD-CA-007 | FUTURE REF | FUTURE REF |
+| REQ-002-015 | No collapse of Document / Artifact / Vector / Provenance identities | APS-000 | current | §4 | AD-CA-009 | FUTURE REF | FUTURE REF |
+| REQ-002-016 | Inter-identity binding fields | APS-000 | current | §4, §7 | AD-CA-009 | FUTURE REF | FUTURE REF |
+| REQ-002-017 | Vector Hash domain definition | APS-200; APS-300 | current | §4; §5, §9 | AD-CA-007, AD-CA-008 | FUTURE REF | FUTURE REF |
+| REQ-002-018 | Artifact Hash domain definition | APS-200; APS-300 | current | §4; §5, §9 | AD-CA-007, AD-CA-008 | FUTURE REF | FUTURE REF |
+| REQ-002-019 | Hash input field inclusion/exclusion | APS-200; APS-300 | current | §4; §5 | AD-CA-008 | FUTURE REF | FUTURE REF |
+| REQ-002-020 | Hash domain independently reproducible | AURA-CON-001 | v1.0-FROZEN | Article IV P2,P8 | AD-CA-008 | FUTURE REF | FUTURE REF |
+| REQ-002-021 | One canonical serialization format | APS-200 | current | §8 | AD-CA-008 | FUTURE REF | FUTURE REF |
+| REQ-002-022 | One canonical byte sequence | APS-200; APS-300 | current | §4; §5 | AD-CA-008 | FUTURE REF | FUTURE REF |
+| REQ-002-023 | Source-to-artifact binding | APS-900 | current | §3–§4 | AD-CA-001, AD-CA-002, AD-CA-009 | FUTURE REF | FUTURE REF |
+| REQ-002-024 | Artifact-to-vector binding | APS-900 | current | §3–§4 | AD-CA-005, AD-CA-006, AD-CA-007, AD-CA-009 | FUTURE REF | FUTURE REF |
+| REQ-002-025 | Commit/execution provenance binding | AURA-CON-001; APS-900; APS-950 | v1.0-FROZEN; current; current | Article X; §2,§4; §6 | AD-CA-010 | FUTURE REF | FUTURE REF |
+| REQ-002-026 | Versioning rules | AURA-CON-001; VERSIONING.md | v1.0-FROZEN; current | Article IV P9; §3–§4, §9 | — | FUTURE REF | FUTURE REF |
+| REQ-002-027 | Lineage and `supersedes` semantics | VERSIONING.md; AURA-CON-001 | current; v1.0-FROZEN | §3; Article XI | AD-CA-009, AD-CA-011, AD-CA-012 | FUTURE REF | FUTURE REF |
+| REQ-002-028 | Registration model, registry fields, and registration integrity | APS-000; APS-900 | current | §7; §4 | AD-CA-011 | FUTURE REF | FUTURE REF |
+| REQ-002-029 | Freeze requirements and frozen-status verification | AURA-CON-001; VERSIONING.md | v1.0-FROZEN; current | Article VIII, XI; §3 | AD-CA-012 | FUTURE REF | FUTURE REF |
+| REQ-002-030 | Independent verification procedure | AURA-CON-001; APS-300; APS-900 | v1.0-FROZEN; current; current | Article III, IV P2,P4,P8; §9; §9 | AD-CA-010, AD-CA-011, AD-CA-012 | FUTURE REF | FUTURE REF |
+| REQ-002-031 | Failure conditions | AURA-CON-001; APS-300 | v1.0-FROZEN; current | Article IV P6; §12 | AD-CA-010, AD-CA-011, AD-CA-012 | FUTURE REF | FUTURE REF |
+| REQ-002-032 | NOT READY until one outcome is forced | AURA-CON-001 | v1.0-FROZEN | Article IV P1,P2,P8 | All unresolved decisions above | FUTURE REF | FUTURE REF |
+
+The complete traceability chain MUST be:
+
+```
+Requirement
+    ↓
+Normative Source (Source Doc ID · Version · Section)
+    ↓
+Architecture Decision (AD-CA-xxx)
+    ↓
+Conformance Test (CONF-xxx — FUTURE REF where not yet assigned)
+    ↓
+Evidence (EVID-xxx — FUTURE REF where not yet assigned)
+    ↓
+Release / Artifact
+```
+
+Test IDs and Evidence IDs MUST NOT be invented to make the matrix appear complete. They are marked FUTURE REF until properly assigned through the governance process.
 
 ---
 
-## 8. Proposed Acceptance Criteria
+## 8. Registration vs. Freeze Distinction
+
+Registration and Freeze are separate governance concepts governed by independent requirements (§4.9 and §4.10). This section records the governing distinction.
+
+**REGISTRATION** is the act of recording an artifact in an authoritative registry. Registration:
+- Requires defined registry fields, integrity checks, identity checks, and provenance checks (REQ-002-028)
+- Does NOT automatically imply that the artifact is frozen
+- Does NOT prevent subsequent modification of a non-frozen artifact in ways permitted by its current lifecycle status
+
+**FREEZE** is the act of placing an artifact into an immutable state. Freeze:
+- Requires authorized authority, a defined status transition, required evidence, and a verification procedure for confirming frozen status (REQ-002-029)
+- Does NOT occur automatically as a consequence of registration
+- MUST NOT be assumed merely because an artifact is registered
+
+Both concepts MUST be independently defined in the future normative specification. The architecture decisions governing each (AD-CA-011 for registration; AD-CA-012 for freeze) are independent and MUST be resolved independently.
+
+---
+
+## 9. Acceptance Criteria
 
 SPEC-002 MAY advance from DRAFT only when all of the following are true:
 
-1. Every requirement in §4 is backed either by an existing approved normative source or by a newly approved architecture decision incorporated into the specification.
-2. The authoritative Constitution source is uniquely identified and its exact source scope is normatively fixed.
-3. Canonicalization, transformation, normalization, embedding, dictionary dependency, numeric representation, serialization, canonical byte sequence, and SHA-256 procedure are each normatively reduced to exactly one valid interpretation.
-4. Artifact identity, vector identity, lineage, `supersedes`, registration, and frozen-status verification are completely specified and independently checkable.
-5. The required independent verification procedure can be executed without inspecting any Reference Implementation.
-6. A formal Independent Implementer Test is defined and its PASS condition requires that two conformant independent implementations produce the same vector, the same canonical bytes, and the same SHA-256 values from the same authoritative source and approved dependencies.
-7. If any conformant independent implementation can still legitimately produce different vectors, canonical bytes, or hashes, SPEC-002 MUST remain NOT READY.
+1. Every requirement in §4 is backed either by an existing approved normative source or by a newly approved architecture decision incorporated into this specification.
+2. The authoritative Constitution source, Source Set, and Source Boundary are uniquely identified and normatively fixed (AD-CA-001 resolved).
+3. Canonicalization, transformation, normalization, embedding, dictionary dependency, numeric representation, serialization, canonical byte sequence, and all hash domain definitions are each normatively reduced to exactly one valid interpretation.
+4. Constitution Document Identity, Artifact Identity, Vector Identity, and Provenance Identity are separately defined, with explicit inter-identity binding fields.
+5. Artifact identity, vector identity, lineage, `supersedes`, registration, and frozen-status verification are completely specified and independently checkable.
+6. The independent verification procedure (§5) can be executed without inspecting any Reference Implementation.
+7. A formal Independent Implementer Test is defined and its PASS condition requires that two conformant independent implementations produce the same artifact, the same vector, the same canonical bytes, and the same hash values from the same authoritative source and approved dependencies.
+8. Positive Determinism Verification (§5.1) and Negative Integrity Verification (§5.2) are both fully specified as independent properties.
+9. If any conformant independent implementation can still legitimately produce different vectors, canonical bytes, or hashes, SPEC-002 MUST remain NOT READY.
 
-### 8.1 Independent Implementer Test
+---
 
-The Independent Implementer Test for SPEC-002 is satisfied only if an independent implementer, using only approved normative specifications and explicitly referenced normative artifacts, can:
+## 10. Independent Implementer Test
+
+The Independent Implementer Test for SPEC-002 is satisfied only if an independent implementer, using ONLY:
+
+- approved normative specifications;
+- explicitly referenced normative artifacts;
+- approved architecture decisions;
+- approved fixtures where applicable;
+
+can satisfy ALL of the following:
+
+```
+ONE VALID INPUT SET
+        ↓
+ONE VALID ARTIFACT
+        ↓
+ONE VALID VECTOR
+        ↓
+ONE VALID BYTE SEQUENCE
+        ↓
+ONE VALID HASH SET
+```
+
+Specifically, the independent implementer MUST be able to:
 
 1. Construct exactly one Constitution Artifact from the authoritative Constitution source.
 2. Derive exactly one canonical Constitution Vector representation.
 3. Serialize the result into exactly one canonical byte sequence.
-4. Reproduce the same SHA-256 values.
+4. Reproduce the same hash values.
 5. Establish identity and lineage.
 6. Verify registration and frozen status.
 7. Complete all of the above without inspecting any Reference Implementation.
+
+The independent implementer MUST NOT need to inspect:
+- `aura-poc-a-core-v3.3`
+- `aura-guard-v1.3`
+- any other Reference Implementation
+- implementation-specific source code
 
 Any legitimate multi-outcome path is a FAIL condition for readiness.
 
 ---
 
-## 9. Formal SPEC-002 Readiness Status
+## 11. Formal SPEC-002 Readiness Status
 
 **SPEC-002 READINESS STATUS: NOT READY**
 
 Rationale:
 
 - APS-001 remains incomplete and upstream normative authority is still blocked by documented gaps.
-- The architectural decisions listed in §6 are unresolved.
+- All twelve architectural decision domains listed in §6 (AD-CA-001 through AD-CA-012) are UNRESOLVED.
 - Existing normative sources establish the need for determinism, traceability, versioning, integrity, and independent verification, but they do not yet establish one canonical Constitution Artifact construction procedure.
 - Until the unresolved decisions are approved and folded into a complete normative contract, independent implementations could legitimately diverge.
+- SPEC-002 will NOT advance to READY merely because this document is internally well structured. Readiness requires every architectural decision required to make the future Constitution Artifact independently reproducible to be explicitly resolved through the proper governance mechanism.
+
+---
+
+## Appendix A — Required Confirmations
+
+**A. Document Status**
+SPEC-002 remains DRAFT. Version 0.2-DRAFT. No normative effect.
+
+**B. CR-007 Status**
+CR-007 remains BLOCKED. No requirement in SPEC-002 constitutes approval or unblocking of CR-007.
+
+**C. No Artifact Created**
+No Constitution Artifact and no Constitution Vector was created, generated, registered, or frozen by this document or by the revision producing version 0.2-DRAFT.
+
+**D. No Implementation Modified**
+No core implementation (`aura-poc-a-core-v3.3`) and no guard implementation (`aura-guard-v1.3`) was modified by this revision.
+
+**E. Unresolved AD-CA Decision Domains**
+The following decision domains remain explicitly unresolved:
+
+- AD-CA-001: Authoritative Constitution source identity, Source Set, and exact Source Boundary
+- AD-CA-002: Canonicalization procedure for the authoritative Constitution source
+- AD-CA-003: Transformation pipeline from source to artifact-ready representation
+- AD-CA-004: Normalization rules affecting deterministic output
+- AD-CA-005: Embedding method identity and versioning model
+- AD-CA-006: Dictionary identity, versioning, integrity, and change policy
+- AD-CA-007: Numeric representation of vector values
+- AD-CA-008: Canonical serialization format, canonical byte sequence, and hash domain definitions
+- AD-CA-009: Constitution Document Identity, Artifact Identity, Vector Identity schema and inter-identity binding fields
+- AD-CA-010: Commit/execution provenance binding schema
+- AD-CA-011: Registration model, authoritative registry, registry fields, and registration integrity semantics
+- AD-CA-012: Freeze evidence, frozen-status verification model, and immutability semantics
+
+---
+
+## Appendix B — Change Summary (v0.1-DRAFT → v0.2-DRAFT)
+
+1. **Source Boundary tightening**: §4.1 replaced with a dedicated Source Boundary section (REQ-002-001 through REQ-002-009) explicitly requiring definition of Source Set, Source Boundary, Source Document Identity, Source Version, Source Status, Source Encoding, Source Canonicalization, and Source Integrity Reference. Added explicit prohibition against silently equating `AURA-CON-001` with `AURA-CONSTITUTION-001`.
+
+2. **Identity separation**: §4.4 added, requiring explicit separation of Constitution Document Identity, Constitution Artifact Identity, Constitution Vector Identity, and Execution/Commit Provenance Identity (REQ-002-015, REQ-002-016). Identity collapse is explicitly prohibited without approved architecture decision.
+
+3. **Hash-domain separation**: §4.5 added, requiring separately and completely defined hash domains for Vector Hash and Artifact Hash (REQ-002-017 through REQ-002-020). Explicit prohibition on approving concrete hash formulas within this DRAFT document.
+
+4. **Positive verification**: §5.1 added, formalizing the Positive Determinism Verification chain.
+
+5. **Negative verification**: §5.2 added, formalizing six Negative Integrity Verification test categories. §5.3 added, explicitly distinguishing DETERMINISM from INTEGRITY as separate required properties.
+
+6. **Candidate-decision protection**: §3 constraint 4 and §6 table both carry explicit statement: "No candidate choice listed in this document constitutes a recommendation, preference, default, or implied architectural decision."
+
+7. **Traceability tightening**: §7 expanded to mechanically addressable fields: Source Doc ID, Source Version, Source Section/Clause, Requirement ID, Architecture Decision ID, Conformance Test ID, Evidence ID. FUTURE REF used where test IDs and evidence IDs do not yet exist. Traceability chain added explicitly.
+
+8. **Registration/freeze separation**: §4.9 and §4.10 separated into distinct subsections with independent requirement sets. §8 added as a dedicated section recording the governing distinction.
