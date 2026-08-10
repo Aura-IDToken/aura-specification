@@ -1,16 +1,16 @@
 # SPEC-002 — Constitution Artifact Contract
 
-Document ID: SPEC-002  
-Version: 0.1-DRAFT  
-Status: DRAFT  
-Classification: Normative Specification Contract  
-Owner: Protocol Custodian  
-Authority: AURA Constitution v1.0 (FROZEN) · APS-000 · APS-200 · APS-300 · APS-400 · APS-900  
+Document ID: SPEC-002
+Version: 0.1-DRAFT
+Status: DRAFT
+Classification: Normative Specification Contract
+Owner: Protocol Custodian
+Authority: AURA Constitution v1.0 (FROZEN) · APS-000 · APS-200 · APS-300 · APS-400 · APS-900
 Last Review: 2026-08-10
 
 ---
 
-> **DRAFT ONLY / SPECIFICATION WORK**  
+> **DRAFT ONLY / SPECIFICATION WORK**
 > This document defines the contract surface for a future Constitution Artifact and Constitution Vector. It MUST NOT be used to implement, generate, register, or freeze a Constitution Artifact or Constitution Vector until all blocking architectural decisions are explicitly approved.
 
 ---
