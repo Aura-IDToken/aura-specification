@@ -217,7 +217,7 @@ Registration and Freeze are separate governance concepts. Registration MUST NOT 
 ### 4.10 Freeze
 
 - **REQ-002-029**: The future specification MUST define freeze requirements independently of registration requirements, including:
-  - The authorized authority who may authorize freeze
+  - The authority who may authorize freeze
   - The status transition that constitutes freeze
   - The evidence required prior to freeze authorization
   - The immutability semantics of frozen status
