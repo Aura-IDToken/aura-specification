@@ -1,7 +1,7 @@
 # SPEC-002 — Constitution Artifact Contract
 
 Document ID: SPEC-002
-Version: 0.2-DRAFT
+Version: 0.3-DRAFT
 Status: DRAFT
 Classification: Normative Contract for Constitution Artifact Specification
 Owner: Protocol Custodian
@@ -121,7 +121,7 @@ The future normative specification MUST explicitly define all of the following. 
 - **REQ-002-003**: The future specification MUST define **Source Document Identity**: the immutable identifier, version, status, and repository location of each document in the Source Set.
 - **REQ-002-004**: The future specification MUST define **Source Version** semantics and which version of each Source Document is authoritative.
 - **REQ-002-005**: The future specification MUST define **Source Status** constraints: which document lifecycle statuses are permissible as inputs.
-- **REQ-002-006**: The future specification MUST define **Source Encoding**: the character encoding, line-ending convention, and byte-order convention of each source document.
+- **REQ-002-006**: The future specification MUST define **Source Encoding**: the source-level canonicalization rules for each source document, covering as applicable character encoding, BOM handling, line-ending normalization, Unicode normalization form, and source-to-byte conversion. Source-level encoding requirements concern source material only and MUST NOT be conflated with numeric byte-order or endianness, which belong to the numeric/vector representation contract under REQ-002-014.
 - **REQ-002-007**: The future specification MUST define **Source Canonicalization**: the deterministic procedure that transforms source documents into a canonical form prior to any further processing, or MUST explicitly declare that the authoritative source is already canonical.
 - **REQ-002-008**: The future specification MUST define **Source Integrity Reference**: the cryptographic or integrity-binding mechanism that ties the authoritative source identity to artifact construction.
 - **REQ-002-009**: Any alternate label, filename, alias, or informal name MUST be treated as distinct from the authoritative identifier unless an approved governance artifact explicitly establishes equivalence. In particular, the identifier `AURA-CON-001` MUST NOT be silently replaced, aliased, or equated with `AURA-CONSTITUTION-001` without such explicit approval.
@@ -170,6 +170,16 @@ Execution / Commit Identity
 provenance binding
 ```
 
+The following terms MUST NOT be used interchangeably. Each has a distinct meaning:
+
+- **Identity** — identifies a distinct entity (document, artifact, vector, or construction event)
+- **Integrity** — verifies that a representation or content has not been altered
+- **Provenance** — identifies the context in which an artifact was constructed
+- **Lineage** — describes the succession relationship between artifacts (e.g., `supersedes`)
+- **Status** — describes the lifecycle state of an artifact (e.g., DRAFT, FROZEN)
+
+The future normative specification MUST define each concept independently and MUST NOT make them synonyms.
+
 - **REQ-002-015**: The future specification MUST NOT equate or merge Constitution Document Identity, Artifact Identity, Vector Identity, and Provenance Identity (e.g., `constitution_id = artifact_id = vector_id`) unless a future approved architecture decision explicitly establishes such equivalence.
 - **REQ-002-016**: The future specification MUST specify which fields bind these identities together.
 
@@ -177,26 +187,79 @@ provenance binding
 
 The future normative specification MUST define each hash domain completely and independently. Hash domain definitions MUST be independently reproducible without reference to any implementation.
 
+There MUST be at minimum a Vector Hash domain and an Artifact Hash domain. However, the future specification is NOT restricted to exactly these two domains; it MUST explicitly define every hash domain it uses and MUST NOT silently rely on additional undeclared domains.
+
 - **REQ-002-017**: The future specification MUST explicitly define the **Vector Hash** domain: the exact bytes that constitute the hash input, the serialization that precedes hashing, the hash algorithm, the output encoding, and the output representation.
 - **REQ-002-018**: The future specification MUST explicitly define the **Artifact Hash** domain: the exact bytes that constitute the hash input, the serialization that precedes hashing, the hash algorithm, the output encoding, and the output representation.
 - **REQ-002-019**: The future specification MUST explicitly state which fields are included in and excluded from each hash input.
 - **REQ-002-020**: Hash domain definitions MUST be sufficient for an independent implementer to reproduce the exact byte sequence fed to each hash function without inspecting any Reference Implementation.
 
-> **ARCHITECTURE NOTE — Hash Domain is UNRESOLVED (AD-CA-007, AD-CA-008).**
-> This draft MUST NOT itself approve any concrete hash formula such as `VECTOR HASH = SHA-256(canonical_vector_bytes)` or `ARTIFACT HASH = SHA-256(canonical_artifact_bytes)`. Such formulas do not exist in any approved normative source. The future architecture decision MUST define each hash domain completely.
+For each hash domain the future specification MUST define:
+
+- exact input representation
+- exact byte sequence within that domain
+- included fields
+- excluded fields
+- serialization
+- algorithm
+- output encoding
+- output representation
+
+> **ARCHITECTURE NOTE — Hash Domains are UNRESOLVED (AD-CA-007, AD-CA-008).**
+> This draft MUST NOT itself approve any concrete hash formula such as `VECTOR HASH = SHA-256(canonical_vector_bytes)` or `ARTIFACT HASH = SHA-256(canonical_artifact_bytes)`. Such formulas do not exist in any approved normative source and remain unresolved. The future architecture decision MUST define each hash domain completely.
 >
 > **Governing principle:** Hash domain MUST be explicitly defined and independently reproducible.
 
 ### 4.6 Canonical Serialization and Byte Sequence
 
 - **REQ-002-021**: The future specification MUST define exactly one canonical serialization format for the Constitution Vector and Constitution Artifact, including field set, field order, encoding, and representation of absent or optional fields.
-- **REQ-002-022**: The future specification MUST define exactly one canonical byte sequence for every hash-bearing Constitution Artifact and Constitution Vector representation.
+- **REQ-002-022**: The future specification MUST define exactly one canonical byte sequence for each defined hash-bearing Constitution Artifact and Constitution Vector representation within its respective hash domain. The canonical byte sequence for the Constitution Artifact and the canonical byte sequence for the Constitution Vector are SEPARATE definitions within their respective hash domains and MUST NOT be treated as a single universal byte sequence for the system.
+
+  The future specification MUST explicitly define for each representation:
+  - the representation-to-bytes transformation
+  - field ordering where applicable
+  - encoding
+  - numeric representation where applicable
+  - absent or optional field handling
+  - byte-level boundaries
+  - hash-domain membership
 
 ### 4.7 Artifact and Vector Binding
 
 - **REQ-002-023**: The future specification MUST define the required binding from authoritative source to Constitution Artifact, including source identifier, source version, source status, source location, and source integrity reference.
 - **REQ-002-024**: The future specification MUST define the required binding from Constitution Artifact to Constitution Vector, including vector identity, dependency identities, canonical bytes reference, and integrity reference.
 - **REQ-002-025**: The future specification MUST define the required commit/execution provenance binding for artifact construction, including the repository revision and the deterministic generation context needed for independent verification.
+
+### 4.7a Provenance / Determinism Boundary
+
+Execution and commit provenance MUST NOT silently introduce variation into the canonical Constitution Artifact, Constitution Vector, canonical byte sequences, or hash values.
+
+- **REQ-002-033**: The future specification MUST explicitly define whether execution / commit provenance is included in, excluded from, or externally bound to the canonical Constitution Artifact representation and its applicable hash domain(s). The future specification MUST define the exact fields and binding semantics used for provenance verification. The definition MUST prevent provenance semantics from introducing unintended non-determinism into canonical artifact, vector, canonical byte sequence, or hash reproduction.
+
+  This requirement does NOT mandate inclusion or exclusion of provenance from any hash domain. It requires only that the future specification make the boundary explicit and independently reproducible.
+
+> **ARCHITECTURE NOTE — Provenance boundary is UNRESOLVED (AD-CA-010).**
+> The question of whether execution / commit provenance belongs to (A) canonical artifact identity / canonical bytes / hash domain, (B) external provenance evidence / binding, or (C) another explicitly defined domain is an architectural decision that remains unresolved. SPEC-002 MUST NOT choose the answer.
+
+### 4.7b Dependency Closure
+
+- **REQ-002-034**: The future specification MUST define the complete dependency closure of Constitution Artifact construction. Every external or auxiliary dependency capable of affecting the canonical artifact, vector, canonical byte sequence, or hash MUST be explicitly identified, versioned where applicable, integrity-bound, and included in the reproducibility contract.
+
+  The requirement covers, where applicable:
+  - embedding method
+  - dictionary
+  - dictionary version
+  - dictionary integrity reference
+  - normalization tables
+  - mapping tables
+  - configuration
+  - constants
+  - Unicode / versioned transformation data
+  - any other deterministic input affecting the output
+
+  The specification MUST NOT permit an undeclared dependency to alter the canonical result.
+
+> **ARCHITECTURE NOTE — Dependency closure affects AD-CA-006 (dictionary identity, versioning, integrity) and AD-CA-005 (embedding method). These decisions remain UNRESOLVED.**
 
 ### 4.8 Versioning and Lineage
 
@@ -226,7 +289,29 @@ Registration and Freeze are separate governance concepts. Registration MUST NOT 
 ### 4.11 Verification and Failure Conditions
 
 - **REQ-002-030**: The future specification MUST define an independent verification procedure that does not require inspection of any Reference Implementation, including `aura-poc-a-core-v3.3`, `aura-guard-v1.3`, or any other implementation-specific source code.
-- **REQ-002-031**: The future specification MUST define failure conditions that invalidate the Constitution Artifact, the Constitution Vector, registration, or frozen status.
+- **REQ-002-031**: The future specification MUST define failure conditions that invalidate the Constitution Artifact, the Constitution Vector, registration, or frozen status. At minimum the future specification MUST explicitly address whether each of the following conditions causes rejection, and MUST NOT permit silent fallback where that fallback could change the canonical result:
+
+  - invalid authoritative source
+  - missing source
+  - ambiguous source boundary
+  - unsupported encoding
+  - missing dependency
+  - unapproved dependency
+  - dependency integrity mismatch
+  - unknown dependency version
+  - malformed dictionary or equivalent dependency
+  - numeric overflow
+  - numeric out-of-domain value
+  - invalid canonicalization input
+  - invalid transformation input
+  - invalid provenance binding
+  - hash mismatch
+  - identity mismatch
+  - lineage inconsistency
+  - registration inconsistency
+  - frozen-status inconsistency
+
+  **The governing principle is: NO SILENT FALLBACK WHERE IT CAN ALTER THE CANONICAL RESULT.**
 - **REQ-002-032**: The future specification MUST remain NOT READY if any conformant independent implementation can legitimately produce more than one vector, more than one canonical byte sequence, or more than one hash value from the same authoritative source and approved dependencies.
 
 ---
@@ -261,6 +346,11 @@ The verification model MUST also verify the rejection of altered inputs or artif
 4. **Modified dictionary or embedding dependency** → dependency/integrity failure
 5. **Wrong provenance / repository revision / execution binding** → provenance verification failure
 6. **Ambiguous or unapproved dependency** → fail closed
+7. **Numeric overflow or invalid numeric value** → deterministic rejection
+8. **Serialization alteration** → hash/integrity failure
+9. **Lineage inconsistency** → verification failure
+10. **Registration inconsistency** → registration verification failure
+11. **Frozen-status inconsistency** → freeze verification failure
 
 ### 5.3 Distinction: Determinism vs. Integrity
 
@@ -271,6 +361,8 @@ These are separate properties and MUST NOT be conflated:
 **INTEGRITY**: modified or invalid inputs → detectable verification failure
 
 A specification that achieves determinism but not integrity, or integrity but not determinism, is incomplete. Both properties MUST be independently specified and independently verifiable.
+
+It is an explicit requirement that the provenance boundary definition (REQ-002-033) does not make execution context a hidden source of canonical-result variation. Provenance information MUST NOT alter the canonical Constitution Artifact, canonical byte sequences, or hash values except through an explicitly defined, normatively approved mechanism.
 
 ---
 
@@ -285,11 +377,11 @@ The following items are unresolved architectural decision domains. The identifie
 | AD-CA-003 | Transformation pipeline from source to artifact-ready representation | UNRESOLVED | None approved | Blocks REQ-002-010, REQ-002-011 |
 | AD-CA-004 | Normalization rules affecting deterministic output | UNRESOLVED | None approved | Blocks REQ-002-011, REQ-002-021, REQ-002-022 |
 | AD-CA-005 | Embedding method identity and versioning model | UNRESOLVED | `Dictionary-Based Embedding` is candidate only | Blocks REQ-002-012, REQ-002-016, REQ-002-024 |
-| AD-CA-006 | Dictionary identity, versioning, integrity, and change policy | UNRESOLVED | None approved | Blocks REQ-002-013, REQ-002-016, REQ-002-024 |
+| AD-CA-006 | Dictionary identity, versioning, integrity, change policy, and complete dependency closure of all external or auxiliary inputs capable of affecting canonical artifact, vector, bytes, or hash | UNRESOLVED | None approved | Blocks REQ-002-013, REQ-002-016, REQ-002-024, REQ-002-034 |
 | AD-CA-007 | Numeric representation of vector values | UNRESOLVED | `32`, `100000`, `signed int32`, `little-endian`, `round-half-to-even` are candidate only | Blocks REQ-002-014, REQ-002-017 through REQ-002-022 |
 | AD-CA-008 | Canonical serialization format, canonical byte sequence, and hash domain definitions | UNRESOLVED | None approved | Blocks REQ-002-017 through REQ-002-022 |
 | AD-CA-009 | Constitution Document Identity, Artifact Identity, Vector Identity schema and inter-identity binding fields | UNRESOLVED | None approved | Blocks REQ-002-015, REQ-002-016, REQ-002-023, REQ-002-024 |
-| AD-CA-010 | Commit/execution provenance binding schema | UNRESOLVED | None approved | Blocks REQ-002-025, REQ-002-030, REQ-002-031 |
+| AD-CA-010 | Commit/execution provenance binding schema, and explicit definition of whether provenance is included in, excluded from, or externally bound to the canonical Constitution Artifact representation and its applicable hash domain(s) | UNRESOLVED | None approved | Blocks REQ-002-025, REQ-002-030, REQ-002-031, REQ-002-033 |
 | AD-CA-011 | Registration model, authoritative registry, registry fields, and registration integrity semantics | UNRESOLVED | None approved | Blocks REQ-002-028, REQ-002-030, REQ-002-031 |
 | AD-CA-012 | Freeze evidence, frozen-status verification model, and immutability semantics | UNRESOLVED | None approved | Blocks REQ-002-029 through REQ-002-031 |
 
@@ -322,7 +414,7 @@ The following matrix uses mechanically addressable references. Where a Conforman
 | REQ-002-019 | Hash input field inclusion/exclusion | APS-200; APS-300 | current | §4; §5 | AD-CA-008 | FUTURE REF | FUTURE REF |
 | REQ-002-020 | Hash domain independently reproducible | AURA-CON-001 | v1.0-FROZEN | Article IV P2,P8 | AD-CA-008 | FUTURE REF | FUTURE REF |
 | REQ-002-021 | One canonical serialization format | APS-200 | current | §8 | AD-CA-008 | FUTURE REF | FUTURE REF |
-| REQ-002-022 | One canonical byte sequence | APS-200; APS-300 | current | §4; §5 | AD-CA-008 | FUTURE REF | FUTURE REF |
+| REQ-002-022 | One canonical byte sequence per hash domain, per representation | APS-200; APS-300 | current | §4; §5 | AD-CA-008 | FUTURE REF | FUTURE REF |
 | REQ-002-023 | Source-to-artifact binding | APS-900 | current | §3–§4 | AD-CA-001, AD-CA-002, AD-CA-009 | FUTURE REF | FUTURE REF |
 | REQ-002-024 | Artifact-to-vector binding | APS-900 | current | §3–§4 | AD-CA-005, AD-CA-006, AD-CA-007, AD-CA-009 | FUTURE REF | FUTURE REF |
 | REQ-002-025 | Commit/execution provenance binding | AURA-CON-001; APS-900; APS-950 | v1.0-FROZEN; current; current | Article X; §2,§4; §6 | AD-CA-010 | FUTURE REF | FUTURE REF |
@@ -333,6 +425,8 @@ The following matrix uses mechanically addressable references. Where a Conforman
 | REQ-002-030 | Independent verification procedure | AURA-CON-001; APS-300; APS-900 | v1.0-FROZEN; current; current | Article III, IV P2,P4,P8; §9; §9 | AD-CA-010, AD-CA-011, AD-CA-012 | FUTURE REF | FUTURE REF |
 | REQ-002-031 | Failure conditions | AURA-CON-001; APS-300 | v1.0-FROZEN; current | Article IV P6; §12 | AD-CA-010, AD-CA-011, AD-CA-012 | FUTURE REF | FUTURE REF |
 | REQ-002-032 | NOT READY until one outcome is forced | AURA-CON-001 | v1.0-FROZEN | Article IV P1,P2,P8 | All unresolved decisions above | FUTURE REF | FUTURE REF |
+| REQ-002-033 | Provenance boundary explicitly defined relative to canonical artifact and hash domain(s) | AURA-CON-001; APS-900; APS-950 | v1.0-FROZEN; current; current | Article IV P2,P8 · Article X; §2,§4; §6 | AD-CA-010 | FUTURE REF | FUTURE REF |
+| REQ-002-034 | Complete dependency closure of artifact construction | AURA-CON-001; APS-000 | v1.0-FROZEN; current | Article IV P1,P2,P8,P9; §7 | AD-CA-005, AD-CA-006 | FUTURE REF | FUTURE REF |
 
 The complete traceability chain MUST be:
 
@@ -385,6 +479,19 @@ SPEC-002 MAY advance from DRAFT only when all of the following are true:
 7. A formal Independent Implementer Test is defined and its PASS condition requires that two conformant independent implementations produce the same artifact, the same vector, the same canonical bytes, and the same hash values from the same authoritative source and approved dependencies.
 8. Positive Determinism Verification (§5.1) and Negative Integrity Verification (§5.2) are both fully specified as independent properties.
 9. If any conformant independent implementation can still legitimately produce different vectors, canonical bytes, or hashes, SPEC-002 MUST remain NOT READY.
+10. **Source Boundary** is fully resolved.
+11. **Dependency Closure** is fully resolved (REQ-002-034; AD-CA-005, AD-CA-006).
+12. **Provenance boundary** is fully resolved (REQ-002-033; AD-CA-010): the relationship between execution/commit provenance and the canonical artifact representation and its hash domain is explicitly defined.
+13. **Hash domains** are fully resolved: every hash domain used by the future specification is completely and independently defined.
+14. **Canonical byte sequence semantics** are fully resolved: exactly one canonical byte sequence is defined per hash domain per representation.
+15. **Failure / rejection semantics** are fully specified: no silent fallback is permitted where that fallback could alter the canonical result.
+16. **Identity separation** is preserved: identity, integrity, provenance, lineage, and status remain separately defined concepts.
+
+The central binary criterion remains:
+
+> Can two independent conformant implementations, using only the approved normative specification and its explicitly referenced normative dependencies, construct the same canonical artifact, derive the same vector, produce the same canonical bytes, and reproduce the same hash values?
+
+If not: **SPEC-002 = NOT READY.**
 
 ---
 
@@ -442,19 +549,23 @@ Rationale:
 - Existing normative sources establish the need for determinism, traceability, versioning, integrity, and independent verification, but they do not yet establish one canonical Constitution Artifact construction procedure.
 - Until the unresolved decisions are approved and folded into a complete normative contract, independent implementations could legitimately diverge.
 - SPEC-002 will NOT advance to READY merely because this document is internally well structured. Readiness requires every architectural decision required to make the future Constitution Artifact independently reproducible to be explicitly resolved through the proper governance mechanism.
+- No Constitution Artifact was created or generated as a result of this document.
+- No Constitution Vector was created or generated as a result of this document.
+- No implementation was modified as a result of this document.
+- CR-007 remains BLOCKED.
 
 ---
 
 ## Appendix A — Required Confirmations
 
 **A. Document Status**
-SPEC-002 remains DRAFT. Version 0.2-DRAFT. No normative effect.
+SPEC-002 remains DRAFT. Version 0.3-DRAFT. No normative effect.
 
 **B. CR-007 Status**
 CR-007 remains BLOCKED. No requirement in SPEC-002 constitutes approval or unblocking of CR-007.
 
 **C. No Artifact Created**
-No Constitution Artifact and no Constitution Vector was created, generated, registered, or frozen by this document or by the revision producing version 0.2-DRAFT.
+No Constitution Artifact and no Constitution Vector was created, generated, registered, or frozen by this document or by the revision producing version 0.3-DRAFT.
 
 **D. No Implementation Modified**
 No core implementation (`aura-poc-a-core-v3.3`) and no guard implementation (`aura-guard-v1.3`) was modified by this revision.
@@ -494,3 +605,27 @@ The following decision domains remain explicitly unresolved:
 7. **Traceability tightening**: §7 expanded to mechanically addressable fields: Source Doc ID, Source Version, Source Section/Clause, Requirement ID, Architecture Decision ID, Conformance Test ID, Evidence ID. FUTURE REF used where test IDs and evidence IDs do not yet exist. Traceability chain added explicitly.
 
 8. **Registration/freeze separation**: §4.9 and §4.10 separated into distinct subsections with independent requirement sets. §8 added as a dedicated section recording the governing distinction.
+
+---
+
+## Appendix C — Change Summary (v0.2-DRAFT → v0.3-DRAFT)
+
+1. **Provenance / determinism boundary tightening**: §4.7a added. REQ-002-033 added, requiring the future specification to explicitly define whether execution/commit provenance is included in, excluded from, or externally bound to the canonical artifact and its hash domain(s). AD-CA-010 updated to explicitly cover this boundary. Traceability matrix updated. Acceptance criteria updated (criterion 12). §5.3 extended to prohibit provenance from being a hidden source of canonical-result variation.
+
+2. **Canonical byte sequence semantic tightening**: REQ-002-022 reworded. Ambiguous "exactly one canonical byte sequence for every hash-bearing … representation" replaced with per-hash-domain, per-representation semantics. The requirement now explicitly states that canonical bytes for the Artifact and Vector are separate definitions within their respective hash domains and MUST NOT be treated as a single universal byte sequence. Sub-bullets added specifying required definitions. Acceptance criteria updated (criterion 14). Traceability matrix updated.
+
+3. **Source encoding vs numeric byte-order separation**: REQ-002-006 reworded. Source-level encoding requirements are explicitly limited to source material (character encoding, BOM, line endings, Unicode normalization form, source-to-byte conversion). Numeric byte order / endianness is explicitly placed under the numeric/vector representation contract (REQ-002-014). No encoding or endianness value was selected.
+
+4. **Dependency closure requirement**: §4.7b added. REQ-002-034 added, requiring the future specification to define the complete dependency closure of Constitution Artifact construction. AD-CA-006 updated to cover complete dependency closure. Traceability matrix updated. Acceptance criteria updated (criterion 11).
+
+5. **Deterministic failure / rejection semantics**: REQ-002-031 strengthened with an explicit enumerated list of failure conditions the future specification MUST address. Governing principle stated: NO SILENT FALLBACK WHERE IT CAN ALTER THE CANONICAL RESULT. No error codes invented.
+
+6. **Identity / integrity / provenance / lineage / status clarification**: §4.4 extended with a normative definitional block distinguishing identity, integrity, provenance, lineage, and status. The future specification MUST define each concept independently.
+
+7. **Hash-domain wording tightened**: §4.5 updated to state that Vector Hash and Artifact Hash are the minimum required domains but the future specification is not restricted to exactly those two; every hash domain used MUST be explicitly defined. An explicit enumeration of per-domain required definitions added. No concrete hash formula introduced or approved.
+
+8. **Traceability stability clarification**: Existing "current" references remain where sources do not yet expose a frozen version, consistent with v0.2 practice. The document continues to make clear that approved traceability requires stable source identity/version/revision.
+
+9. **Acceptance criteria expanded**: §9 expanded with criteria 10–16 covering source boundary, dependency closure, provenance boundary, hash domains, canonical byte semantics, failure semantics, and identity separation.
+
+10. **Negative integrity verification expanded**: §5.2 extended with cases 7–11: numeric overflow/invalid numeric value, serialization alteration, lineage inconsistency, registration inconsistency, frozen-status inconsistency.
