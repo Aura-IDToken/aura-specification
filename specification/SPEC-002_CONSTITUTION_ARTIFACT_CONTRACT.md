@@ -425,7 +425,7 @@ The following matrix uses mechanically addressable references. Where a Conforman
 | REQ-002-030 | Independent verification procedure | AURA-CON-001; APS-300; APS-900 | v1.0-FROZEN; current; current | Article III, IV P2,P4,P8; §9; §9 | AD-CA-010, AD-CA-011, AD-CA-012 | FUTURE REF | FUTURE REF |
 | REQ-002-031 | Failure conditions | AURA-CON-001; APS-300 | v1.0-FROZEN; current | Article IV P6; §12 | AD-CA-010, AD-CA-011, AD-CA-012 | FUTURE REF | FUTURE REF |
 | REQ-002-032 | NOT READY until one outcome is forced | AURA-CON-001 | v1.0-FROZEN | Article IV P1,P2,P8 | All unresolved decisions above | FUTURE REF | FUTURE REF |
-| REQ-002-033 | Provenance boundary explicitly defined relative to canonical artifact and hash domain(s) | AURA-CON-001; APS-900; APS-950 | v1.0-FROZEN; current; current | Article IV P2,P8; Article X; §2,§4; §6 | AD-CA-010 | FUTURE REF | FUTURE REF |
+| REQ-002-033 | Provenance boundary explicitly defined relative to canonical artifact and hash domain(s) | AURA-CON-001; APS-900; APS-950 | v1.0-FROZEN; current; current | Article IV P2,P8 · Article X; §2,§4; §6 | AD-CA-010 | FUTURE REF | FUTURE REF |
 | REQ-002-034 | Complete dependency closure of artifact construction | AURA-CON-001; APS-000 | v1.0-FROZEN; current | Article IV P1,P2,P8,P9; §7 | AD-CA-005, AD-CA-006 | FUTURE REF | FUTURE REF |
 
 The complete traceability chain MUST be:
