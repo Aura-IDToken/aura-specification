@@ -18,6 +18,7 @@ Versioning follows the model defined in [VERSIONING.md](VERSIONING.md).
 - Conformance Test stubs (CONF-001 – CONF-010)
 - Traceability Model
 - ADR and RFC process templates
+- SPEC-002 draft for the Constitution Artifact contract, including unresolved architectural decisions, traceability matrix, proposed acceptance criteria, and formal NOT READY status
 
 ### Changed
 - README.md restructured as canonical repository index
