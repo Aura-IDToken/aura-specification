@@ -9,12 +9,13 @@
   "canonical_serialization": {
     "status": "EXPLICITLY_OUT_OF_SCOPE_FOR_DQ002",
     "bytes_utf8_hex": "6167656e745f69643d413030317c6172693d39353030307c64726966743d353030307c74733d323032362d30312d30315430303a30303a30305a",
-    "bytes_utf8_text": "agent_id=A001|ari=95000|drift=5000|ts=2026-01-01T00:00:00Z"
+    "bytes_utf8_text": "agent_id=A001|ari=95000|drift=5000|ts=2026-01-01T00:00:00Z",
+    "length_bytes": 58
   },
   "leaf": {
     "input_hex": "006167656e745f69643d413030317c6172693d39353030307c64726966743d353030307c74733d323032362d30312d30315430303a30303a30305a",
-    "input_length_bytes": 72,
-    "digest_hex": "2e7f7f2d0c6e0d0d4b9c7e9d8d6f2f4f3e6f0d8b0b1c6a2d9d4d2e1b9c5f8a3c1"
+    "input_length_bytes": 59,
+    "digest_hex": "ba2749fedbcff14c1409a22c721c8de2e0f9ebd9c4177cc8b3950142b3bfd123"
   },
   "node": {
     "left_digest_hex": "0000000000000000000000000000000000000000000000000000000000000000",
@@ -30,5 +31,5 @@
     "Hexadecimal child digests MUST NOT be hashed as text.",
     "RI-PY and RI-RS MUST produce identical digest_hex values."
   ],
-  "note": "The node vector is independently computable and fixed by the DQ-002 ADR. The leaf digest is a placeholder pending independent recomputation and MUST NOT be treated as proven until verified by the conformance implementations."
+  "verification_note": "Leaf and node digests were independently recomputed from the explicit byte inputs before recording this fixture."
 }
