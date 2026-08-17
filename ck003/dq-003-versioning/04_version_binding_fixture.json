@@ -1,0 +1,42 @@
+{
+  "fixture_id": "DQ003-004",
+  "concept": "VERSION_BINDING",
+  "status": "PROPOSED",
+  "purpose": "Cross-language fixture for independent protocol_version and schema_version semantics.",
+  "input": {
+    "protocol_version": "UNSET",
+    "schema_version": "1.0.0",
+    "agent_id": "MACHINE_ACCOUNT_001",
+    "timestamp": "2026-08-16T21:38:00Z",
+    "ari": {
+      "score": 95000,
+      "drift": 5000,
+      "status": "COMPLIANT"
+    },
+    "audit": {
+      "leaf_hash": "1234abcd1234abcd1234abcd1234abcd1234abcd1234abcd1234abcd1234abcd",
+      "merkle_root": "abcd1234abcd1234abcd1234abcd1234abcd1234abcd1234abcd1234abcd1234"
+    }
+  },
+  "expected_semantics": {
+    "protocol_version": "must be supplied by the frozen normative protocol specification; this fixture intentionally does not invent its value",
+    "schema_version": "identifies the canonical object schema/representation version",
+    "implementation_versions": "must not be substituted for either field"
+  },
+  "canonicalization_requirement": {
+    "rule": "Both version fields, once normatively bound, are resolved before canonical serialization.",
+    "digest_domain": "The resulting canonical bytes are consumed by the DQ-002 canonical hash-domain model.",
+    "algorithm": "SHA-256(0x00 || canonical_bytes) for a leaf; SHA-256(0x01 || left[32] || right[32]) for a node."
+  },
+  "conformance_assertions": [
+    "RI-PY and RI-RS MUST interpret protocol_version and schema_version as distinct fields.",
+    "Neither implementation may derive protocol_version from Core or Guard package version.",
+    "Changing schema_version must not silently change protocol_version.",
+    "Changing protocol_version must be treated as a protocol-contract change.",
+    "An unsupported protocol_version must not be silently downgraded or reinterpreted."
+  ],
+  "closure_blockers": [
+    "Initial authoritative protocol_version value is not yet frozen.",
+    "Canonical serialization inclusion/order of both version fields is not yet normatively frozen."
+  ]
+}
