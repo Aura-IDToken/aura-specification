@@ -1,0 +1,27 @@
+{
+  "fixture_id": "CANONICAL-001",
+  "profile": "RFC8785-JCS",
+  "protocol_object": {
+    "event_type": "AUDIT_RECORD",
+    "protocol_version": "1.0",
+    "schema_version": "1.0",
+    "payload": {
+      "value": 42
+    }
+  },
+  "canonicalization": {
+    "algorithm": "RFC8785-JCS",
+    "encoding": "UTF-8"
+  },
+  "hash_domain": {
+    "leaf_algorithm": "SHA-256(0x00 || canonical_bytes)",
+    "node_algorithm": "SHA-256(0x01 || left_digest_bytes || right_digest_bytes)",
+    "tree_semantics": "RFC6962"
+  },
+  "expected": {
+    "canonical_bytes_hex": null,
+    "canonical_sha256_hex": null,
+    "merkle_leaf_hash_hex": null
+  },
+  "status": "NORMATIVE_CANDIDATE_PENDING_INDEPENDENT_CALCULATION"
+}
