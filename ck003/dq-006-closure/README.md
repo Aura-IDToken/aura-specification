@@ -33,7 +33,7 @@ RI-PY execution evidence is anchored to `Aura-IDToken/aura-poc-a-core-v3.3` comm
 
 RI-RS execution evidence is anchored to `Aura-IDToken/aura-guard-v1.3` commit `420653e232cb0ff1e365edd2e4a5eb294d2bb2a0` and its parent execution commit `4e9e2284ccdac6d2f40e038e33b4eaeec847aaa2`.
 
-GitHub records show the evidence commits are signed/verified and describe the actual execution, artifacts, equality result and production-integrity checks. citeturn552file0turn553file0
+The evidence commits are GitHub-verified and record the actual execution, artifacts, equality result and production-integrity checks.
 
 ## Scope boundary
 
