@@ -1,0 +1,32 @@
+{
+  "gate_id": "CROSS-LANGUAGE-002",
+  "decision": "DQ-002",
+  "status": "OPEN",
+  "fixture_id": "FIX-CK003-DQ002-RFC6962-2LEAF",
+  "normative_contract": {
+    "leaf": "SHA-256(0x00 || raw_leaf_bytes)",
+    "node": "SHA-256(0x01 || left_hash_bytes || right_hash_bytes)",
+    "tree": "RFC6962 recursive split; promote lone node; no duplication"
+  },
+  "expected": {
+    "leaf_a": "022a6979e6dab7aa5ae4c3e5e45f7e977112a7e63593820dbec1ec738a24f93c",
+    "leaf_b": "57eb35615d47f34ec714cacdf5fd74608a5e8e102724e80b24b287c0c27b6a31",
+    "root": "b137985ff484fb600db93107c77b0365c80d78f5b429ded0fd97361d077999eb"
+  },
+  "preflight": {
+    "ri_py_source": "FAIL_EXPECTED_LEGACY_DOMAIN",
+    "ri_rs_source": "PASS_SOURCE_INSPECTION",
+    "ri_py_execution": "FAIL_EXPECTED_LEGACY_DOMAIN",
+    "ri_rs_execution": "NOT_RUN"
+  },
+  "closure_requires": [
+    "approved DQ-002",
+    "RI-PY remediation",
+    "independent RI-PY execution",
+    "independent RI-RS execution",
+    "leaf/node/root equality",
+    "proof verification",
+    "negative controls",
+    "provenance ledger"
+  ]
+}
