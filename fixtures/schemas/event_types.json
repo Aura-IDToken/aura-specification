@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Aura-IDToken/aura-specification/blob/ck003/closure-workspace/fixtures/schemas/event_types.json",
+  "title": "Aura Protocol Event Type Registry",
+  "description": "Machine-readable contract for canonical ENT-007 event_type registry entries. Individual event tokens are not normative until explicitly registered.",
+  "type": "object",
+  "required": ["protocol_version", "registry_version", "event_types"],
+  "additionalProperties": false,
+  "properties": {
+    "protocol_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "registry_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event_types": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/eventType"
+      }
+    }
+  },
+  "$defs": {
+    "eventType": {
+      "type": "object",
+      "required": [
+        "event_type",
+        "description",
+        "producer",
+        "payload_schema",
+        "introduced_protocol_version",
+        "deprecated"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "event_type": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]*$",
+          "description": "Case-sensitive canonical ASCII event token."
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "producer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "payload_schema": {
+          "type": "string",
+          "minLength": 1
+        },
+        "introduced_protocol_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "deprecated": {
+          "type": "boolean"
+        },
+        "replacement": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]*$"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "deprecated": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": ["replacement"]
+          }
+        }
+      ]
+    }
+  }
+}
