@@ -25,7 +25,7 @@ DQ-002 already has a dedicated evidence package under `ck003/dq-002-hash-domain/
 
 `ck003/dq-006-closure/` contains the closure package for DQ-006 / CROSS-LANGUAGE-001. The package records independent RI-PY and RI-RS CANONICAL-001 execution, byte/SHA/leaf equality, negative controls, provenance and production-integrity evidence.
 
-**DQ-006 status: CLOSED.**
+**DQ-006 status: CLOSED.** The repository-level decision of record, carrying the DQ6-C01…DQ6-C13 closure matrix, is `evidence/DQ-006_CLOSURE_PACKAGE.md`.
 
 This does not by itself close DQ-002, APS-001, INV-001…INV-015, or the release gate.
 

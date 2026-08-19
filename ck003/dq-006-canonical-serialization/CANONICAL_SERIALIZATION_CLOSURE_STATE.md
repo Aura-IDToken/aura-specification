@@ -12,15 +12,15 @@ This is a proposed architecture decision, not yet a frozen normative rule.
 
 ## Closure blockers
 
-1. Chief Architect approval of the proposed profile.
-2. APS-200 §8 normative amendment.
-3. APS-300 reconciliation of evidence/hash scope.
-4. Normative fixture with canonical bytes and expected digest.
-5. RI-PY / RI-RS equality against the same fixture.
-6. Version/migration rule for pre-JCS evidence.
+1. Chief Architect approval of the proposed profile. — **OPEN**
+2. APS-200 §8 normative amendment. — **OPEN**
+3. APS-300 reconciliation of evidence/hash scope. — **OPEN**
+4. Normative fixture with canonical bytes and expected digest. — **SATISFIED** by `CANONICAL-001` (DQ-006).
+5. RI-PY / RI-RS equality against the same fixture. — **SATISFIED** by CROSS-LANGUAGE-001 (DQ-006); see `evidence/DQ-006_CLOSURE_PACKAGE.md`.
+6. Version/migration rule for pre-JCS evidence. — **OPEN**
 
 ## Gate status
 
-**CANONICAL SERIALIZATION: OPEN / PROPOSED PROFILE READY**
+**CANONICAL SERIALIZATION: OPEN / PROPOSED PROFILE READY — CROSS-LANGUAGE EVIDENCE SUPPLIED**
 
-No PASS is claimed until the normative APS documents and cross-language evidence are updated.
+The cross-language evidence blocker is discharged for `CANONICAL-001` by DQ-006 (CLOSED). The normative blockers 1, 2, 3 and 6 remain open, so no normative PASS is claimed for canonical serialization here.

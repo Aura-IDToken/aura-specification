@@ -54,8 +54,8 @@ This ADR may be marked APPROVED only after:
 - [ ] Chief Architect approval is recorded.
 - [ ] APS-200 §8 is updated to bind the profile.
 - [ ] APS-300 hash/evidence scope is reconciled with canonical bytes.
-- [ ] At least one normative cross-language fixture is frozen.
-- [ ] RI-PY and RI-RS produce identical canonical bytes and expected digests.
+- [x] At least one normative cross-language fixture is frozen. — `CANONICAL-001`, evidenced by DQ-006 / CROSS-LANGUAGE-001.
+- [x] RI-PY and RI-RS produce identical canonical bytes and expected digests. — evidenced by DQ-006 / CROSS-LANGUAGE-001; see `evidence/DQ-006_CLOSURE_PACKAGE.md`.
 - [ ] Version/migration semantics are documented.
 
 **Important:** this file is a proposal. It does not itself amend or freeze the normative APS documents.

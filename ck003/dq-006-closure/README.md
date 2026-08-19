@@ -27,6 +27,8 @@ This package records the evidence required to close DQ-006 after independent RI-
 - `CROSS-LANGUAGE-001-EVIDENCE.md` — execution/equality evidence ledger.
 - `canonical-001-evidence-manifest.json` — machine-readable evidence index.
 
+The repository-level decision of record, including the DQ6-C01…DQ6-C13 closure matrix and the evidence reference index, is [`evidence/DQ-006_CLOSURE_PACKAGE.md`](../../evidence/DQ-006_CLOSURE_PACKAGE.md).
+
 ## Source evidence
 
 RI-PY execution evidence is anchored to `Aura-IDToken/aura-poc-a-core-v3.3` commit `3e8e0e326a1cfec71e001f4901fc1ee5b7c28c4e` and its parent execution commit `49d0e4f67e90a7a47e9f067bfc42ab40ee59a56f`.

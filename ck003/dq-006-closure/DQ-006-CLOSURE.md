@@ -7,6 +7,7 @@
 - **Gate:** CROSS-LANGUAGE-001 ARTIFACT BRIDGE
 - **Decision status:** **PASS / CLOSED**
 - **Closure package:** `ck003/dq-006-closure`
+- **Decision of record:** [`evidence/DQ-006_CLOSURE_PACKAGE.md`](../../evidence/DQ-006_CLOSURE_PACKAGE.md), which carries the DQ6-C01…DQ6-C13 closure matrix and the evidence reference index
 
 ## 2. Closure statement
 
@@ -26,6 +27,8 @@ Conformance engines:
 - RI-RS: `serde_json_canonicalizer==0.3.2`
 
 These dependencies are conformance-scoped. This decision does not require either dependency to enter production runtime.
+
+**Normative dependency notice.** This is an evidence/decision closure, not an APS amendment. At the closure date `ADR-CK003-DQ006` remains `PROPOSED`, `aps/APS-200_CANONICAL_DATA_MODEL.md` §8 retains its TODO for the RI-PY / RI-RS interoperability serialization format, and `ck003/dq-006-canonical-serialization/APS-300-RECONCILIATION.md` remains `OPEN`. DQ-006 supplies the executable evidence those items were waiting on for the CANONICAL-001 boundary; it does not itself perform the amendment, the reconciliation, or the ADR approval.
 
 ### Digest domain
 
@@ -184,6 +187,8 @@ This closure does **not** by itself:
 
 - close DQ-002;
 - close APS-001;
+- amend APS-200 §8 or approve `ADR-CK003-DQ006`;
+- complete the APS-300 evidence-hash reconciliation;
 - establish full INV-001…INV-015 conformance;
 - establish full APS-500 fixture corpus conformance;
 - establish CI/release gates;
