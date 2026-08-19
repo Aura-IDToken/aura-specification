@@ -15,7 +15,7 @@ The document already defines the protocol execution lifecycle, fail-closed model
 | Item | Current evidence | Gate A status | Next evidence |
 |---|---|---|---|
 | APS-001 scope/execution lifecycle | APS-001 §1–2 | SUBSTANTIALLY DEFINED | Architecture review |
-| DQ-002 hash-domain | RI-RS model explicitly recorded | DECIDED / IMPLEMENTATION PENDING | Final ADR + fixture + conformance |
+| DQ-002 hash-domain | RI-RS model recorded; `ADR-CK003-DQ002` is PROPOSED, RI-PY non-conformant, CROSS-LANGUAGE-002 OPEN | BLOCKED — see `ck003/dq-002-hash-domain/DQ-002_CLOSURE_ASSESSMENT.md` | ADR approval + APS-200 §8/APS-300 §5 + RI-PY remediation + CROSS-LANGUAGE-002 |
 | DQ-003 version semantics | APS-001 §12 distinguishes protocol/schema version | OPEN — binding matrix required | Version fixture + conformance |
 | DQ-004 event semantics | APS-200 ENT-007 requires `event_type` but leaves semantics open | OPEN | Event registry/ADR + fixture |
 | Canonical serialization | APS-200 §8 explicitly TODO; RFC 8785 JCS profile proposed in `ADR-CK003-DQ006` and evidenced for `CANONICAL-001` by DQ-006 | OPEN / BLOCKER — normative amendment outstanding | APS-200 §8 amendment + APS-300 reconciliation + schemas |

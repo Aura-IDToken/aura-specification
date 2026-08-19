@@ -32,4 +32,7 @@ Therefore this pack establishes an **open specification gap**, not a completed p
 
 Approve an ADR establishing a single normative Merkle hash domain for all conformant implementations, with explicit byte-level rules and a cross-language conformance fixture. The proposed rule in the ADR is RFC 6962-style domain separation.
 
+The formal closure assessment, including the DQ2-A01…DQ2-A18 acceptance matrix and the
+current **BLOCKED** verdict, is `DQ-002_CLOSURE_ASSESSMENT.md` in this directory.
+
 **No merge is authorized by this pack.**
