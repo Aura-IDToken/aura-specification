@@ -1,8 +1,27 @@
 # Governance
 
-Document ID: GOV-001  
-Version: 1.0-DRAFT  
-Authority: AURA Constitution v1.0 (FROZEN)
+- **Document ID:** GOV-001
+- **Version:** 1.0-FROZEN
+- **Status:** FROZEN
+- **Authority:** AURA Constitution v1.0 (FROZEN)
+
+---
+
+## 0. Approval Record
+
+| Field | Value |
+|---|---|
+| Status | **FROZEN** |
+| Key 1 — Objective Evidence | **PASS** |
+| Key 2 — Normative Approval | **APPROVED** |
+| Decision date | 2026-08-19 |
+| Decision authority | Protocol Custodian / Chief Architect |
+
+This record captures the approved status transition of GOV-001 from PENDING APPROVAL
+to FROZEN. The substantive governance rules in §1–§11 are unchanged by this transition.
+
+Per [VERSIONING.md](VERSIONING.md), a FROZEN document is immutable and never receives a
+new version number; a revision creates a new document version.
 
 ---
 

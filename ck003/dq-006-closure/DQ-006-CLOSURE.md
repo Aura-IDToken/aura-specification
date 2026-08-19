@@ -1,5 +1,44 @@
 # DQ-006 Closure Record
 
+**Status: CLOSED**
+
+## 0. Closure approval record
+
+| Field | Value |
+|---|---|
+| Status | **CLOSED** |
+| Key 1 — Objective Evidence | **PASS** |
+| Key 2 — Custodian Approval | **APPROVED** |
+| Decision | **APPROVE** |
+| Decision date | 2026-08-19 |
+| Decision authority | Protocol Custodian / Chief Architect |
+
+### 0.1 Key 1 — Objective evidence vector
+
+Evidence vector: **CROSS-LANGUAGE-001**
+
+| Item | Value / Result |
+|---|---|
+| RI-PY conformance engine | `rfc8785==0.1.4` |
+| RI-RS conformance engine | `serde_json_canonicalizer==0.3.2` |
+| Canonical bytes equality | **PASS** |
+| SHA-256 equality | **PASS** |
+| RFC-6962 leaf equality | **PASS** |
+| Negative controls | **PASS** |
+
+The detailed evidence provenance, per-check verdicts and negative-control significance are
+recorded in §4, §5 and §6 below and are unchanged by this approval.
+
+### 0.2 Production scope clause
+
+**Conformance JCS implementation does NOT authorize production runtime integration.**
+
+This closure changes no production hashing, no production Merkle implementation, no protocol
+runtime, no event semantics, no serialization runtime, no RI-PY production core and no RI-RS
+production core. See §7 (Production boundary) and §10 (Non-consequences), which remain in force.
+
+---
+
 ## 1. Decision identity
 
 - **Decision:** DQ-006 — JCS / canonical serialization cross-language conformance
