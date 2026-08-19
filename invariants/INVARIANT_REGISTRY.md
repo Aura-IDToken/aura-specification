@@ -4,7 +4,7 @@ Document ID: INV-REG-001
 Version: 1.0-DRAFT  
 Status: DRAFT  
 Authority: APS-100  
-Last Review: 2026-07-23
+Last Review: 2026-08-19
 
 ---
 
@@ -203,6 +203,7 @@ This registry is the canonical, machine-readable source for all Protocol Invaria
 | Class | Major |
 | Related APS | APS-000 §9, APS-200 §9 |
 | Conformance Test | CONF-008 |
+| Closure Status | **MAPPED — CONF-008** |
 
 **Requirement (MUST)**: Evidence, Protocol, and Data Model version references MUST be mutually consistent.
 
@@ -213,6 +214,8 @@ This registry is the canonical, machine-readable source for all Protocol Invaria
 **Required Evidence**: EVID-CORE
 
 **Failure Classification**: Major
+
+**Closure note**: The invariant is explicitly assigned to CONF-008 Version Compatibility. DQ-006 closure does not reopen DQ-003. Full INV-009 conformance remains subject to execution of CONF-008 against the finalized version compatibility matrix and applicable fixture corpus.
 
 ---
 
