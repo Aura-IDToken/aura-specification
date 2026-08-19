@@ -1,0 +1,31 @@
+{
+  "fixture_id": "CANONICAL-001",
+  "profile": "RFC8785-JCS",
+  "protocol_object": {
+    "event_type": "AUDIT_RECORD",
+    "protocol_version": "1.0",
+    "schema_version": "1.0",
+    "payload": {
+      "value": 42
+    }
+  },
+  "canonicalization": {
+    "algorithm": "RFC8785-JCS",
+    "encoding": "UTF-8",
+    "canonical_bytes_length": 100,
+    "canonical_bytes_hex": "7b226576656e745f74797065223a2241554449545f5245434f5244222c227061796c6f6164223a7b2276616c7565223a34327d2c2270726f746f636f6c5f76657273696f6e223a22312e30222c22736368656d615f76657273696f6e223a22312e30227d"
+  },
+  "hash_domain": {
+    "canonical_sha256_hex": "b6c3660ce6dee498b37443a92bf87c5efead6fe863fcf19197c0baeda139a4e6",
+    "leaf_algorithm": "SHA-256(0x00 || canonical_bytes)",
+    "merkle_leaf_hash_hex": "ce6b36733d97699230f37d80a14e14104c19d2e787526a6fc3aaae6b6648c039",
+    "node_algorithm": "SHA-256(0x01 || left_digest_bytes || right_digest_bytes)",
+    "tree_semantics": "RFC6962"
+  },
+  "oracle_status": "INDEPENDENTLY_CALCULATED",
+  "implementation_status": {
+    "RI-PY": "PENDING_EXECUTION",
+    "RI-RS": "PENDING_EXECUTION",
+    "cross_language_equality": "PENDING_EXECUTION"
+  }
+}
