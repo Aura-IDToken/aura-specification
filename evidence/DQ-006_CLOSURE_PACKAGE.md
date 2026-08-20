@@ -3,7 +3,8 @@
 Document ID: DQ-006-CLOSURE-001  
 Status: **CLOSED — PASS**  
 Authority: DQ-006 / APS-200 / APS-300 / APS-400  
-Closure date: 2026-08-19
+Original closure date: 2026-08-19  
+Reconciliation revision: 2026-08-20
 
 ---
 
@@ -15,6 +16,21 @@ The closure is based on independently executed RI-PY and RI-RS CANONICAL-001 art
 
 This closure does **not** modify production hashing, Merkle behavior, event-type semantics, or runtime canonicalization.
 
+### 1.1 Downstream governance constraint
+
+The DQ-006 closure is an evidence closure for canonical serialization and cross-language equality. It is **not** sufficient by itself to close DQ-002.
+
+A subsequent DQ-002 audit executed the relevant oracles and reported **DQ-002 = BLOCKED** because the Merkle/hash-domain contract is not yet normatively complete. In particular, the audit identifies unresolved normative issues concerning the approved Merkle profile, tree shape/odd-node promotion, leaf-versus-raw-byte coverage, and missing normative conformance coverage.
+
+Therefore:
+
+```text
+DQ-006 = CLOSED / PASS
+DQ-002 = BLOCKED
+```
+
+No document in this package shall be interpreted as overriding the later DQ-002 audit or as authorizing DQ-002 closure solely on the basis of DQ-006.
+
 ---
 
 ## 2. Frozen Canonical Contract
@@ -24,12 +40,14 @@ This closure does **not** modify production hashing, Merkle behavior, event-type
 | Canonicalization | RFC 8785 JCS |
 | RI-PY conformance engine | `rfc8785==0.1.4` |
 | RI-RS conformance engine | `serde_json_canonicalizer==0.3.2` |
-| Digest | `SHA-256(canonical_bytes)` |
-| RFC-6962 leaf domain | `0x00` |
-| Leaf | `SHA-256(0x00 || canonical_bytes)` |
+| Digest used by CANONICAL-001 evidence | `SHA-256(canonical_bytes)` |
+| RFC-6962 leaf domain used by CANONICAL-001 evidence | `0x00` |
+| Leaf used by CANONICAL-001 evidence | `SHA-256(0x00 || canonical_bytes)` |
 | Production runtime changes | None |
 
 The JCS engines are conformance-only. They are not asserted here as production runtime dependencies.
+
+**Scope note:** The values above describe the executed CANONICAL-001 conformance boundary. They do not by themselves constitute final closure of the broader Merkle/hash-domain specification represented by DQ-002.
 
 ---
 
@@ -60,7 +78,7 @@ SHA-256:
 b6c3660ce6dee498b37443a92bf87c5efead6fe863fcf19197c0baeda139a4e6
 ```
 
-RFC-6962 leaf:
+CANONICAL-001 RFC-6962 leaf:
 
 ```text
 ce6b36733d97699230f37d80a14e14104c19d2e787526a6fc3aaae6b6648c039
@@ -182,21 +200,24 @@ The equality gate is therefore evidence-producing rather than a comparison of tw
 
 This closure does not imply that the entire Aura specification is closed.
 
-Remaining work includes, at minimum:
+Current downstream constraints include:
 
-- DQ-002 final closure;
-- INV-001…INV-015 complete closure;
-- completion of missing conformance tests;
-- canonical fixture corpus completion;
+- **DQ-002: BLOCKED** pending normative Merkle/hash-domain reconciliation;
+- DQ-003 versioning closure;
+- DQ-004 event-type semantic closure;
+- INV-001…INV-015 as a complete set;
+- full canonical fixture corpus;
 - conformance runner and CI gates;
 - release traceability and final specification freeze.
+
+The DQ-002 blocked state is a governance/specification completeness issue, not evidence that the CANONICAL-001 cross-language equality failed.
 
 ---
 
 ## 11. Final Verdict
 
-**DQ-006: CLOSED — PASS**
-
-**CROSS-LANGUAGE-001: PASS**
+**DQ-006: CLOSED — PASS**  
+**CROSS-LANGUAGE-001: PASS**  
+**DQ-002: BLOCKED — downstream and independently governed**
 
 No production runtime change was required for this closure.
