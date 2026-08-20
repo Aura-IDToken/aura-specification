@@ -1,5 +1,11 @@
 # Canonical Serialization Closure State
 
+> **SUPERSEDED — 2026-08-20.** The blockers listed below have been resolved or reclassified.
+> Current state: APS-200 §8 and APS-300 §5 are bound; CANONICAL-001 is executed on both
+> reference implementations. Remaining residuals are tracked in
+> [`closures/DQ-006_CLOSURE_PACKAGE.md`](../../closures/DQ-006_CLOSURE_PACKAGE.md) §13.
+> This file is retained as history and MUST NOT be cited as current gate status.
+
 ## Current source finding
 
 `APS-200 §8` currently requires deterministic serialization but explicitly leaves the canonical serialization format for RI-PY / RI-RS interoperability as TODO. Therefore the normative specification is not yet closed.

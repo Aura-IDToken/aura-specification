@@ -5,6 +5,12 @@
 **Branch:** `ck003/cross-language-002`  
 **Status:** OPEN — execution gate not yet PASS
 
+> **Reconciled 2026-08-20.** The dependency line above records `DQ-006 CLOSED`. The DQ-006
+> status of record is now **OPEN** — see
+> [`closures/DQ-006_CLOSURE_PACKAGE.md`](../../closures/DQ-006_CLOSURE_PACKAGE.md).
+> What CROSS-LANGUAGE-002 actually depends on is unaffected: CROSS-LANGUAGE-001 byte,
+> SHA-256 and RFC 6962 leaf equality on CANONICAL-001 remains PASS.
+
 ## 1. Objective
 
 Establish byte-level cross-language conformance for the DQ-002 RFC 6962 Merkle contract beyond the DQ-006 canonicalization/leaf boundary.

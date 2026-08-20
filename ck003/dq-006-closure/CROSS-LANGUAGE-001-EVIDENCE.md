@@ -1,5 +1,12 @@
 # CROSS-LANGUAGE-001 Evidence Ledger
 
+> **Subordinate record — reconciled 2026-08-20.** The execution evidence below is correct and
+> was re-verified by recomputation. Its closing verdict line `DQ-006 = CLOSED` is superseded:
+> `CROSS-LANGUAGE-001 = PASS` still stands for byte, SHA-256 and RFC 6962 leaf equality on
+> CANONICAL-001, but the DQ-006 status of record is **OPEN** per
+> [`closures/DQ-006_CLOSURE_PACKAGE.md`](../../closures/DQ-006_CLOSURE_PACKAGE.md).
+> CANONICAL-001 is JCS-degenerate; see that record §10 (D-1).
+
 ## Fixture
 
 `CANONICAL-001`

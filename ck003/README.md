@@ -23,9 +23,13 @@ DQ-002 already has a dedicated evidence package under `ck003/dq-002-hash-domain/
 
 ## DQ-006 closure
 
-`ck003/dq-006-closure/` contains the closure package for DQ-006 / CROSS-LANGUAGE-001. The package records independent RI-PY and RI-RS CANONICAL-001 execution, byte/SHA/leaf equality, negative controls, provenance and production-integrity evidence.
+The single authoritative DQ-006 record is [`closures/DQ-006_CLOSURE_PACKAGE.md`](../closures/DQ-006_CLOSURE_PACKAGE.md). Everything under `ck003/dq-006-closure/` and `ck003/dq-006-canonical-serialization/` is superseded working history and MUST NOT be cited as current status.
 
-**DQ-006 status: CLOSED.**
+The normative canonical serialization rule lives in **APS-200 §8** (single authority), with the evidence-hash byte domain in **APS-300 §5**, the decision in **ADR-CK003-DQ006**, and the conformance requirement in **CONF-003**.
+
+**DQ-006 status: OPEN** — specification closure complete; conformance evidence partial.
+
+Cross-language byte, SHA-256 and RFC 6962 leaf equality on CANONICAL-001 is executed and PASS. Closure is withheld because CANONICAL-001 is JCS-degenerate (it cannot distinguish RFC 8785 from sorted JSON), the evidence is unmerged in both reference repositories, and the verdict is unratified. Residuals R1–R4 are listed in the closure package §13.
 
 This does not by itself close DQ-002, APS-001, INV-001…INV-015, or the release gate.
 

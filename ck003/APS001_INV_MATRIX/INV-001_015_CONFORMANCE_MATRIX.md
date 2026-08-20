@@ -15,7 +15,7 @@ No invariant is considered conformant merely because a CONF identifier exists. C
 |---|---|---|---|---|---|---|---|
 | INV-001 | Identical inputs MUST produce identical outputs. | CONF-001 | Deterministic evaluation fixture | EVID-CORE | Required | Required | OPEN — verify |
 | INV-002 | Replay MUST reproduce an identical result across conformant implementations. | CONF-002 | Replay/Evidence Pack fixture | EVID-CORE, EVID-CHAIN | Required | Required | OPEN — verify |
-| INV-003 | Every protocol object MUST have unambiguous canonical serialization. | CONF-003 | Canonical-bytes corpus | EVID-CORE | Required | Required | BLOCKED — APS-200 serialization still open |
+| INV-003 | Every protocol object MUST have unambiguous canonical serialization. | CONF-003 | Canonical-bytes corpus | EVID-CORE | CANONICAL-001 PASS | CANONICAL-001 PASS | PARTIAL — APS-200 §8 bound; corpus not yet JCS-discriminating (DQ-006 R1) |
 | INV-004 | Evidence MUST NOT be modified after generation. | CONF-004 | Mutation/tamper fixture | EVID-CORE | Required | Required | OPEN — verify |
 | INV-005 | Every Evidence artifact MUST reference the APS requirement it documents. | CONF-005 | Traceability fixture | EVID-CORE | Required | Required | OPEN — verify |
 | INV-006 | Results MUST be independent of hardware/OS platform. | CONF-006 | Cross-platform deterministic fixture | EVID-CORE | Required | Required | OPEN — requires multi-platform evidence |
@@ -23,7 +23,7 @@ No invariant is considered conformant merely because a CONF identifier exists. C
 | INV-008 | Errors MUST terminate safely; no partial conformant output. | CONF-007 | Fail-closed negative fixtures | EVID-CORE | Required | Required | OPEN — verify |
 | INV-009 | Evidence, Protocol and Data Model versions MUST be compatible. | CONF-008 | Version compatibility corpus | EVID-CORE | Required | Required | OPEN — DQ-003 binding required |
 | INV-010 | Every invariant MUST have a corresponding Conformance Test. | CONF-009 | Registry/CONF completeness fixture | EVID-CONF | Required | Required | OPEN — currently circular until all missing CONF tests exist |
-| INV-011 | Evidence integrity MUST be independently cryptographically verifiable. | CONF-010 | Hash-domain/integrity fixtures | EVID-CORE | Required | Required | OPEN — DQ-002 + canonical bytes required |
+| INV-011 | Evidence integrity MUST be independently cryptographically verifiable. | CONF-010 | Hash-domain/integrity fixtures | EVID-CORE | Required | Required | OPEN — byte domain now bound (APS-200 §8.5, APS-300 §5.1); Evidence-object execution evidence still required |
 | INV-012 | Every protocol execution MUST leave an APS-conformant audit trail. | TODO in registry | ENT-007 audit fixture | EVID-AUDIT | Required | Required | OPEN — CONF missing; DQ-004 relevant |
 | INV-013 | Same policy version + identical inputs MUST yield identical decision. | TODO in registry | Policy determinism fixture | EVID-CORE | Required | Required | OPEN — CONF missing |
 | INV-014 | Implementation MUST pass all applicable APS-500 fixtures. | TODO in registry | Full APS-500 corpus | EVID-CORE, EVID-CONF | Required | Required | OPEN — CONF missing |
