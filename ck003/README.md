@@ -27,9 +27,13 @@ The single authoritative DQ-006 record is [`closures/DQ-006_CLOSURE_PACKAGE.md`]
 
 The normative canonical serialization rule lives in **APS-200 §8** (single authority), with the evidence-hash byte domain in **APS-300 §5**, the decision in **ADR-CK003-DQ006**, and the conformance requirement in **CONF-003**.
 
-**DQ-006 status: OPEN** — specification closure complete; conformance evidence partial.
+**DQ-006 status: CLOSED** (2026-08-20).
 
-Cross-language byte, SHA-256 and RFC 6962 leaf equality on CANONICAL-001 is executed and PASS. Closure is withheld because CANONICAL-001 is JCS-degenerate (it cannot distinguish RFC 8785 from sorted JSON), the evidence is unmerged in both reference repositories, and the verdict is unratified. Residuals R1–R4 are listed in the closure package §13.
+Cross-language byte, SHA-256 and RFC 6962 leaf equality is executed and PASS on **two** fixtures: CANONICAL-001 and the JCS-discriminating CANONICAL-002. CANONICAL-001 alone is JCS-degenerate — a sorted-JSON serializer reproduces its canonical bytes — so it evidences agreement; CANONICAL-002 separates RFC 8785 from that serializer and is what evidences conformance.
+
+Consolidated evidence: [`dq-006-closure/DQ-006_EVIDENCE.md`](dq-006-closure/DQ-006_EVIDENCE.md). Traceability: [`dq-006-closure/DQ-006_TRACEABILITY.md`](dq-006-closure/DQ-006_TRACEABILITY.md). Carried items C-1…C-3 are listed in the closure package §13; all are repository hygiene, none qualifies the decision.
+
+Both JCS engines remain conformance-scoped. This closure does not state that production Core or Guard uses JCS.
 
 This does not by itself close DQ-002, APS-001, INV-001…INV-015, or the release gate.
 

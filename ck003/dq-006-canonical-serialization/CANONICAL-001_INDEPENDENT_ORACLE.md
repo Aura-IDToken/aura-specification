@@ -43,17 +43,21 @@ RI-RS canonicalization:   EXECUTED  (serde_json_canonicalizer 0.3.2 @ 4e9e2284)
 canonical_bytes equality: PASS
 SHA-256 equality:         PASS
 leaf equality:            PASS
-DQ-006:                   OPEN      (see closure package §12–§13)
+DQ-006:                   CLOSED    (see closure package §12, §15)
 ```
 
 All three oracle values above were independently reproduced by both reference implementations
 and re-verified by recomputation on 2026-08-20. The oracle values themselves are unchanged.
 
-**Limitation.** This vector is JCS-degenerate: ordinary sorted JSON produces the same bytes,
-the same SHA-256 and the same leaf. Agreement between the two implementations on this vector
-therefore does not by itself demonstrate RFC 8785 conformance. See
-[`closures/DQ-006_CLOSURE_PACKAGE.md`](../../closures/DQ-006_CLOSURE_PACKAGE.md) §10 (D-1)
-and residual R1.
+**Limitation, and how it was resolved.** This vector is JCS-degenerate: ordinary sorted JSON
+produces the same bytes, the same SHA-256 and the same leaf. Agreement between the two
+implementations on this vector therefore does not by itself demonstrate RFC 8785 conformance.
+That gap was closed on 2026-08-20 by the discriminating fixture **CANONICAL-002**, executed on
+both frozen engines. See
+[`closures/DQ-006_CLOSURE_PACKAGE.md`](../../closures/DQ-006_CLOSURE_PACKAGE.md) §10 (D-1) and
+[`ck003/dq-006-closure/DQ-006_EVIDENCE.md`](../dq-006-closure/DQ-006_EVIDENCE.md) §1.2.
+
+This record's own oracle values are unchanged and remain correct for CANONICAL-001.
 
 This record declares oracle correctness and execution agreement. It does not declare either
 implementation conformant to RFC 8785.

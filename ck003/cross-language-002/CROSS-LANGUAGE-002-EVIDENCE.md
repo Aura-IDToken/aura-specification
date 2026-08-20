@@ -5,11 +5,17 @@
 **Branch:** `ck003/cross-language-002`  
 **Status:** OPEN — execution gate not yet PASS
 
-> **Reconciled 2026-08-20.** The dependency line above records `DQ-006 CLOSED`. The DQ-006
-> status of record is now **OPEN** — see
+> **Reconciled 2026-08-20.** The dependency line above records `DQ-006 CLOSED`, and that is
+> now the status of record — see
 > [`closures/DQ-006_CLOSURE_PACKAGE.md`](../../closures/DQ-006_CLOSURE_PACKAGE.md).
-> What CROSS-LANGUAGE-002 actually depends on is unaffected: CROSS-LANGUAGE-001 byte,
-> SHA-256 and RFC 6962 leaf equality on CANONICAL-001 remains PASS.
+> This gate's own status is unchanged and remains **OPEN**.
+>
+> **Identifier collision.** The reference-implementation repositories also use the name
+> `CROSS-LANGUAGE-002` for the CANONICAL-002 canonicalization equality gate, which is a
+> different gate over a different contract and which is PASS. To prevent that from being
+> read as a pass for *this* Merkle gate, the specification refers to the canonicalization
+> gate as `CROSS-LANGUAGE-CANONICAL-002`. Renaming the RI-side identifier is carried as
+> item C-3 in the DQ-006 closure package §13.
 
 ## 1. Objective
 

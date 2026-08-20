@@ -4,7 +4,10 @@
 > The single authoritative DQ-006 closure record is [`../closures/DQ-006_CLOSURE_PACKAGE.md`](../closures/DQ-006_CLOSURE_PACKAGE.md),
 > which reconciles this material against APS-200 §8, APS-300 §5, ADR-CK003-DQ006 and CONF-003.
 > Where this document differs from that record — including its status line — that record governs.
-> **DQ-006 status of record: OPEN.**
+> **DQ-006 status of record: CLOSED** (2026-08-20, DQ-006 CLOSURE INTEGRATION).
+> The closure now rests on two fixtures: CANONICAL-001 and the JCS-discriminating
+> CANONICAL-002. Consolidated evidence:
+> [`ck003/dq-006-closure/DQ-006_EVIDENCE.md`](../ck003/dq-006-closure/DQ-006_EVIDENCE.md).
 
 Document ID: DQ-006-CLOSURE-001  
 Status: **CLOSED — PASS**  

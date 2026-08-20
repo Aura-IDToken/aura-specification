@@ -5,6 +5,8 @@
 **Branch:** `ck003/closure-workspace`  
 **Purpose:** Establish the complete verification chain before fixture and implementation work.
 
+**DQ-006 authority:** [`closures/DQ-006_CLOSURE_PACKAGE.md`](../../closures/DQ-006_CLOSURE_PACKAGE.md)
+
 ## Rule
 
 No invariant is considered conformant merely because a CONF identifier exists. Closure requires an executable verification path and evidence. The repository currently marks several invariants as TODO; those remain OPEN until the required tests and evidence exist.
@@ -15,7 +17,7 @@ No invariant is considered conformant merely because a CONF identifier exists. C
 |---|---|---|---|---|---|---|---|
 | INV-001 | Identical inputs MUST produce identical outputs. | CONF-001 | Deterministic evaluation fixture | EVID-CORE | Required | Required | OPEN — verify |
 | INV-002 | Replay MUST reproduce an identical result across conformant implementations. | CONF-002 | Replay/Evidence Pack fixture | EVID-CORE, EVID-CHAIN | Required | Required | OPEN — verify |
-| INV-003 | Every protocol object MUST have unambiguous canonical serialization. | CONF-003 | Canonical-bytes corpus | EVID-CORE | CANONICAL-001 PASS | CANONICAL-001 PASS | PARTIAL — APS-200 §8 bound; corpus not yet JCS-discriminating (DQ-006 R1) |
+| INV-003 | Every protocol object MUST have unambiguous canonical serialization. | CONF-003 | Canonical-bytes corpus | EVID-CORE | CANONICAL-001 + 002 PASS | CANONICAL-001 + 002 PASS | PASS for the canonicalization boundary — APS-200 §8 bound, corpus JCS-discriminating, DQ-006 CLOSED. Full APS-500 corpus coverage remains OPEN. |
 | INV-004 | Evidence MUST NOT be modified after generation. | CONF-004 | Mutation/tamper fixture | EVID-CORE | Required | Required | OPEN — verify |
 | INV-005 | Every Evidence artifact MUST reference the APS requirement it documents. | CONF-005 | Traceability fixture | EVID-CORE | Required | Required | OPEN — verify |
 | INV-006 | Results MUST be independent of hardware/OS platform. | CONF-006 | Cross-platform deterministic fixture | EVID-CORE | Required | Required | OPEN — requires multi-platform evidence |

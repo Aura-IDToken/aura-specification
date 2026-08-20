@@ -1,0 +1,114 @@
+{
+  "fixture_id": "CANONICAL-002",
+  "profile": "RFC8785-JCS",
+  "purpose": "JCS-discriminating cross-language fixture (DQ-006-R1). CANONICAL-001 is JCS-degenerate; CANONICAL-002 exercises UTF-16 code-unit member ordering, raw UTF-8 output, ECMAScript number form, negative-zero normalisation, exponent form, recursive canonicalisation, array-order preservation and minimal escaping.",
+  "normative_authority": "APS-200 §8",
+  "conformance_requirement": "CONF-003",
+  "input": {
+    "path": "conformance/corpus/canonical-002/input.json",
+    "sha256": "aee31642d0186c17daabdc910da64183567a3aa655348cc41195e4f2f7956588",
+    "bytes": 992,
+    "note": "Member order deliberately non-canonical. Pure ASCII; non-ASCII written as \\u escapes and resolved by the parser before canonicalization.",
+    "value": {
+      "array_order": [
+        3,
+        1,
+        2,
+        {
+          "x": 2,
+          "y": 1
+        },
+        "c",
+        "a",
+        "b"
+      ],
+      "event_type": "AUDIT_RECORD",
+      "nested": {
+        "alpha": {
+          "m": null,
+          "￿": true,
+          "𐀀": false
+        },
+        "zebra": {
+          "inner_a": [
+            9,
+            8,
+            7
+          ],
+          "inner_z": 1
+        }
+      },
+      "numbers": {
+        "exponent_boundary": 1e-06,
+        "large_exponent": 1e+21,
+        "negative_fraction": -1.5,
+        "negative_zero": -0.0,
+        "one_point_zero": 1.0,
+        "plain_integer": 42,
+        "small_exponent": 1e-07
+      },
+      "protocol_version": "1.0",
+      "schema_version": "1.0",
+      "strings": {
+        "escapes": "quote\" backslash\\ newline\n tab\t ctrl\u0001 solidus/ end",
+        "unicode": "eacute é euro € emoji 😀 bmp ﬀ"
+      },
+      "z": "key_ascii_z",
+      "é": "key_u_00e9",
+      "€": "key_u_20ac",
+      "ﬀ": "key_u_fb00",
+      "￿": "key_u_ffff",
+      "𐀀": "key_u_10000",
+      "😀": "key_u_1f600"
+    }
+  },
+  "canonicalization": {
+    "algorithm": "RFC8785-JCS",
+    "encoding": "UTF-8",
+    "canonical_bytes_length": 655,
+    "canonical_bytes_hex": "7b2261727261795f6f72646572223a5b332c312c322c7b2278223a322c2279223a317d2c2263222c2261222c2262225d2c226576656e745f74797065223a2241554449545f5245434f5244222c226e6573746564223a7b22616c706861223a7b226d223a6e756c6c2c22f0908080223a66616c73652c22efbfbf223a747275657d2c227a65627261223a7b22696e6e65725f61223a5b392c382c375d2c22696e6e65725f7a223a317d7d2c226e756d62657273223a7b226578706f6e656e745f626f756e64617279223a302e3030303030312c226c617267655f6578706f6e656e74223a31652b32312c226e656761746976655f6672616374696f6e223a2d312e352c226e656761746976655f7a65726f223a302c226f6e655f706f696e745f7a65726f223a312c22706c61696e5f696e7465676572223a34322c22736d616c6c5f6578706f6e656e74223a31652d377d2c2270726f746f636f6c5f76657273696f6e223a22312e30222c22736368656d615f76657273696f6e223a22312e30222c22737472696e6773223a7b2265736361706573223a2271756f74655c22206261636b736c6173685c5c206e65776c696e655c6e207461625c74206374726c5c753030303120736f6c696475732f20656e64222c22756e69636f6465223a2265616375746520c3a9206575726f20e282ac20656d6f6a6920f09f988020626d7020efac80227d2c227a223a226b65795f61736369695f7a222c22c3a9223a226b65795f755f30306539222c22e282ac223a226b65795f755f32306163222c22f0908080223a226b65795f755f3130303030222c22f09f9880223a226b65795f755f3166363030222c22efac80223a226b65795f755f66623030222c22efbfbf223a226b65795f755f66666666227d"
+  },
+  "hash_domain": {
+    "canonical_sha256_hex": "cdceb08100d88c81adc5a7e4f0462328071711808bc990458c0fa6b2c87d0952",
+    "leaf_algorithm": "SHA-256(0x00 || canonical_bytes)",
+    "merkle_leaf_hash_hex": "20fd6065aa4a21233119ad361835e43e64932e7805568947b4715a07c95b9368",
+    "node_algorithm": "SHA-256(0x01 || left_digest_bytes || right_digest_bytes)",
+    "tree_semantics": "RFC6962"
+  },
+  "oracle_status": "ESTABLISHED_BY_INDEPENDENT_CROSS_LANGUAGE_EXECUTION",
+  "implementation_status": {
+    "RI-PY": "EXECUTED_PASS",
+    "RI-RS": "EXECUTED_PASS",
+    "cross_language_equality": "PASS"
+  },
+  "profile_discrimination": {
+    "jcs_discriminating": true,
+    "naive_sorted_json_len": 716,
+    "canonical_bytes_len": 655,
+    "note": "Sorted-JSON serialization of the same input differs from the canonical bytes. Negative control N4 substitutes sorted-JSON output for one implementation and is rejected by the gate; the identical substitution on CANONICAL-001 passes undetected."
+  },
+  "execution_evidence": {
+    "gate": "CROSS-LANGUAGE-CANONICAL-002",
+    "ri_rs_gate_identifier_note": "The RI repositories name this gate CROSS-LANGUAGE-002, which is already assigned in this specification to the DQ-002 Merkle gate. Carried as item C-3 in closures/DQ-006_CLOSURE_PACKAGE.md §13.",
+    "ri_py": {
+      "repository": "Aura-IDToken/aura-poc-a-core-v3.3",
+      "execution_commit": "7bcc600f649a35f76cee5752ce597ac2b71b6d62",
+      "evidence_commit": "ea39a53a60336b1715abd41166348eea2ad6f52e",
+      "engine": "rfc8785==0.1.4",
+      "artifact_path": "conformance/corpus/canonical-002/ri-py.json",
+      "artifact_sha256": "7c82d626cdd01c15ec727be5103f10e05284fa9e490ed10246c317067c2a91ec",
+      "reachable_from_default_branch": false
+    },
+    "ri_rs": {
+      "repository": "Aura-IDToken/aura-guard-v1.3",
+      "execution_commit": "bd4a2fa6b4d11dcfb270b4a4f98b2f359ab32609",
+      "evidence_commit": "5685b2a74ca2fabcdbcf36c89733c42ba0141f7e",
+      "engine": "serde_json_canonicalizer==0.3.2",
+      "artifact_path": "conformance/corpus/canonical-002/ri-rs.json",
+      "artifact_sha256": "96c7dad9bfa02f6e03b7712d4ae7882bd5e5ac0b83f73491cfec38cc57115322",
+      "reachable_from_default_branch": false
+    },
+    "negative_controls": "PASS (A modified bytes, B modified SHA, C wrong leaf domain, D incorrect serializer)",
+    "closure_record": "closures/DQ-006_CLOSURE_PACKAGE.md"
+  }
+}

@@ -55,6 +55,7 @@
   },
   "profile_discrimination": {
     "jcs_discriminating": false,
-    "note": "JCS-degenerate vector: sorted-JSON serialization (sort_keys, no whitespace, no ASCII escaping) yields byte-identical output, and therefore the identical SHA-256 and leaf. This fixture verifies cross-implementation agreement, not conformance to RFC 8785. A discriminating vector is required — see closures/DQ-006_CLOSURE_PACKAGE.md residual R1."
-  }
+    "note": "JCS-degenerate vector: sorted-JSON serialization (sort_keys, no whitespace, no ASCII escaping) yields byte-identical output, and therefore the identical SHA-256 and leaf. This fixture verifies cross-implementation agreement, not conformance to RFC 8785. The discriminating vector required alongside it is CANONICAL-002 (fixtures/corpus/CANONICAL-002_jcs_evidence.json), executed and PASS on 2026-08-20; DQ-006 residual R1 is closed."
+  },
+  "companion_fixture": "CANONICAL-002"
 }

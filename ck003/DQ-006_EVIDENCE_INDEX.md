@@ -2,8 +2,10 @@
 
 > **Subordinate record — reconciled 2026-08-20.** The artifact paths and digests below are
 > correct and were re-verified by recomputation. The **Status** block at the end of this file
-> is superseded: the DQ-006 status of record is **OPEN**, per
+> is superseded: the DQ-006 status of record is **CLOSED**, per
 > [`closures/DQ-006_CLOSURE_PACKAGE.md`](../closures/DQ-006_CLOSURE_PACKAGE.md).
+> This index covers CANONICAL-001 only; CANONICAL-002 evidence is in
+> [`ck003/dq-006-closure/DQ-006_EVIDENCE.md`](dq-006-closure/DQ-006_EVIDENCE.md).
 
 This index binds the specification closure record to the independently executed RI-PY / RI-RS evidence.
 

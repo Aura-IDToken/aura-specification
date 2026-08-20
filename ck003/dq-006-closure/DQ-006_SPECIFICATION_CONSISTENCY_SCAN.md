@@ -1,7 +1,7 @@
 # DQ-006 — Specification Consistency Scan
 
 **Classification:** TRACEABILITY — non-normative
-**Scan date:** 2026-08-20
+**Scan date:** 2026-08-20 (reconciliation) · re-scanned 2026-08-20 (closure integration)
 **Scope:** `Aura-IDToken/aura-specification`, all `*.md`, `*.json`, `*.yaml`
 **Closure record:** [`closures/DQ-006_CLOSURE_PACKAGE.md`](../../closures/DQ-006_CLOSURE_PACKAGE.md)
 
@@ -101,11 +101,55 @@ There is now exactly one normative authority per question, and the architecture 
 
 One authority conflict remains **outside** it: CFL-001, between the specification corpus and the implementation corpus, with no cross-corpus precedence rule in either. That is a governance act reserved to the Protocol Custodian and is not resolved here.
 
+## Closure-integration round — 2026-08-20
+
+The reconciliation round above left DQ-006 OPEN on residual R1 (no
+JCS-discriminating cross-language vector). R1 was closed by execution
+(CANONICAL-002), and the closure integration flipped the status of record to
+CLOSED. Rows re-checked and reconciled in that round:
+
+| # | Location | Change | Status |
+|---|---|---|---|
+| 45 | `closures/DQ-006_CLOSURE_PACKAGE.md` | Status OPEN → **CLOSED**; §4.1, §7.1, §8.1 add CANONICAL-002; D-1 marked RESOLVED; D-2/D-3 recast as carried items C-1/C-2; residuals R1–R4 replaced by carried items C-1–C-3 | **A** |
+| 46 | `ck003/dq-006-closure/DQ-006_EVIDENCE.md` | **New.** Consolidated evidence for both fixtures | **A** |
+| 47 | `ck003/dq-006-closure/DQ-006_TRACEABILITY.md` | **New.** Traceability graph, link table, adjacent-decision status | **A** |
+| 48 | `fixtures/corpus/CANONICAL-002_jcs_evidence.json` | **New.** Discriminating fixture record; `jcs_discriminating: true` | **A** |
+| 49 | `fixtures/corpus/CANONICAL-001_jcs_evidence.json` | Discrimination note now points to CANONICAL-002 instead of open residual R1. **No digest changed.** | **A** |
+| 50 | `conformance/CONF-003_CANONICAL_SERIALIZATION.md` | §8 status PARTIAL → **PASS** on the two-fixture corpus; §4.3 satisfied; §4.5 carried as coverage | **A** |
+| 51 | `ck003/dq-006-canonical-serialization/ADR-CK003-DQ006-*.md` | Status line ratified; §8 limitation marked closed; §9 gate table reconciled | **A** |
+| 52 | Four superseded closure records + evidence index | Banners flipped from OPEN to CLOSED, with a pointer to the two-fixture evidence | **A** |
+| 53 | `ck003/dq-006-closure/CROSS-LANGUAGE-001-EVIDENCE.md` | Banner reconciled: gate PASS, DQ-006 CLOSED, but *not on this fixture alone* — degeneracy retained and explained | **A** |
+| 54 | `ck003/cross-language-002/CROSS-LANGUAGE-002-EVIDENCE.md` (Merkle) | DQ-006 dependency reconciled; **identifier collision recorded**; own status left OPEN | **A** |
+| 55 | `ck003/dq-006-canonical-serialization/CANONICAL-001_INDEPENDENT_ORACLE.md` | Verdict OPEN → CLOSED; limitation marked resolved by CANONICAL-002; oracle values unchanged | **A** |
+| 56 | `ck003/README.md`, `ck003/gates/GATE_A_*.md`, `ck003/APS001_INV_MATRIX/*`, `compliance/TRACEABILITY_MATRIX.md` | Status rows reconciled to CLOSED / PASS for the canonicalization boundary | **A** |
+| 57 | RI-side identifier `CROSS-LANGUAGE-002` | **Collision with the DQ-002 Merkle gate.** Classified MAJOR, resolved inside this specification by adopting `CROSS-LANGUAGE-CANONICAL-002`; RI-side rename carried as C-3 | **F** (RI-side) / **A** (spec-side) |
+
+### Contradiction audit result
+
+Re-scanned for `JCS`, `RFC 8785`, `canonical serialization`, `canonical bytes`,
+`serde_json`, `rfc8785`, `hash domain`, `0x00`, `RFC 6962`, `DQ-006`.
+
+**No CRITICAL contradiction.** One **MAJOR** item was found — the
+`CROSS-LANGUAGE-002` identifier collision (row 57) — and it is resolved within
+this specification before closure is claimed: the canonicalization gate is named
+`CROSS-LANGUAGE-CANONICAL-002` everywhere in the spec, and the Merkle gate's own
+record carries an explicit collision note. What remains is a rename in the
+reference repositories, which this task may not modify (change control), carried
+as C-3. No digest, byte or verdict depends on it.
+
+Remaining **LEGACY/INFORMATIONAL** items are unchanged from the reconciliation
+round: dated DQ-002 and working documents that describe the pre-binding state
+(rows 34–36), left in place by change control.
+
+---
+
 ## Regression checks
 
 | Check | Result |
 |---|---|
 | DQ-003 — `protocol_version` / `schema_version` remain distinct, unrenamed, unmerged | **PASS** — APS-200 §8.7 explicitly excludes version semantics from the profile |
 | DQ-004 — `event_type` governed by the registry, not by canonicalization | **PASS** — APS-200 §8.7 explicitly excludes event semantics; registry §7 defers to APS-200 |
-| DQ-002 — hash-domain semantics unchanged | **PASS** — no DQ-002 artifact modified; APS-200 §8.5 binds the input byte domain only |
-| Canonical bytes, SHA-256, RFC 6962 leaf values | **UNCHANGED** — verified by recomputation |
+| DQ-002 — hash-domain semantics unchanged | **PASS** — no DQ-002 artifact modified; APS-200 §8.5 binds the input byte domain only. DQ-002's dependency on DQ-006 is now satisfied; its status was **not** changed by this integration |
+| CANONICAL-001 canonical bytes, SHA-256, RFC 6962 leaf | **UNCHANGED** — re-verified by recomputation on 2026-08-20 |
+| CANONICAL-002 canonical bytes, SHA-256, RFC 6962 leaf | **VERIFIED** — recomputed from the committed corpus, match both artifacts |
+| CROSS-LANGUAGE-002 (Merkle) status | **UNCHANGED** — remains OPEN |

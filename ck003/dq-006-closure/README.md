@@ -4,7 +4,10 @@
 > The single authoritative DQ-006 closure record is [`../../closures/DQ-006_CLOSURE_PACKAGE.md`](../../closures/DQ-006_CLOSURE_PACKAGE.md),
 > which reconciles this material against APS-200 §8, APS-300 §5, ADR-CK003-DQ006 and CONF-003.
 > Where this document differs from that record — including its status line — that record governs.
-> **DQ-006 status of record: OPEN.**
+> **DQ-006 status of record: CLOSED** (2026-08-20, DQ-006 CLOSURE INTEGRATION).
+> The closure now rests on two fixtures: CANONICAL-001 and the JCS-discriminating
+> CANONICAL-002. Consolidated evidence:
+> [`ck003/dq-006-closure/DQ-006_EVIDENCE.md`](../../ck003/dq-006-closure/DQ-006_EVIDENCE.md).
 
 **Workstream:** CK-003 Remediation  
 **Decision:** DQ-006  
@@ -29,9 +32,20 @@ This package records the evidence required to close DQ-006 after independent RI-
 
 ## Contents
 
-- `DQ-006-CLOSURE.md` — normative closure record and decision.
-- `CROSS-LANGUAGE-001-EVIDENCE.md` — execution/equality evidence ledger.
-- `canonical-001-evidence-manifest.json` — machine-readable evidence index.
+Current (maintained):
+
+- `DQ-006_EVIDENCE.md` — consolidated evidence, CANONICAL-001 and CANONICAL-002.
+- `DQ-006_TRACEABILITY.md` — traceability graph, link table, adjacent-decision status.
+- `DQ-006_SPECIFICATION_CONSISTENCY_SCAN.md` — repository-wide consistency scan.
+
+Historical (superseded, retained):
+
+- `DQ-006-CLOSURE.md` — earlier closure record.
+- `CROSS-LANGUAGE-001-EVIDENCE.md` — CANONICAL-001 execution/equality ledger; still accurate for that fixture.
+- `canonical-001-evidence-manifest.json` — machine-readable CANONICAL-001 evidence index.
+
+The closure record of authority is
+[`closures/DQ-006_CLOSURE_PACKAGE.md`](../../closures/DQ-006_CLOSURE_PACKAGE.md).
 
 ## Source evidence
 

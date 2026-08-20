@@ -1,11 +1,13 @@
 # CROSS-LANGUAGE-001 Evidence Ledger
 
 > **Subordinate record — reconciled 2026-08-20.** The execution evidence below is correct and
-> was re-verified by recomputation. Its closing verdict line `DQ-006 = CLOSED` is superseded:
-> `CROSS-LANGUAGE-001 = PASS` still stands for byte, SHA-256 and RFC 6962 leaf equality on
-> CANONICAL-001, but the DQ-006 status of record is **OPEN** per
-> [`closures/DQ-006_CLOSURE_PACKAGE.md`](../../closures/DQ-006_CLOSURE_PACKAGE.md).
-> CANONICAL-001 is JCS-degenerate; see that record §10 (D-1).
+> was re-verified by recomputation. `CROSS-LANGUAGE-001 = PASS` stands for byte, SHA-256 and
+> RFC 6962 leaf equality on CANONICAL-001, and the DQ-006 status of record is **CLOSED** per
+> [`closures/DQ-006_CLOSURE_PACKAGE.md`](../../closures/DQ-006_CLOSURE_PACKAGE.md) — but not on
+> this fixture alone. CANONICAL-001 is JCS-degenerate: a sorted-JSON serializer reproduces its
+> canonical bytes exactly, so this gate evidences cross-implementation *agreement*. Conformance
+> to RFC 8785 is evidenced by the discriminating fixture CANONICAL-002; see
+> [`DQ-006_EVIDENCE.md`](DQ-006_EVIDENCE.md) §1.2 and §4.
 
 ## Fixture
 

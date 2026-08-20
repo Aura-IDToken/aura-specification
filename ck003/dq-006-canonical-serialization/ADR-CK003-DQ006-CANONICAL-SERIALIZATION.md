@@ -1,6 +1,6 @@
 # ADR-CK003-DQ006 — Canonical Serialization Profile
 
-- **Status:** ACCEPTED (decision) — bound into APS-200 §8. Chief Architect ratification of the DQ-006 *closure verdict* is still required; see §9.
+- **Status:** ACCEPTED — bound into APS-200 §8. DQ-006 closure verdict ratified 2026-08-20 (DQ-006 CLOSURE INTEGRATION); see §9.
 - **Classification:** DECISION
 - **Scope:** Protocol-bound canonical object bytes
 - **Normative home:** APS-200 §8 (single authority)
@@ -89,7 +89,7 @@ Canonical-byte equality, SHA-256 equality and RFC 6962 leaf equality: **PASS** (
 
 Full evidence ledger: [`closures/DQ-006_CLOSURE_PACKAGE.md`](../../closures/DQ-006_CLOSURE_PACKAGE.md).
 
-## 8. Known limitation of the current evidence
+## 8. Evidence limitation, and how it was closed
 
 CANONICAL-001 is **JCS-degenerate**: for this object, RFC 8785 and an ordinary sorted-JSON serializer (`json.dumps(sort_keys=True, separators=(",",":"), ensure_ascii=False)`) produce identical bytes, and therefore identical digests. All keys are ASCII, no member ordering depends on UTF-16 code units, the only number is a small integer, and no string requires non-trivial escaping. This was verified by recomputation and is recorded in [`ck003/handover-assessment/10_INDEPENDENT_VERIFICATION.md`](../handover-assessment/10_INDEPENDENT_VERIFICATION.md) §3.2.
 
@@ -97,7 +97,21 @@ Consequence: CROSS-LANGUAGE-001 establishes that RI-PY and RI-RS **agree** on th
 
 Partial mitigation on the RI-PY side only: the executed `conformance/canonical/test_jcs_behavior.py` suite (13 passed) exercises RFC-8785-discriminating behaviour — ES6 number form (`1.0` → `1`, `1e21` → `1e+21`), rejection of non-finite numbers, minimal escaping, raw UTF-8 for non-ASCII, and member ordering. The RI-RS side has no equivalent executed behavioural suite; its `canonical_001` test covers member ordering, array order, UTF-8 validity, whitespace absence and the leaf domain, none of which distinguish RFC 8785 from sorted JSON.
 
-This limitation constrains the DQ-006 closure verdict; it does not weaken the *decision* in §1, which is a specification choice and does not depend on evidence to exist.
+**Closed 2026-08-20 (DQ-006-R1).** The fixture **CANONICAL-002** was added and
+executed on both frozen engines. It is 655 canonical bytes against 716 bytes of
+sorted JSON for the same input, exercising UTF-16 code-unit member ordering, raw
+UTF-8 output, ECMAScript number form, negative-zero normalisation, exponent form,
+recursive canonicalisation, array-order preservation and minimal escaping. RI-PY
+and RI-RS produced identical bytes, digest and leaf. A fourth negative control
+substitutes sorted-JSON output for one side: it is inert on CANONICAL-001 and is
+rejected on CANONICAL-002.
+
+The cross-language evidence therefore now demonstrates conformance to RFC 8785,
+not merely agreement, and the DQ-006 closure verdict is no longer constrained by
+this limitation. CANONICAL-001 remains in the corpus unchanged; its degeneracy is
+a property of that vector, recorded so no future reader over-reads it.
+
+Evidence: [`ck003/dq-006-closure/DQ-006_EVIDENCE.md`](../dq-006-closure/DQ-006_EVIDENCE.md).
 
 ## 9. Closure gate
 
@@ -108,8 +122,11 @@ This limitation constrains the DQ-006 closure verdict; it does not weaken the *d
 | At least one normative cross-language fixture frozen | **DONE** — CANONICAL-001 |
 | RI-PY and RI-RS produce identical canonical bytes and expected digests | **DONE** — CROSS-LANGUAGE-001 PASS |
 | Version/migration semantics documented | **DONE** — APS-200 §8.8, APS-300 §5.3 |
-| Cross-language evidence that discriminates RFC 8785 from sorted JSON | **NOT DONE** — see §8 |
-| Evidence reachable from the default branch of each RI repository | **NOT DONE** — evidence lives on unmerged branches |
-| Chief Architect ratification of the closure verdict | **NOT DONE** — human act under GOVERNANCE.md §2 |
+| Cross-language evidence that discriminates RFC 8785 from sorted JSON | **DONE** — CANONICAL-002; see §8 |
+| Chief Architect ratification of the closure verdict | **DONE** — DQ-006 CLOSURE INTEGRATION, 2026-08-20 |
+| Evidence merged to the default branch of each RI repository | **CARRIED** — published and reachable by SHA; not on `main`. Closure package §13 item C-1 |
 
-The decision in §1 is accepted and normatively bound. The DQ-006 *gate* is not closed while the last three rows are outstanding. See the closure package for the verdict.
+The decision in §1 is accepted and normatively bound, and the DQ-006 gate is
+**CLOSED**. The one outstanding row is repository hygiene carried to the release
+gate; it does not qualify the decision or the evidence. See the closure package
+for the verdict.
