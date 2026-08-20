@@ -3,32 +3,55 @@
   "decision": "DQ-006",
   "gate": "CROSS-LANGUAGE-001",
   "status": "PASS",
+  "closure_record": "ck003/dq-006-closure/DQ-006-CLOSURE.md",
+  "evidence_index": "ck003/dq-006-closure/DQ-006_EVIDENCE_INDEX.md",
+  "cross_language_matrix": "ck003/dq-006-closure/DQ-006_CROSS_LANGUAGE_MATRIX.md",
   "canonicalization": {
     "profile": "RFC 8785 JCS",
     "ri_py_engine": "rfc8785==0.1.4",
-    "ri_rs_engine": "serde_json_canonicalizer==0.3.2"
+    "ri_rs_engine": "serde_json_canonicalizer==0.3.2",
+    "engine_scope": "conformance-only; not a production runtime dependency"
   },
   "hash_domain": {
     "digest": "SHA-256(canonical_bytes)",
     "leaf": "SHA-256(0x00 || canonical_bytes)",
-    "leaf_domain_octet": "00"
+    "leaf_domain_octet": "00",
+    "leaf_domain_note": "0x00 is one raw octet, not ASCII \"0x00\", not hex text, not JSON, not a serialized string"
+  },
+  "input": {
+    "path": "conformance/corpus/canonical-001/input.json",
+    "sha256": "649bb748464ce78fe1a1d7104689d2dee736fb80777db6569592bc0d3d039261"
   },
   "observed": {
     "canonical_bytes_len": 100,
+    "canonical_bytes_hex": "7b226576656e745f74797065223a2241554449545f5245434f5244222c227061796c6f6164223a7b2276616c7565223a34327d2c2270726f746f636f6c5f76657273696f6e223a22312e30222c22736368656d615f76657273696f6e223a22312e30227d",
     "canonical_bytes_sha256": "b6c3660ce6dee498b37443a92bf87c5efead6fe863fcf19197c0baeda139a4e6",
-    "leaf_sha256": "ce6b36733d97699230f37d80a14e14104c19d2e787526a6fc3aaae6b6648c039"
+    "leaf_sha256": "ce6b36733d97699230f37d80a14e14104c19d2e787526a6fc3aaae6b6648c039",
+    "classification": "NORMATIVE FIXTURE VALUES"
   },
   "ri_py": {
     "repository": "Aura-IDToken/aura-poc-a-core-v3.3",
     "execution_commit": "49d0e4f67e90a7a47e9f067bfc42ab40ee59a56f",
     "evidence_commit": "3e8e0e326a1cfec71e001f4901fc1ee5b7c28c4e",
-    "artifact_path": "conformance/corpus/canonical-001/ri-py.json"
+    "artifact_path": "conformance/corpus/canonical-001/ri-py.json",
+    "artifact_sha256": "6b5b5ccd54901181b9af45421d051ea5ea53096fbf632ab1e25a66705f2b856c",
+    "adapter_path": "conformance/canonical/jcs.py",
+    "adapter_sha256": "8f6c3b440221113721a82c6ff3ff61dcfbaccbcbe972ce7ae635d00444b8b5a4",
+    "execution_command": "python -m conformance.canonical.emit_ri_py_artifact",
+    "toolchain": "CPython 3.11.15, Linux x86_64"
   },
   "ri_rs": {
     "repository": "Aura-IDToken/aura-guard-v1.3",
     "execution_commit": "4e9e2284ccdac6d2f40e038e33b4eaeec847aaa2",
     "evidence_commit": "420653e232cb0ff1e365edd2e4a5eb294d2bb2a0",
-    "artifact_path": "conformance/corpus/canonical-001/ri-rs.json"
+    "artifact_path": "conformance/corpus/canonical-001/ri-rs.json",
+    "artifact_sha256": "a6ebad019118a7806ae927c4802a60056cb9e0c90f3cb1ef2a5e0cf359af329c",
+    "adapter_path": "conformance/canonical/jcs.rs",
+    "adapter_sha256": "0dae4ef696f06a4d3248ca85284fd7db280ef3c897a96cf898ef076cd4e846f2",
+    "lockfile_path": "conformance/Cargo.lock",
+    "lockfile_sha256": "3ff49a0f01aafa9925dc2904927f0810a2628d24ff944b200c7858c06a534638",
+    "execution_command": "cargo test --locked --test canonical_001",
+    "toolchain": "rustc 1.94.1 (e408947bf 2026-03-25), Linux x86_64"
   },
   "equality": {
     "canonical_bytes": "PASS",
@@ -40,7 +63,8 @@
   "negative_controls": {
     "modified_bytes_rejected": true,
     "modified_sha_rejected": true,
-    "wrong_leaf_domain_rejected": true
+    "wrong_leaf_domain_rejected": true,
+    "symmetric_mutation_note": "A symmetric leaf-domain mutation preserves RI-PY == RI-RS equality; independent leaf recomputation is therefore a required property of the gate"
   },
   "production_integrity": {
     "ri_py_core_unchanged": true,
@@ -48,8 +72,33 @@
     "ri_rs_src_unchanged": true,
     "ri_rs_production_cargo_unchanged": true
   },
+  "evidence_ids": {
+    "DQ006-E01": "RI-PY JCS conformance boundary",
+    "DQ006-E02": "RI-RS JCS conformance boundary",
+    "DQ006-E03": "CANONICAL-001 RI-PY artifact",
+    "DQ006-E04": "CANONICAL-001 RI-RS artifact",
+    "DQ006-E05": "CROSS-LANGUAGE-001 equality gate",
+    "DQ006-E06": "negative controls",
+    "DQ006-E07": "production integrity"
+  },
   "scope": {
+    "proves": [
+      "CANONICAL-001 canonical bytes, digest and RFC-6962 leaf are identical in RI-PY and RI-RS",
+      "the equality gate independently recomputes and rejects byte, digest and leaf-domain mutations",
+      "the conformance work is isolated from production runtime"
+    ],
+    "does_not_prove": [
+      "all possible JSON inputs are cross-language proven",
+      "all future schema versions are proven",
+      "production runtime uses JCS",
+      "the fixture corpus is complete"
+    ],
     "closes": ["DQ-006"],
-    "does_not_close": ["DQ-002", "APS-001", "INV-001..INV-015", "release-gate"]
-  }
+    "does_not_close": ["DQ-001", "DQ-002", "DQ-003", "DQ-004", "APS-001", "APS-200 §8 amendment", "INV-001..INV-015", "ci-gate", "release-gate"]
+  },
+  "residual_dependencies": [
+    "APS-200 §8 canonical serialization amendment remains TODO; ADR-CK003-DQ006 remains PROPOSED",
+    "CANONICAL-001 conformance tree is not on the default branch of either reference implementation repository",
+    "no RI-RS equivalent of the RI-PY JCS engine-behaviour suite is recorded"
+  ]
 }

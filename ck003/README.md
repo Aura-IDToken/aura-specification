@@ -23,11 +23,21 @@ DQ-002 already has a dedicated evidence package under `ck003/dq-002-hash-domain/
 
 ## DQ-006 closure
 
-`ck003/dq-006-closure/` contains the closure package for DQ-006 / CROSS-LANGUAGE-001. The package records independent RI-PY and RI-RS CANONICAL-001 execution, byte/SHA/leaf equality, negative controls, provenance and production-integrity evidence.
+`ck003/dq-006-closure/` is the **single canonical location** for the DQ-006 / CROSS-LANGUAGE-001
+closure package. It records independent RI-PY and RI-RS CANONICAL-001 execution, byte/SHA/leaf
+equality, negative controls, provenance and production-integrity evidence, together with the
+`DQ006-E01`…`DQ006-E07` evidence index, the cross-language equality matrix, the closure criteria
+and the explicit scope of proof.
 
-**DQ-006 status: CLOSED.**
+**DQ-006 status: CLOSED — PASS.**
 
-This does not by itself close DQ-002, APS-001, INV-001…INV-015, or the release gate.
+Earlier duplicate copies (`ck003/DQ-006_CLOSURE.md`, `ck003/DQ-006_EVIDENCE_INDEX.md`,
+`closures/DQ-006_CLOSURE_PACKAGE.md`, `evidence/DQ-006_CLOSURE_PACKAGE.md`) are `SUPERSEDED`
+pointers to that package.
+
+This does not by itself close DQ-002, APS-001, INV-001…INV-015, or the release gate, and it does
+not amend `APS-200 §8` — the canonical-serialization *specification* gate remains open per
+`ck003/dq-006-canonical-serialization/CANONICAL_SERIALIZATION_CLOSURE_STATE.md`.
 
 ## Operating rule
 

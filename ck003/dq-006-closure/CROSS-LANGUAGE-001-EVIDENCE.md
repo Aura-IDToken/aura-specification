@@ -1,5 +1,10 @@
 # CROSS-LANGUAGE-001 Evidence Ledger
 
+Document ID: DQ-006-XLANG-LEDGER  
+Status: EVIDENCE  
+Authority: `DQ-006-CLOSURE.md`  
+Last Review: 2026-08-20
+
 ## Fixture
 
 `CANONICAL-001`
@@ -104,7 +109,7 @@ RI-PY:
 
 ```text
 core/  -> unchanged
- audit/ -> unchanged
+audit/ -> unchanged
 ```
 
 RI-RS:
@@ -142,3 +147,5 @@ The evidence commits explicitly record their execution parents, engines, observe
 `CROSS-LANGUAGE-001 = PASS`
 
 `DQ-006 = CLOSED`
+
+Scope and non-closures are governed by `DQ-006-CLOSURE.md` §11 and §14.

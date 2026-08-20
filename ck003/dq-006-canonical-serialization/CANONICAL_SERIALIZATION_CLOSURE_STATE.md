@@ -24,3 +24,19 @@ This is a proposed architecture decision, not yet a frozen normative rule.
 **CANONICAL SERIALIZATION: OPEN / PROPOSED PROFILE READY**
 
 No PASS is claimed until the normative APS documents and cross-language evidence are updated.
+
+---
+
+## Relationship to DQ-006
+
+DQ-006 is **CLOSED — PASS** as a *conformance/evidence* gate: RI-PY and RI-RS independently
+executed CANONICAL-001 and produced identical canonical bytes, digest and RFC-6962 leaf. See
+[`ck003/dq-006-closure/DQ-006-CLOSURE.md`](../dq-006-closure/DQ-006-CLOSURE.md).
+
+The *specification* gate recorded above remains **OPEN**: blockers 1 (Chief Architect approval),
+2 (APS-200 §8 normative amendment), 3 (APS-300 reconciliation) and 6 (version/migration rule) are
+unaffected by DQ-006. Blockers 4 and 5 are satisfied by the frozen CANONICAL-001 fixture and the
+CROSS-LANGUAGE-001 equality evidence for that fixture.
+
+The two statuses are not in conflict: DQ-006 closes what was executed and verified; it does not
+amend normative APS text.

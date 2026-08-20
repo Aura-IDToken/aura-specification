@@ -1,6 +1,6 @@
 # CANONICAL-001 — Independent Oracle Record
 
-**Status:** BLOCKED_PENDING_IMPLEMENTATION_CONFORMANCE
+**Status:** BLOCKED_PENDING_IMPLEMENTATION_CONFORMANCE — **RESOLVED for the DQ-006 scope**, see *Resolution* below
 **Profile:** Proposed RFC 8785 JCS
 **Hash domain:** Proposed DQ-002 RI-RS model
 
@@ -46,3 +46,28 @@ DQ-002 final closure: BLOCKED
 ```
 
 No implementation is declared conformant by this record.
+
+---
+
+## Resolution — 2026-08-20
+
+The oracle values recorded above were subsequently matched by actual execution. RI-PY
+(`rfc8785==0.1.4`) and RI-RS (`serde_json_canonicalizer==0.3.2`) each independently reported the
+same canonical bytes, the same `SHA-256(canonical_bytes)` and the same
+`SHA-256(0x00 || canonical_bytes)` as this record, and the equality gate independently recomputed
+both artifacts.
+
+```text
+RI-PY canonicalization:   PASS
+RI-RS canonicalization:   PASS
+canonical_bytes equality: PASS
+SHA-256 equality:         PASS
+leaf equality:            PASS
+DQ-006:                   CLOSED / PASS
+```
+
+The `DQ-002 final closure` line in the *Current verdict* block above is **not** resolved by this
+note; DQ-002 remains subject to its own closure gate.
+
+Closure record: [`ck003/dq-006-closure/DQ-006-CLOSURE.md`](../dq-006-closure/DQ-006-CLOSURE.md).
+The *Current verdict* block above is retained as the record of the pre-execution state.
