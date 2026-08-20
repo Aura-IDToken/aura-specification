@@ -8,6 +8,8 @@ This directory contains the Compliance Mapping artifacts, supplementing APS-900.
 |------|-------------|
 | [TRACEABILITY_MODEL.md](TRACEABILITY_MODEL.md) | Full description of the traceability model |
 | [TRACEABILITY_MATRIX.md](TRACEABILITY_MATRIX.md) | Machine-readable traceability matrix |
+| [DQ-002_TRACEABILITY_MATRIX.md](DQ-002_TRACEABILITY_MATRIX.md) | DQ-002 hash-domain traceability matrix (evidence, non-normative) |
+| [DQ-002_TRACEABILITY_REVIEW.md](DQ-002_TRACEABILITY_REVIEW.md) | DQ-002 traceability audit findings (evidence, non-normative) |
 
 ## Purpose
 
