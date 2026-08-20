@@ -1,5 +1,10 @@
 # APS-200 §8 — Proposed Canonical Serialization Profile
 
+> **SUPERSEDED — 2026-08-20.** This proposal was accepted and is now normative in
+> [`aps/APS-200_CANONICAL_DATA_MODEL.md`](../../aps/APS-200_CANONICAL_DATA_MODEL.md) §8.
+> APS-200 §8 is the single normative authority for canonical serialization. This file is
+> retained as decision history and MUST NOT be cited as a normative source.
+
 **Status:** PROPOSED — not yet frozen
 **Decision:** RFC 8785 JSON Canonicalization Scheme (JCS)
 

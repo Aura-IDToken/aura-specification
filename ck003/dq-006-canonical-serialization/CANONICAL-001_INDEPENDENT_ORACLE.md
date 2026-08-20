@@ -1,8 +1,10 @@
 # CANONICAL-001 — Independent Oracle Record
 
-**Status:** BLOCKED_PENDING_IMPLEMENTATION_CONFORMANCE
-**Profile:** Proposed RFC 8785 JCS
-**Hash domain:** Proposed DQ-002 RI-RS model
+**Status:** EXECUTED — oracle values corroborated by RI-PY and RI-RS
+**Classification:** EVIDENCE
+**Profile:** RFC 8785 JCS (normative — APS-200 §8)
+**Hash domain:** APS-200 §8.5 / DQ-002
+**Reconciled:** 2026-08-20
 
 ## Normative candidate object
 
@@ -36,13 +38,22 @@ The verdict is PASS only if all three values equal the independent oracle. A mat
 ## Current verdict
 
 ```text
-RI-PY canonicalization: BLOCKED
-RI-RS canonicalization: BLOCKED
-canonical_bytes equality: BLOCKED
-SHA-256 equality: BLOCKED
-leaf equality: BLOCKED
-DQ-006: BLOCKED
-DQ-002 final closure: BLOCKED
+RI-PY canonicalization:   EXECUTED  (rfc8785 0.1.4 @ 49d0e4f6)
+RI-RS canonicalization:   EXECUTED  (serde_json_canonicalizer 0.3.2 @ 4e9e2284)
+canonical_bytes equality: PASS
+SHA-256 equality:         PASS
+leaf equality:            PASS
+DQ-006:                   OPEN      (see closure package §12–§13)
 ```
 
-No implementation is declared conformant by this record.
+All three oracle values above were independently reproduced by both reference implementations
+and re-verified by recomputation on 2026-08-20. The oracle values themselves are unchanged.
+
+**Limitation.** This vector is JCS-degenerate: ordinary sorted JSON produces the same bytes,
+the same SHA-256 and the same leaf. Agreement between the two implementations on this vector
+therefore does not by itself demonstrate RFC 8785 conformance. See
+[`closures/DQ-006_CLOSURE_PACKAGE.md`](../../closures/DQ-006_CLOSURE_PACKAGE.md) §10 (D-1)
+and residual R1.
+
+This record declares oracle correctness and execution agreement. It does not declare either
+implementation conformant to RFC 8785.

@@ -1,5 +1,10 @@
 # DQ-006 Evidence Index
 
+> **Subordinate record — reconciled 2026-08-20.** The artifact paths and digests below are
+> correct and were re-verified by recomputation. The **Status** block at the end of this file
+> is superseded: the DQ-006 status of record is **OPEN**, per
+> [`closures/DQ-006_CLOSURE_PACKAGE.md`](../closures/DQ-006_CLOSURE_PACKAGE.md).
+
 This index binds the specification closure record to the independently executed RI-PY / RI-RS evidence.
 
 ## Repositories

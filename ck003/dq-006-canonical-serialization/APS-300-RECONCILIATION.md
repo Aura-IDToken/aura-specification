@@ -1,5 +1,10 @@
 # APS-300 Reconciliation — Canonical Serialization / Evidence Hash
 
+> **SUPERSEDED — 2026-08-20.** This reconciliation was applied and is now normative in
+> [`aps/APS-300_EVIDENCE_MODEL.md`](../../aps/APS-300_EVIDENCE_MODEL.md) §5.1–§5.3.
+> This file is retained as decision history and MUST NOT be cited as a normative source.
+> Its closing line — *"DQ-006 / APS-300 reconciliation: OPEN"* — is no longer current.
+
 **Status:** PROPOSED — awaiting normative approval
 
 ## Binding
