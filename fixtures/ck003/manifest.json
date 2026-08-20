@@ -1,27 +1,136 @@
 {
-  "manifest_version": "CK003-CORPUS-0.1",
-  "status": "WORKING_BASELINE_NOT_RELEASE_CONFORMANT",
-  "protocol_version": "UNBOUND",
-  "canonicalization_profile": "UNBOUND_PENDING_APS-200_CLOSURE",
-  "hash_domain": "RI-RS_RFC6962_MODEL",
+  "manifest_version": "CK003-CORPUS-0.2",
+  "status": "CANONICAL_SERIALIZATION_FROZEN — remaining entries still blocked on their own gates",
+  "protocol_version": "1.0",
+  "canonicalization_profile": "RFC8785-JCS",
+  "hash_domain": "RFC6962 — SHA-256(0x00 || canonical_bytes) leaf, SHA-256(0x01 || left || right) node",
   "digest_algorithm": "SHA-256",
   "entries": [
-    {"id":"CK003-001","status":"LEGACY_REFERENCE_UNRESOLVED","path":null},
-    {"id":"CK003-002","status":"LEGACY_REFERENCE_UNRESOLVED","path":null},
-    {"id":"CK003-003","status":"LEGACY_REFERENCE_UNRESOLVED","path":null},
-    {"id":"CK003-004","status":"LEGACY_REFERENCE_UNRESOLVED","path":null},
-    {"id":"CK003-005","status":"LEGACY_REFERENCE_UNRESOLVED","path":null},
-    {"id":"CK003-006","status":"LEGACY_REFERENCE_UNRESOLVED","path":null},
-    {"id":"CK003-007","status":"LEGACY_REFERENCE_UNRESOLVED","path":null},
-    {"id":"CK003-008","status":"LEGACY_REFERENCE_UNRESOLVED","path":null},
-    {"id":"CK003-009","status":"LEGACY_REFERENCE_UNRESOLVED","path":null},
-    {"id":"CK003-010","status":"LEGACY_REFERENCE_UNRESOLVED","path":null},
-    {"id":"FIX-INV-007","invariant":"INV-007","conf":"CONF-011","path":"fixtures/corpus/FIX-INV-007_zero_float.json","status":"READY"},
-    {"id":"FIX-INV-012","invariant":"INV-012","conf":"CONF-012","path":"fixtures/corpus/FIX-INV-012_event_type.json","status":"REGISTRY_DEPENDENT"},
-    {"id":"FIX-INV-013","invariant":"INV-013","conf":"CONF-013","path":"fixtures/corpus/FIX-INV-013_policy_determinism.json","status":"PARAMETRIC"},
-    {"id":"FIX-INV-014","invariant":"INV-014","conf":"CONF-014","path":"fixtures/corpus/FIX-INV-014_aps500_compatibility.json","status":"APS500_VERSION_BLOCKED"},
-    {"id":"FIX-INV-015","invariant":"INV-015","conf":"CONF-015","path":"fixtures/corpus/FIX-INV-015_canonical_identity.json","status":"APS000_BINDING_BLOCKED"},
-    {"id":"FIX-CK003-DQ002-RFC6962-2LEAF","dq":"DQ-002","path":"ck003/dq-002-hash-domain/fixtures/FIX-CK003-DQ002-RFC6962-2LEAF.json","status":"NORMATIVE_HASH_DOMAIN_FIXTURE"},
-    {"id":"FIX-CK003-DQ002-CROSS-LANGUAGE","dq":"DQ-002","path":"ck003/dq-002-hash-domain/03_cross_language_fixture.json","status":"CROSS_LANGUAGE_FIXTURE"}
-  ]
+    {
+      "id": "CK003-001",
+      "status": "LEGACY_REFERENCE_UNRESOLVED",
+      "path": null,
+      "reason": "no artifact exists in any commit of this repository; identifier retained for recovery"
+    },
+    {
+      "id": "CK003-002",
+      "status": "LEGACY_REFERENCE_UNRESOLVED",
+      "path": null,
+      "reason": "no artifact exists in any commit of this repository; identifier retained for recovery"
+    },
+    {
+      "id": "CK003-003",
+      "status": "LEGACY_REFERENCE_UNRESOLVED",
+      "path": null,
+      "reason": "no artifact exists in any commit of this repository; identifier retained for recovery"
+    },
+    {
+      "id": "CK003-004",
+      "status": "LEGACY_REFERENCE_UNRESOLVED",
+      "path": null,
+      "reason": "no artifact exists in any commit of this repository; identifier retained for recovery"
+    },
+    {
+      "id": "CK003-005",
+      "status": "LEGACY_REFERENCE_UNRESOLVED",
+      "path": null,
+      "reason": "no artifact exists in any commit of this repository; identifier retained for recovery"
+    },
+    {
+      "id": "CK003-006",
+      "status": "LEGACY_REFERENCE_UNRESOLVED",
+      "path": null,
+      "reason": "no artifact exists in any commit of this repository; identifier retained for recovery"
+    },
+    {
+      "id": "CK003-007",
+      "status": "LEGACY_REFERENCE_UNRESOLVED",
+      "path": null,
+      "reason": "no artifact exists in any commit of this repository; identifier retained for recovery"
+    },
+    {
+      "id": "CK003-008",
+      "status": "LEGACY_REFERENCE_UNRESOLVED",
+      "path": null,
+      "reason": "no artifact exists in any commit of this repository; identifier retained for recovery"
+    },
+    {
+      "id": "CK003-009",
+      "status": "LEGACY_REFERENCE_UNRESOLVED",
+      "path": null,
+      "reason": "no artifact exists in any commit of this repository; identifier retained for recovery"
+    },
+    {
+      "id": "CK003-010",
+      "status": "LEGACY_REFERENCE_UNRESOLVED",
+      "path": null,
+      "reason": "no artifact exists in any commit of this repository; identifier retained for recovery"
+    },
+    {
+      "id": "CANONICAL-001",
+      "invariant": "INV-003",
+      "conf": "CONF-003",
+      "path": "fixtures/corpus/CANONICAL-001_jcs_evidence.json",
+      "status": "NORMATIVE",
+      "frozen": true,
+      "scope": "serialization-profile vector over the JSON data model (APS-200 §8.2); not an ENT-00x instance",
+      "self_check": "scripts/validate_canonical_001.py"
+    },
+    {
+      "id": "FIX-INV-007",
+      "invariant": "INV-007",
+      "conf": "CONF-011",
+      "path": "fixtures/corpus/FIX-INV-007_zero_float.json",
+      "status": "READY"
+    },
+    {
+      "id": "FIX-INV-012",
+      "invariant": "INV-012",
+      "conf": "CONF-012",
+      "path": "fixtures/corpus/FIX-INV-012_event_type.json",
+      "status": "REGISTRY_DEPENDENT"
+    },
+    {
+      "id": "FIX-INV-013",
+      "invariant": "INV-013",
+      "conf": "CONF-013",
+      "path": "fixtures/corpus/FIX-INV-013_policy_determinism.json",
+      "status": "PARAMETRIC"
+    },
+    {
+      "id": "FIX-INV-014",
+      "invariant": "INV-014",
+      "conf": "CONF-014",
+      "path": "fixtures/corpus/FIX-INV-014_aps500_compatibility.json",
+      "status": "APS500_VERSION_BLOCKED"
+    },
+    {
+      "id": "FIX-INV-015",
+      "invariant": "INV-015",
+      "conf": "CONF-015",
+      "path": "fixtures/corpus/FIX-INV-015_canonical_identity.json",
+      "status": "APS000_BINDING_BLOCKED"
+    },
+    {
+      "id": "FIX-CK003-DQ002-RFC6962-2LEAF",
+      "dq": "DQ-002",
+      "path": "ck003/dq-002-hash-domain/fixtures/FIX-CK003-DQ002-RFC6962-2LEAF.json",
+      "status": "NORMATIVE_HASH_DOMAIN_FIXTURE"
+    },
+    {
+      "id": "FIX-CK003-DQ002-CROSS-LANGUAGE",
+      "dq": "DQ-002",
+      "path": "ck003/dq-002-hash-domain/03_cross_language_fixture.json",
+      "status": "CROSS_LANGUAGE_FIXTURE"
+    }
+  ],
+  "canonicalization_authority": "aps/APS-200_CANONICAL_DATA_MODEL.md §8",
+  "hash_domain_authority": "specification/APS-001_PROTOCOL_SPECIFICATION.md §7 / DQ-002",
+  "status_vocabulary": {
+    "NORMATIVE": "current, source-backed, frozen fixture",
+    "PROPOSED": "authored but not frozen",
+    "LEGACY_REFERENCE_UNRESOLVED": "referenced historically, not recoverable from any commit; MUST NOT participate in PASS calculations",
+    "DEPRECATED": "recovered but superseded",
+    "INVALID": "provenance or integrity failure"
+  }
 }

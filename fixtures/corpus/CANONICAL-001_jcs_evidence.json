@@ -1,5 +1,12 @@
 {
   "fixture_id": "CANONICAL-001",
+  "classification": "NORMATIVE_FIXTURE",
+  "status": "FROZEN",
+  "frozen_on": "2026-08-20",
+  "normative_authority": "aps/APS-200_CANONICAL_DATA_MODEL.md §8",
+  "conformance_test": "CONF-003",
+  "invariants": ["INV-003", "INV-006", "INV-011"],
+  "scope": "Serialization-profile conformance vector over the JSON data model (APS-200 §8.2). This fixture is NOT an instance of an ENT-001…ENT-008 entity and asserts nothing about entity admissibility, event-type registration, or the APS-200 §4 common object contract.",
   "profile": "RFC8785-JCS",
   "protocol_object": {
     "event_type": "AUDIT_RECORD",
@@ -12,20 +19,67 @@
   "canonicalization": {
     "algorithm": "RFC8785-JCS",
     "encoding": "UTF-8",
+    "unicode_normalization": "NONE",
     "canonical_bytes_length": 100,
-    "canonical_bytes_hex": "7b226576656e745f74797065223a2241554449545f5245434f5244222c227061796c6f6164223a7b2276616c7565223a34327d2c2270726f746f636f6c5f76657273696f6e223a22312e30222c22736368656d615f76657273696f6e223a22312e30227d"
+    "canonical_bytes_hex": "7b226576656e745f74797065223a2241554449545f5245434f5244222c227061796c6f6164223a7b2276616c7565223a34327d2c2270726f746f636f6c5f76657273696f6e223a22312e30222c22736368656d615f76657273696f6e223a22312e30227d",
+    "canonical_bytes_utf8": "{\"event_type\":\"AUDIT_RECORD\",\"payload\":{\"value\":42},\"protocol_version\":\"1.0\",\"schema_version\":\"1.0\"}"
   },
   "hash_domain": {
+    "digest_algorithm": "SHA-256",
+    "digest_input": "canonical_bytes",
     "canonical_sha256_hex": "b6c3660ce6dee498b37443a92bf87c5efead6fe863fcf19197c0baeda139a4e6",
     "leaf_algorithm": "SHA-256(0x00 || canonical_bytes)",
+    "leaf_domain_octet": "0x00",
+    "leaf_domain_octet_note": "A single raw octet of value zero, not the ASCII text \"0x00\".",
     "merkle_leaf_hash_hex": "ce6b36733d97699230f37d80a14e14104c19d2e787526a6fc3aaae6b6648c039",
     "node_algorithm": "SHA-256(0x01 || left_digest_bytes || right_digest_bytes)",
+    "node_authority": "APS-001 §7 / DQ-002 — not defined by this fixture",
     "tree_semantics": "RFC6962"
   },
-  "oracle_status": "INDEPENDENTLY_CALCULATED",
-  "implementation_status": {
-    "RI-PY": "PENDING_EXECUTION",
-    "RI-RS": "PENDING_EXECUTION",
-    "cross_language_equality": "PENDING_EXECUTION"
-  }
+  "version_binding": {
+    "protocol_version": "1.0",
+    "schema_version": "1.0",
+    "profile_bound_to": "protocol_version",
+    "profile_independently_versioned": false,
+    "authority": "aps/APS-200_CANONICAL_DATA_MODEL.md §8.6"
+  },
+  "implementation_evidence": {
+    "classification": "INFORMATIVE — conformance provenance, not protocol contract",
+    "RI-PY": {
+      "repository": "Aura-IDToken/aura-poc-a-core-v3.3",
+      "engine": "rfc8785",
+      "engine_version": "0.1.4",
+      "execution_commit": "49d0e4f67e90a7a47e9f067bfc42ab40ee59a56f",
+      "bridge_commit": "3e8e0e326a1cfec71e001f4901fc1ee5b7c28c4e",
+      "reachable_from_default_branch": false,
+      "reachable_from_branch": "claude/cross-language-canonical-001-n4v2c5",
+      "result": "PASS"
+    },
+    "RI-RS": {
+      "repository": "Aura-IDToken/aura-guard-v1.3",
+      "engine": "serde_json_canonicalizer",
+      "engine_version": "0.3.2",
+      "execution_commit": "4e9e2284ccdac6d2f40e038e33b4eaeec847aaa2",
+      "bridge_commit": "420653e232cb0ff1e365edd2e4a5eb294d2bb2a0",
+      "reachable_from_default_branch": false,
+      "reachable_from_branch": "claude/cross-language-canonical-001-n4v2c5",
+      "result": "PASS",
+      "independent_harness_on_default_branch": {
+        "note": "A second, independently authored RI-RS harness reached the default branch via PR #58 and is not the commit cited by the DQ-006 closure. It is separate corroboration, not the same artifact.",
+        "commit": "35082d7b4880dad780fb55a1a5f3ac0ef4322674",
+        "path": "conformance/canonical/canonical_001.rs",
+        "dependency_placement": "[dev-dependencies] — production runtime untouched",
+        "result": "PASS"
+      }
+    },
+    "CROSS-LANGUAGE-001": "PASS",
+    "re_execution_2026_08_20": {
+      "RI-PY": "PASS — 27 tests, rfc8785==0.1.4",
+      "RI-RS": "PASS — 5 tests, serde_json_canonicalizer==0.3.2",
+      "record": "ck003/dq-006-canonical-serialization/CK003_EXECUTION_EVIDENCE.md",
+      "RI-RS_source": "default branch harness (35082d7), not the closure-cited commit"
+    }
+  },
+  "conformance_rule": "An implementation is conformant if it independently reproduces canonical_bytes_hex byte-for-byte, together with canonical_sha256_hex and merkle_leaf_hash_hex. A matching digest without matching canonical bytes MUST NOT be recorded as a pass. No specific language, library or package version is required.",
+  "immutability": "These values are frozen. They MUST NOT be recalculated under a different serialization rule. A change to any recorded value is a protocol_version event per APS-200 §8.6, not a fixture correction."
 }

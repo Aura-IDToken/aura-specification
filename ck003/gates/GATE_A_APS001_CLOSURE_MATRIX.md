@@ -2,7 +2,7 @@
 
 **Classification:** DECISION / WORKING
 **Status:** OPEN — EXECUTION CONTROL
-**Review date:** 2026-08-18
+**Review date:** 2026-08-18 (canonical-serialization row updated 2026-08-20 by CK-003)
 
 ## Authority baseline
 
@@ -18,7 +18,7 @@ The document already defines the protocol execution lifecycle, fail-closed model
 | DQ-002 hash-domain | RI-RS model explicitly recorded | DECIDED / IMPLEMENTATION PENDING | Final ADR + fixture + conformance |
 | DQ-003 version semantics | APS-001 §12 distinguishes protocol/schema version | OPEN — binding matrix required | Version fixture + conformance |
 | DQ-004 event semantics | APS-200 ENT-007 requires `event_type` but leaves semantics open | OPEN | Event registry/ADR + fixture |
-| Canonical serialization | APS-200 §8 explicitly TODO | OPEN / BLOCKER | Serialization profile + schemas |
+| Canonical serialization | APS-200 §8 enacted 2026-08-20 (CK-003): RFC 8785 JCS, UTF-8 bytes, hash + leaf domain, version binding | **RECONCILED** — pending Chief Architect approval at merge | APS-200 §9 JSON Schemas (separate gate) |
 | APS-300 evidence cryptographic binding | APS-001 requires it; APS-300 remains source of detail | OPEN | Evidence model closure |
 | INV-001…INV-015 coverage | Registry exists; not all executable coverage is evidenced | OPEN | Gate B matrix |
 | Canonical fixture corpus | APS-500 contract exists; completeness not yet evidenced | OPEN | Gate B corpus |

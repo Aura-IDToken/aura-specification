@@ -64,6 +64,11 @@ Full definitions: [../invariants/INVARIANT_REGISTRY.md](../invariants/INVARIANT_
 ### INV-003 — Canonical Serialization
 **MUST**: Every protocol object MUST have an unambiguous serialization representation.
 
+The canonical serialization profile that satisfies this invariant is **RFC 8785
+(JCS)**, defined normatively in APS-200 §8. Two independent implementations MUST
+produce byte-identical canonical bytes for the same value in the JSON data model.
+Verified by CONF-003 against the CANONICAL-001 fixture.
+
 ### INV-004 — Immutable Evidence
 **MUST**: Evidence MUST NOT be modified after generation.
 

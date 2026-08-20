@@ -70,7 +70,53 @@ Every Evidence object MUST contain at minimum:
 | `previous_evidence_hash` | string | SHOULD | Hash of the previous Evidence object (if chain exists) |
 | `attestation_reference` | string | MUST | object_id of the associated Attestation (ENT-006) |
 
-> **TODO**: Define the canonical algorithm for computing `evidence_hash`. Must reference INV-011 and specify whether the hash covers the full JSON serialization or a field-ordered canonical form.
+### 5.1 Byte domain of the Evidence digests
+
+**Classification: NORMATIVE.**
+
+Every digest in the table above is computed over **canonical bytes** as defined by
+APS-200 §8 — the UTF-8 output of RFC 8785 (JCS) applied to the corresponding value
+in the JSON data model.
+
+This answers the question this section previously left open, "full JSON
+serialization or a field-ordered canonical form": neither. The digest input is not
+a received JSON document and not an implementation-chosen field ordering; it is the
+canonical byte sequence, and the ordering is RFC 8785's.
+
+```text
+evidence_hash = SHA-256( canonical_bytes( Evidence object without `evidence_hash` ) )
+```
+
+Constraints (INV-011):
+
+1. `input_hash`, `output_hash`, `evidence_hash` and `previous_evidence_hash` MUST
+   NOT be computed over pretty-printed JSON, over an implementation-specific
+   serializer's output, over source text as received, or over the hexadecimal text
+   of another digest.
+2. Where a digest value is carried in a field, the field carries the lower-case
+   hexadecimal rendering; the digest is the 32 raw octets it renders.
+3. A verifier MUST be able to recompute each digest independently from the
+   Evidence object alone, using only APS-200 §8 and SHA-256.
+
+**Domain separation.** The following are distinct values and MUST NOT be treated
+as interchangeable, whatever their numeric relationship in a given
+implementation:
+
+| Value | Definition | Owner |
+|---|---|---|
+| `canonical_bytes` | `UTF-8(RFC8785(value))` | APS-200 §8 |
+| `evidence_hash` | `SHA-256(canonical_bytes)` over the Evidence object, per this section | APS-300 §5.1 |
+| Merkle leaf digest | `SHA-256(0x00 \|\| canonical_bytes)` | APS-001 §7 / DQ-002 |
+| Merkle interior digest | `SHA-256(0x01 \|\| left[32] \|\| right[32])` | APS-001 §7 / DQ-002 |
+
+No equivalence between `evidence_hash` and a Merkle leaf digest is implied by
+either name or by both being SHA-256 values. They have different preimages.
+
+> **Gap (OPEN):** the exclusion rule for the self-referential `evidence_hash`
+> member — whether the member is absent, or present with a fixed placeholder —
+> is not settled here, and mirrors the same open question for APS-200 §4
+> `integrity_hash`. Both remain APS entity-model decisions. This section fixes
+> only the byte domain and the digest algorithm.
 
 ---
 

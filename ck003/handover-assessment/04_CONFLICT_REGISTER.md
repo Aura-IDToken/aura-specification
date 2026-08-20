@@ -1,8 +1,25 @@
 # Conflict Register
 
 **Classification:** EVIDENCE — NON-NORMATIVE
-**Reconciled:** 0 of 5. Each entry is routed to the Protocol Custodian / Human Architectural
-Authority. No agent may resolve any of these.
+**Reconciled:** 1 of 5 (CFL-002, by classification under CK-003). The remaining four are
+routed to the Protocol Custodian / Human Architectural Authority and are not resolved by
+any agent.
+
+> **CK-003 disposition, 2026-08-20.** CFL-002 is addressed: the contradictory DQ-006
+> statuses are reconciled by enacting APS-200 §8 and marking the stale artifacts
+> SUPERSEDED, which is the treatment §13 of the CK-003 execution order directs. That
+> marking is proposed on a branch and takes effect on merge — the approval remains the
+> Chief Architect's act under `GOVERNANCE.md` §2.
+>
+> CFL-001 is **narrowed but open**: the implementation-corpus D-3 record asserts no
+> competing encoding, only that none may be *derived* from implementation behaviour;
+> APS-200 §8 derives nothing from it. The cross-corpus precedence question itself is
+> untouched. CFL-003 is partially overtaken (PR #58 merged to `aura-guard-v1.3` `main`
+> with the engine in `[dev-dependencies]`). CFL-004 is **confirmed** by direct
+> reachability checks. CFL-005 is **open and out of CK-003 scope**; the serialization
+> question is separated from it by the input-domain rule in APS-200 §8.2.
+>
+> Full disposition: `ck003/CK003_CANONICAL_SERIALIZATION_RECONCILIATION.md` §8.
 
 ---
 

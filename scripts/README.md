@@ -2,6 +2,20 @@
 
 This directory contains tooling scripts for traceability validation and repository maintenance.
 
+## Available Scripts
+
+| Script | Purpose | Status |
+|--------|---------|--------|
+| `validate_canonical_001.py` | Verify the frozen CANONICAL-001 fixture is internally consistent: hex decodes to the recorded length, decodes as UTF-8, parses to the recorded object, and yields the recorded SHA-256 and RFC-6962 leaf — plus two negative controls. Does **not** canonicalize. | Available |
+| `check_canonicalization_authority.py` | Verify exactly one document in the normative corpus defines the RFC 8785 profile (APS-200 §8) and every other document that mentions it cites that authority. | Available |
+
+Run both from the repository root:
+
+```sh
+python3 scripts/validate_canonical_001.py
+python3 scripts/check_canonicalization_authority.py
+```
+
 ## Planned Scripts
 
 | Script | Purpose | Status |
@@ -14,7 +28,7 @@ This directory contains tooling scripts for traceability validation and reposito
 
 ## Status
 
-> **TODO**: Scripts are pending finalization of APS-200 schemas and canonical document format.
+> **TODO**: The planned scripts above remain pending finalization of APS-200 §9 schemas and the canonical document format. The canonical-serialization scripts are available now.
 
 ## Conventions
 

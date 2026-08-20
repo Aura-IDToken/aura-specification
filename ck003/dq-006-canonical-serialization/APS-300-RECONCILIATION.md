@@ -1,6 +1,11 @@
 # APS-300 Reconciliation — Canonical Serialization / Evidence Hash
 
-**Status:** PROPOSED — awaiting normative approval
+> **SUPERSEDED — 2026-08-20 (CK-003).**
+> The binding proposed here is enacted as `aps/APS-300_EVIDENCE_MODEL.md` §5.1.
+> Retained as the decision trail; no normative force.
+> See `ck003/CK003_CANONICAL_SERIALIZATION_RECONCILIATION.md`.
+
+**Status:** SUPERSEDED — enacted as APS-300 §5.1
 
 ## Binding
 

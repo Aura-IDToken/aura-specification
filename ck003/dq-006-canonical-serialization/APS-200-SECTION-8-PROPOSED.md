@@ -1,6 +1,13 @@
 # APS-200 §8 — Proposed Canonical Serialization Profile
 
-**Status:** PROPOSED — not yet frozen
+> **SUPERSEDED — 2026-08-20 (CK-003).**
+> The amendment drafted here is enacted. The normative canonical serialization
+> contract is `aps/APS-200_CANONICAL_DATA_MODEL.md` §8; read that, not this.
+> This draft is retained as the decision trail and has no normative force.
+> Where it differs from APS-200 §8, APS-200 §8 governs.
+> See `ck003/CK003_CANONICAL_SERIALIZATION_RECONCILIATION.md`.
+
+**Status:** SUPERSEDED — enacted as APS-200 §8
 **Decision:** RFC 8785 JSON Canonicalization Scheme (JCS)
 
 ## Contract

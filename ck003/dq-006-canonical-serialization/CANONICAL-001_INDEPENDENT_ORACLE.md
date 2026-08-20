@@ -1,6 +1,15 @@
 # CANONICAL-001 — Independent Oracle Record
 
-**Status:** BLOCKED_PENDING_IMPLEMENTATION_CONFORMANCE
+> **SUPERSEDED — 2026-08-20 (CK-003).**
+> The `BLOCKED` verdicts in §"Current verdict" below were accurate when written
+> and are now overtaken by executed evidence: RI-PY and RI-RS both reproduce the
+> reference values, and CROSS-LANGUAGE-001 is PASS. The reference values
+> themselves are unchanged and are frozen in
+> `fixtures/corpus/CANONICAL-001_jcs_evidence.json`.
+> **Do not cite the verdict block below as current status.**
+> See `ck003/dq-006-canonical-serialization/CK003_EXECUTION_EVIDENCE.md`.
+
+**Status:** SUPERSEDED — verdicts overtaken by executed evidence (values unchanged)
 **Profile:** Proposed RFC 8785 JCS
 **Hash domain:** Proposed DQ-002 RI-RS model
 
