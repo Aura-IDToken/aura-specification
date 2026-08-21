@@ -1,5 +1,11 @@
 # DQ-006 — Canonical Serialization / Cross-Language Closure Package
 
+> **SUPERSEDED — 2026-08-20.** This record is retained for history only.
+> The single authoritative DQ-006 closure record is [`../closures/DQ-006_CLOSURE_PACKAGE.md`](../closures/DQ-006_CLOSURE_PACKAGE.md),
+> which reconciles this material against APS-200 §8, APS-300 §5, ADR-CK003-DQ006 and CONF-003.
+> Where this document differs from that record — including its status line — that record governs.
+> **DQ-006 status of record: OPEN.**
+
 **Status:** CLOSED — PASS
 **Gate:** DQ-006
 **Fixture:** CANONICAL-001

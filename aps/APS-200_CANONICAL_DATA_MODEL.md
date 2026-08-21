@@ -55,7 +55,9 @@ Every entity MUST contain the following fields:
 | `protocol_version` | string | MUST | APS version this object conforms to (e.g., `1.0`) |
 | `schema_version` | string | MUST | Schema version of this entity definition |
 | `created_at` | string (ISO 8601) | MUST | Timestamp of object creation (UTC) |
-| `integrity_hash` | string | MUST | SHA-256 hash of the canonical serialization of this object |
+| `integrity_hash` | string | MUST | `SHA-256(canonical_bytes)` of this object, excluding `integrity_hash` itself. Canonical bytes are defined by §8. |
+
+> **Note on self-reference.** A digest field cannot cover its own value. `integrity_hash` therefore excludes itself from the canonicalized object, matching the rule already stated for `evidence_hash` in APS-300 §5. This makes an existing implicit constraint explicit; it does not introduce a new one.
 
 ---
 
