@@ -97,7 +97,7 @@ Every entity MUST contain the following fields:
 
 ### ENT-003 — Evaluation Result
 
-**Purpose**: The output of a protocol execution.
+**Purpose**: The output of evaluation.
 
 | Field | Type | Requirement | Description |
 |-------|------|-------------|-------------|
@@ -155,7 +155,7 @@ See APS-300 for the full Evidence Model. The canonical Evidence object fields ar
 | Field | Type | Requirement | Description |
 |-------|------|-------------|-------------|
 | Common Object Contract fields | — | MUST | See §4 |
-| `event_type` | string | MUST | Canonical event type |
+| `event_type` | string | MUST | Canonical event type; normative vocabulary is governed by `aps/EVENT_TYPE_REGISTRY.md` |
 | `sequence_number` | integer | MUST | Monotonically increasing sequence number within a session |
 | `previous_record_hash` | string | MUST | Hash of the previous Audit Record (chain link) |
 | `event_payload_hash` | string | MUST | Hash of the event payload |
@@ -212,125 +212,80 @@ Every object MUST pass:
 
 ## 8. Serialization Requirements
 
-### 8.1 Transport representations
+For the current normative JSON interoperability profile, implementations MUST use **RFC 8785 JSON Canonicalization Scheme (JCS)** when canonical JSON serialization is required by this specification.
 
-Implementations MAY use different transport formats (JSON, CBOR, Protocol Buffers), provided:
-- Full model semantics are preserved
-- The transport representation round-trips to the same semantic object
-- INV-003 (Canonical Serialization) is not violated
+The canonical serialization boundary is the UTF-8 byte sequence emitted by the JCS profile. Semantic JSON equivalence, map insertion order, implementation-specific serializers, whitespace conventions, or textual/hexadecimal representations MUST NOT be used as substitutes for canonical-byte equality.
 
-A transport representation is never itself the canonical representation.
-
-### 8.2 Canonical serialization profile
-
-**This section is the single normative authority for canonical serialization in the Aura Protocol.** No other document may define a conflicting canonical serialization profile. Other documents MAY reference, interpret, test or trace this section; they MUST NOT restate it as an independent definition.
-
-Wherever this specification requires the *canonical serialization* of a protocol object:
-
-1. The object MUST first satisfy the applicable APS schema and semantic constraints (§7).
-2. The canonical representation MUST be produced by applying the **JSON Canonicalization Scheme (JCS), RFC 8785**, to the semantic object.
-3. The result MUST be encoded as **UTF-8**.
-4. The exact byte sequence produced by that operation is the object's **`canonical_bytes`**.
-
-`canonical_bytes` is the sole input to every cryptographic operation that this specification defines over canonical serialization.
-
-### 8.3 Properties fixed by the profile
-
-Because RFC 8785 is normative, the following are fixed by it and MUST NOT be redefined by an implementation or by a subordinate document:
-
-| Property | Rule |
-|----------|------|
-| Object member ordering | Determined by JCS (UTF-16 code-unit ordering of member names), never by insertion order |
-| Insignificant whitespace | Absent from `canonical_bytes` |
-| String representation | JCS/JSON string form, UTF-8 encoded, minimal escaping |
-| Non-ASCII characters | Emitted as raw UTF-8, not as `\uXXXX` escapes |
-| Number serialization | RFC 8785 (ECMAScript `Number::toString`) rules |
-| Non-finite numbers | `NaN` and `Infinity` are not JSON values; they MUST be rejected, never coerced |
-| Array element ordering | Preserved exactly as given by the semantic object |
-
-### 8.4 Prohibited digest inputs
-
-An implementation MUST NOT compute a protocol digest over any of the following:
-
-- pretty-printed or indented JSON;
-- an implementation-specific or parser-preserving JSON serialization;
-- a JSON string containing an escaped copy of `canonical_bytes`;
-- a hexadecimal, Base64 or other textual encoding of `canonical_bytes`;
-- a hexadecimal digest string used in place of raw digest bytes;
-- a language-specific debug or `repr` form of the object.
-
-### 8.5 Hash and Merkle domains
-
-For a protocol object with canonical byte sequence `B`:
+For a canonical object `O`:
 
 ```text
-digest(B)  = SHA-256(B)
-leaf(B)    = SHA-256(0x00 || B)
-node(l, r) = SHA-256(0x01 || l || r)
+JCS(O) = canonical UTF-8 bytes B
+SHA-256(B) = record/integrity digest where applicable
+SHA-256(0x00 || B) = RFC 6962-style leaf hash where applicable
 ```
 
-`0x00` and `0x01` are raw octets, not the ASCII texts `"0x00"` / `"0x01"`. `l` and `r` are raw digest bytes, not hexadecimal strings.
+The leaf prefix `0x00` is one raw octet. It MUST NOT be represented as the ASCII characters `0x00`, a hexadecimal string, or another textual wrapper. RFC 6962-style interior-node hashing uses `0x01` followed by the two raw 32-byte child digests.
 
-The hash-domain model itself is owned by **APS-001 §7.1** and governed by the DQ-002 hash-domain decision; the formulas are reproduced here only so that the byte boundary is unambiguous. This section binds their **input byte domain** to `canonical_bytes`; it does not define, extend or vary the domains themselves. Where this table and APS-001 §7.1 could be read differently, APS-001 §7.1 governs.
+The canonicalization/hash boundary is implementation-independent. RI-PY and RI-RS have independently executed CANONICAL-001 under CK-003 DQ-006 and produced byte-identical canonical bytes, SHA-256 digests and leaf digests. The corresponding closure evidence is normative decision evidence, not a production dependency requirement.
 
-Correspondingly, APS-001 §7.1 states that the serialization profile producing `canonical bytes` is owned by APS-200 — that profile is §8.2 above.
+Conformance engines used for this verification are:
 
-The evidence-hash domain is defined by APS-300 §5 and is bound to `canonical_bytes` there.
+- RI-PY: `rfc8785==0.1.4` — conformance-only;
+- RI-RS: `serde_json_canonicalizer==0.3.2` — conformance-only.
 
-### 8.6 Cross-implementation requirement
+These implementation dependencies do not mandate insertion of either library into production runtime code. Production implementations MUST satisfy the RFC 8785 semantics; the named engines are reference conformance tools.
 
-For the same semantic protocol object, every conformant implementation MUST produce identical `canonical_bytes`. In particular, RI-PY and RI-RS MUST be byte-identical. Verification is defined by CONF-003.
+The canonical serialization profile is version-bound. A change affecting canonical bytes, number/string serialization, field inclusion, hash-domain inputs, or conformance outcomes MUST be treated as a versioned protocol change and MUST undergo compatibility and fixture impact analysis.
 
-### 8.7 Scope boundary
+### CANONICAL-001 reference vector
 
-Canonical serialization determines **representation only**. It does not define, and MUST NOT be read as defining:
+Input object:
 
-- event semantics or the `event_type` vocabulary — see the [Event-Type Registry](EVENT_TYPE_REGISTRY.md) and DQ-004;
-- version semantics, or the distinction between `protocol_version` and `schema_version` — see §4 and DQ-003;
-- object identity semantics — see §4 and INV-015;
-- entity schemas — see §5 and §9;
-- Merkle tree construction semantics beyond the domains stated in §8.5.
+```json
+{"event_type":"AUDIT_RECORD","payload":{"value":42},"protocol_version":"1.0","schema_version":"1.0"}
+```
 
-### 8.8 Compatibility and migration
+Canonical byte length: `100`.
 
-Binding or changing the canonical serialization profile is a protocol compatibility event and MUST be version-bound with explicit impact analysis.
+Canonical bytes (hex):
 
-Evidence generated before this profile was bound MUST retain its original serialization and hash-profile identity. Such evidence MUST NOT be silently reinterpreted as RFC 8785 / RFC 6962 evidence.
+```text
+7b226576656e745f74797065223a2241554449545f5245434f5244222c227061796c6f6164223a7b2276616c7565223a34327d2c2270726f746f636f6c5f76657273696f6e223a22312e30222c22736368656d615f76657273696f6e223a22312e30227d
+```
 
-### 8.9 Reference engines (informative)
+SHA-256:
 
-The reference implementations use the following conformance-scoped engines:
+```text
+b6c3660ce6dee498b37443a92bf87c5efead6fe863fcf19197c0baeda139a4e6
+```
 
-| Implementation | Engine |
-|----------------|--------|
-| RI-PY | `rfc8785` 0.1.4 |
-| RI-RS | `serde_json_canonicalizer` 0.3.2 |
+RFC 6962 leaf:
 
-These engines are **conformance implementation detail, not protocol contract**. The normative contract is RFC 8785 together with §8.5. Naming an engine here does not authorize introducing it into any production runtime dependency graph, and an implementation using a different RFC 8785-conformant engine is not thereby non-conformant.
+```text
+ce6b36733d97699230f37d80a14e14104c19d2e787526a6fc3aaae6b6648c039
+```
 
-> **Traceability**: INV-003 · CONF-003 · CANONICAL-001 · ADR-CK003-DQ006 · DQ-006 closure package.
+The executable cross-language evidence and provenance are maintained under `ck003/dq-006-closure/` and the reference implementation conformance repositories.
 
 ---
 
 ## 9. JSON Schema
 
-> **TODO**: Publish JSON Schema definitions for each entity at a stable URL. Schemas belong in `fixtures/schemas/`.
+Machine-readable schema definitions for canonical fixtures and shared object contracts are maintained under `fixtures/schemas/`. Entity-specific schemas remain subject to APS-200 completion and MUST be added before APS-001 v1.0 approval where required by the relevant entity contract.
+
+The event-type vocabulary and validation contract are governed by `aps/EVENT_TYPE_REGISTRY.md`. That registry MUST be incorporated into the approved APS-200 profile before DQ-004 can be closed.
 
 ---
 
 ## 10. Traceability
 
 | Entity | Related Invariants | Related Evidence | Related CONF |
-|--------|-------------------|-----------------|--------------|
+|--------|-------------------|------------------|--------------|
 | ENT-001 | INV-009, INV-015 | EVID-CORE | CONF-008 |
 | ENT-002 | INV-001, INV-003 | EVID-CORE | CONF-001, CONF-003 |
 | ENT-003 | INV-001, INV-003, INV-013 | EVID-CORE | CONF-001, CONF-003 |
 | ENT-004 | INV-013 | EVID-CORE | — |
 | ENT-005 | INV-004, INV-005, INV-011 | EVID-CORE | CONF-004, CONF-009 |
 | ENT-006 | INV-005 | EVID-CONF | CONF-005 |
-| ENT-007 | INV-012 | EVID-AUDIT | — |
+| ENT-007 | INV-003, INV-012 | EVID-AUDIT | CONF-003, CONF-012 |
 | ENT-008 | INV-009, INV-015 | EVID-CORE | CONF-008 |
-
----
-
-*Source: Original text preserved in [`APS-200 — Canonical Data Model_260723_192852.txt`](../APS-200%20%E2%80%94%20Canonical%20Data%20Model_260723_192852.txt)*
