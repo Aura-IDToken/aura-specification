@@ -21,6 +21,18 @@ Normative authority remains with the approved Constitution, APS documents, appro
 
 DQ-002 already has a dedicated evidence package under `ck003/dq-002-hash-domain/`. DQ-003 work is maintained on its dedicated branch until consolidated into the closure branch.
 
+## DQ-002 closure
+
+The single authoritative DQ-002 record is [`closures/DQ-002_FINAL_CLOSURE.md`](../closures/DQ-002_FINAL_CLOSURE.md). Everything under `ck003/dq-002-hash-domain/` is subordinate evidence and MUST NOT be cited as current status.
+
+The normative hash-domain model lives in **APS-001 §7.1–§7.2** (single authority), with the input byte domain bound in **APS-200 §8.5** and the evidence/Merkle domain separation in **APS-300 §5.2**.
+
+**DQ-002 status: BLOCKED** — contract settled, closure evidence insufficient.
+
+Revalidated against the DQ-006 canonical boundary on 2026-08-21: DQ-006 introduces no new hash dependency and does not change the algorithm, the leaf domain or the node domain. Canonical bytes → SHA-256 → RFC 6962 leaf re-executes clean across RI-PY and RI-RS, with 41/41 revalidation checks and 18 negative controls. Closure is withheld because both DQ-002 ADRs are still `PROPOSED`, APS-001 §7.2 defers odd-node behaviour to an "approved Aura Merkle profile" that does not exist, `DEFECT-DQ002-F1/F2/F3` are open, no DQ-002 CI gate has ever executed successfully, and the depended-upon DQ-006 gate is itself OPEN. Residuals R-1…R-10 are listed in the closure record §12.
+
+This does not by itself close APS-001, DQ-003, DQ-004, INV-001…INV-015, or the release gate.
+
 ## DQ-006 closure
 
 The single authoritative DQ-006 record is [`closures/DQ-006_CLOSURE_PACKAGE.md`](../closures/DQ-006_CLOSURE_PACKAGE.md). Everything under `ck003/dq-006-closure/` and `ck003/dq-006-canonical-serialization/` is superseded working history and MUST NOT be cited as current status.

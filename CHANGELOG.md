@@ -29,6 +29,11 @@ Versioning follows the model defined in [VERSIONING.md](VERSIONING.md).
 - **CONF-003** rewritten as a normative conformance requirement demanding independently produced RI-PY/RI-RS artifacts, gate-side digest and leaf recomputation, negative controls, and a JCS-discriminating fixture
 - **ADR-CK003-DQ006** reconciled to ACCEPTED, distinguishing the normative protocol contract from conformance implementation detail
 - **DQ-006 status of record** reconciled from CLOSED to **OPEN** in `closures/DQ-006_CLOSURE_PACKAGE.md`, now the single authoritative closure record; four duplicate records marked SUPERSEDED. Cross-language byte/SHA-256/leaf equality on CANONICAL-001 remains PASS; closure is withheld pending a JCS-discriminating cross-language vector, evidence reachability, and ratification
+- **DQ-002 status of record** revalidated against the DQ-006 canonical boundary and reconciled from CLOSED / PASS to **BLOCKED** in `closures/DQ-002_FINAL_CLOSURE.md`, now the single authoritative DQ-002 closure record; the 2026-08-19 text is retained verbatim in §14. The hash-domain contract is **unchanged** — SHA-256 over `canonical_bytes`, leaf `0x00`, node `0x01`, raw 32-byte children — and DQ-006 introduces no new hash dependency. Closure is withheld pending ADR approval, an approved Merkle tree-construction profile, closure of `DEFECT-DQ002-F1/F2/F3`, a successful CI execution, and ratification (residuals R-1…R-10)
+
+### Evidence
+- `ck003/dq-002-hash-domain/tools/dq002_hash_domain_revalidation.py` — standard-library-only harness proving the DQ-006 → DQ-002 chain (canonical bytes → SHA-256 → RFC 6962 leaf / node) and 18 negative controls against real RI-PY and RI-RS execution artifacts. 41 checks, 0 failed
+- `ck003/dq-002-hash-domain/evidence/canonical-001/` — CANONICAL-001 execution artifacts transported byte-identically from the reference repositories, with `PROVENANCE.md` recording source repository, path, commit and digest for each
 
 ---
 

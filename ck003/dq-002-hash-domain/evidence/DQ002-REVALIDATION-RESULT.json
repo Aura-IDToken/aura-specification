@@ -1,0 +1,252 @@
+{
+  "checks": [
+    {
+      "detail": "RI-PY artifact sha256 6b5b5ccd54901181b9af45421d051ea5ea53096fbf632ab1e25a66705f2b856c (manifest: 6b5b5ccd54901181b9af45421d051ea5ea53096fbf632ab1e25a66705f2b856c, source Aura-IDToken/aura-poc-a-core-v3.3@49d0e4f67e90a7a47e9f067bfc42ab40ee59a56f)",
+      "id": "T-RI-PY-ARTIFACT",
+      "phase": "traceability",
+      "result": "PASS"
+    },
+    {
+      "detail": "RI-RS artifact sha256 a6ebad019118a7806ae927c4802a60056cb9e0c90f3cb1ef2a5e0cf359af329c (manifest: a6ebad019118a7806ae927c4802a60056cb9e0c90f3cb1ef2a5e0cf359af329c, source Aura-IDToken/aura-guard-v1.3@4e9e2284ccdac6d2f40e038e33b4eaeec847aaa2)",
+      "id": "T-RI-RS-ARTIFACT",
+      "phase": "traceability",
+      "result": "PASS"
+    },
+    {
+      "detail": "input.json sha256 649bb748464ce78fe1a1d7104689d2dee736fb80777db6569592bc0d3d039261",
+      "id": "T-INPUT",
+      "phase": "traceability",
+      "result": "PASS"
+    },
+    {
+      "detail": "rfc8785 0.1.4 vs serde_json_canonicalizer 0.3.2",
+      "id": "T-DISTINCT",
+      "phase": "traceability",
+      "result": "PASS"
+    },
+    {
+      "detail": "RI-PY canonical_bytes == RI-RS canonical_bytes (100 B)",
+      "id": "B-EQ",
+      "phase": "dq006-boundary",
+      "result": "PASS"
+    },
+    {
+      "detail": "canonical_bytes_len = 100",
+      "id": "B-LEN",
+      "phase": "dq006-boundary",
+      "result": "PASS"
+    },
+    {
+      "detail": "canonical_bytes decode as UTF-8",
+      "id": "B-UTF8",
+      "phase": "dq006-boundary",
+      "result": "PASS"
+    },
+    {
+      "detail": "both artifacts declare RFC8785",
+      "id": "B-PROFILE",
+      "phase": "dq006-boundary",
+      "result": "PASS"
+    },
+    {
+      "detail": "SHA-256(canonical_bytes) == RI-PY sha256 = b6c3660ce6dee498b37443a92bf87c5efead6fe863fcf19197c0baeda139a4e6",
+      "id": "H-PY",
+      "phase": "sha-boundary",
+      "result": "PASS"
+    },
+    {
+      "detail": "SHA-256(canonical_bytes) == RI-RS sha256 = b6c3660ce6dee498b37443a92bf87c5efead6fe863fcf19197c0baeda139a4e6",
+      "id": "H-RS",
+      "phase": "sha-boundary",
+      "result": "PASS"
+    },
+    {
+      "detail": "RI-PY sha256 == RI-RS sha256",
+      "id": "H-EQ",
+      "phase": "sha-boundary",
+      "result": "PASS"
+    },
+    {
+      "detail": "SHA-256(0x00 || canonical_bytes) == RI-PY leaf = ce6b36733d97699230f37d80a14e14104c19d2e787526a6fc3aaae6b6648c039",
+      "id": "L-PY",
+      "phase": "leaf-boundary",
+      "result": "PASS"
+    },
+    {
+      "detail": "SHA-256(0x00 || canonical_bytes) == RI-RS leaf = ce6b36733d97699230f37d80a14e14104c19d2e787526a6fc3aaae6b6648c039",
+      "id": "L-RS",
+      "phase": "leaf-boundary",
+      "result": "PASS"
+    },
+    {
+      "detail": "RI-PY leaf == RI-RS leaf",
+      "id": "L-EQ",
+      "phase": "leaf-boundary",
+      "result": "PASS"
+    },
+    {
+      "detail": "both artifacts declare leaf domain 0x00",
+      "id": "L-DOMAIN",
+      "phase": "leaf-boundary",
+      "result": "PASS"
+    },
+    {
+      "detail": "leaf preimage is exactly one octet longer than canonical_bytes",
+      "id": "L-PREIMAGE",
+      "phase": "leaf-boundary",
+      "result": "PASS"
+    },
+    {
+      "detail": "observed canonical_bytes == frozen reference",
+      "id": "X-BYTES",
+      "phase": "reference",
+      "result": "PASS"
+    },
+    {
+      "detail": "observed SHA-256 == frozen reference",
+      "id": "X-SHA",
+      "phase": "reference",
+      "result": "PASS"
+    },
+    {
+      "detail": "observed leaf == frozen reference",
+      "id": "X-LEAF",
+      "phase": "reference",
+      "result": "PASS"
+    },
+    {
+      "detail": "SHA-256(pretty JSON text) = 90d537856cef1adcf128c87f04317ad731be3f6dcbdd975b2ad3c7f5e7f71b6a (normative = b6c3660ce6dee498b37443a92bf87c5efead6fe863fcf19197c0baeda139a4e6)",
+      "id": "NC-B1",
+      "phase": "negative",
+      "result": "PASS"
+    },
+    {
+      "detail": "SHA-256(default json.dumps text) = dfcd927f35f613e72195dd7e027cfbf01d59b8a52ef0411bd07e13064632cb01 (normative = b6c3660ce6dee498b37443a92bf87c5efead6fe863fcf19197c0baeda139a4e6)",
+      "id": "NC-B2",
+      "phase": "negative",
+      "result": "PASS"
+    },
+    {
+      "detail": "SHA-256(input.json file bytes) = 649bb748464ce78fe1a1d7104689d2dee736fb80777db6569592bc0d3d039261 (normative = b6c3660ce6dee498b37443a92bf87c5efead6fe863fcf19197c0baeda139a4e6)",
+      "id": "NC-B3",
+      "phase": "negative",
+      "result": "PASS"
+    },
+    {
+      "detail": "SHA-256(JSON string escaping canonical_bytes) = f92d4c9246b10ca18a58e32aea6869b05dee3e1d35cc0f496da80010d6229d1b (normative = b6c3660ce6dee498b37443a92bf87c5efead6fe863fcf19197c0baeda139a4e6)",
+      "id": "NC-B4",
+      "phase": "negative",
+      "result": "PASS"
+    },
+    {
+      "detail": "SHA-256(hex text of canonical_bytes) = 07ddadb346f1c51e9e0b7c97098a82b3893d5fe35cdfb261c23afb2a842b78aa (normative = b6c3660ce6dee498b37443a92bf87c5efead6fe863fcf19197c0baeda139a4e6)",
+      "id": "NC-B5",
+      "phase": "negative",
+      "result": "PASS"
+    },
+    {
+      "detail": "SHA-256(Python repr) = bbc242f9e90e69cfe4203e708418a52cf5d16c04e850f6ae71c09d9ac0a99097 (normative = b6c3660ce6dee498b37443a92bf87c5efead6fe863fcf19197c0baeda139a4e6)",
+      "id": "NC-B6",
+      "phase": "negative",
+      "result": "PASS"
+    },
+    {
+      "detail": "SHA-256(0x01 || bytes) = 491a8dccdaf280c90d6ce9984ecd8b067c26c994aff7144b0a7606e3119a10b1 (normative = ce6b36733d97699230f37d80a14e14104c19d2e787526a6fc3aaae6b6648c039)",
+      "id": "NC-D1",
+      "phase": "negative",
+      "result": "PASS"
+    },
+    {
+      "detail": "SHA-256(bytes) with no domain octet = b6c3660ce6dee498b37443a92bf87c5efead6fe863fcf19197c0baeda139a4e6 (normative = ce6b36733d97699230f37d80a14e14104c19d2e787526a6fc3aaae6b6648c039)",
+      "id": "NC-D2",
+      "phase": "negative",
+      "result": "PASS"
+    },
+    {
+      "detail": "SHA-256(ASCII \"0x00\" || bytes) = c85ca1869eea551b687e7e305e2e8c0e32cf7dd98b03fa0dc1415b3aa601aed1 (normative = ce6b36733d97699230f37d80a14e14104c19d2e787526a6fc3aaae6b6648c039)",
+      "id": "NC-E1",
+      "phase": "negative",
+      "result": "PASS"
+    },
+    {
+      "detail": "SHA-256(ASCII \"00\" || bytes) = c838f1b8c25cf3c8b8fcd5bd889770ad5a33ace2baa477e6f480065ad6ed7939 (normative = ce6b36733d97699230f37d80a14e14104c19d2e787526a6fc3aaae6b6648c039)",
+      "id": "NC-E2",
+      "phase": "negative",
+      "result": "PASS"
+    },
+    {
+      "detail": "SHA-256(hex text of the whole leaf preimage) = 015cf0e2f609cb7cfecbac3bf44811d30b2ef8e09c8ded6f2cf69271e9a5c6d9 (normative = ce6b36733d97699230f37d80a14e14104c19d2e787526a6fc3aaae6b6648c039)",
+      "id": "NC-E3",
+      "phase": "negative",
+      "result": "PASS"
+    },
+    {
+      "detail": "SHA-256(0x01 || hex(l) || hex(r)) = f70d1a73f0deffe9823af35dedf29b32f603080c9475111c3e7411a2b3f52551 (normative = b64c82cfbbd9a27d9f6fcab36c5f14ee12dc9da99ff3c9b31c9754c6ec3b4193)",
+      "id": "NC-N1",
+      "phase": "negative",
+      "result": "PASS"
+    },
+    {
+      "detail": "SHA-256(hex(l) || hex(r)) - the RI-PY legacy node domain = 3c6f1dd2f985b41c8fc5b723023fa3cf45414f90e2c23f71333b4eed04310720 (normative = b64c82cfbbd9a27d9f6fcab36c5f14ee12dc9da99ff3c9b31c9754c6ec3b4193)",
+      "id": "NC-N2",
+      "phase": "negative",
+      "result": "PASS"
+    },
+    {
+      "detail": "SHA-256(0x00 || l || r) - leaf domain used for a node = b9912389084a2ce993818ec07bf2d518d9ac81cf624cde861fe102c384506e78 (normative = b64c82cfbbd9a27d9f6fcab36c5f14ee12dc9da99ff3c9b31c9754c6ec3b4193)",
+      "id": "NC-N3",
+      "phase": "negative",
+      "result": "PASS"
+    },
+    {
+      "detail": "node() rejects a non-32-byte (hexadecimal text) child",
+      "id": "NC-N4",
+      "phase": "negative",
+      "result": "PASS"
+    },
+    {
+      "detail": "canonicalization variant: sorted+indent=2 = 7b0a2020226576656e745f74797065223a202241554449545f5245434f5244222c0a2020227061796c6f6164223a207b0a202020202276616c7565223a2034320a20207d2c0a20202270726f746f636f6c5f76657273696f6e223a2022312e30222c0a202022736368656d615f76657273696f6e223a2022312e30220a7d (normative = 7b226576656e745f74797065223a2241554449545f5245434f5244222c227061796c6f6164223a7b2276616c7565223a34327d2c2270726f746f636f6c5f76657273696f6e223a22312e30222c22736368656d615f76657273696f6e223a22312e30227d)",
+      "id": "NC-C1",
+      "phase": "negative",
+      "result": "PASS"
+    },
+    {
+      "detail": "canonicalization variant: insertion order, compact = 7b226576656e745f74797065223a2241554449545f5245434f5244222c2270726f746f636f6c5f76657273696f6e223a22312e30222c22736368656d615f76657273696f6e223a22312e30222c227061796c6f6164223a7b2276616c7565223a34327d7d (normative = 7b226576656e745f74797065223a2241554449545f5245434f5244222c227061796c6f6164223a7b2276616c7565223a34327d2c2270726f746f636f6c5f76657273696f6e223a22312e30222c22736368656d615f76657273696f6e223a22312e30227d)",
+      "id": "NC-C2",
+      "phase": "negative",
+      "result": "PASS"
+    },
+    {
+      "detail": "ensure_ascii escaped: IDENTICAL on this fixture",
+      "id": "NC-C3",
+      "phase": "negative",
+      "result": "PASS"
+    },
+    {
+      "detail": "CANONICAL-001 is JCS-degenerate: sorted-compact JSON reproduces the canonical bytes, so this fixture proves agreement, not RFC 8785 conformance. DQ-002's leaf evidence inherits DQ-006 deviation D-1.",
+      "id": "D1-INHERITED",
+      "phase": "deviation",
+      "result": "PASS"
+    },
+    {
+      "detail": "03_cross_language_fixture.json leaf digest is correct",
+      "id": "F1-LEAF-OK",
+      "phase": "defect",
+      "result": "PASS"
+    },
+    {
+      "detail": "03_cross_language_fixture.json node digest still wrong: recorded e2bd2dcef148b54e935fe552c7c83978103f85b2d970d55f482717bb3904b7ac, actual bc6b943b820c449acf880d293c216a24a8066b153f87f2361fae2beda3a72641 (DEFECT-DQ002-F1 OPEN)",
+      "id": "F1-NODE-DEFECT",
+      "phase": "defect",
+      "result": "PASS"
+    },
+    {
+      "detail": "that fixture's bytes are a pipe-delimited string, not JCS output: it does not exercise the DQ-006 boundary",
+      "id": "F1-CANON-DISJOINT",
+      "phase": "defect",
+      "result": "PASS"
+    }
+  ],
+  "failed": 0,
+  "result": "PASS"
+}

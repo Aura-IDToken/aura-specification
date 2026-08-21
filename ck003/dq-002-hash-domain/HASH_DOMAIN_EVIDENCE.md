@@ -1,7 +1,16 @@
 # DQ-002 Hash-Domain Evidence Matrix
 
-**Date:** 2026-08-17
+> **Subordinate record — revalidated 2026-08-21.** The AS-IS findings below are
+> **correct and were re-verified by execution and by source inspection** during
+> the DQ-002 final closure revalidation; both cited source blob SHAs are
+> unchanged at each repository's current head. The **Decision state** block at
+> the end of this file is superseded: the DQ-002 status of record is
+> **BLOCKED**, per [`closures/DQ-002_FINAL_CLOSURE.md`](../../closures/DQ-002_FINAL_CLOSURE.md).
+> Where this file and that record differ, that record governs.
+
+**Date:** 2026-08-17 · revalidated 2026-08-21
 **Baseline source:** `aura-specification` commit `62d2d6bcc1a46dd505ebfe400ad01fa3c6a25bf0`
+**Revalidation baseline:** `aura-specification` commit `ff30e166be2511b6d5684a33efb8c7da9d63a574`
 
 ## Specification evidence
 
@@ -56,8 +65,43 @@ For raw UTF-8 leaves `61` (`a`) and `62` (`b`), under the proposed RFC 6962 doma
 
 These values are generated from the explicit byte-domain formulas, not copied from either implementation.
 
+## 2026-08-21 revalidation — what changed and what did not
+
+The DQ-006 canonical serialization boundary (RFC 8785 JCS → UTF-8
+`canonical_bytes`) is now bound in APS-200 §8.2, which closes the dependency
+that `02_hash_domain_adr.md` §3.1 left open. The hash-domain contract itself is
+**unchanged**: SHA-256 over `canonical_bytes`, leaf `0x00`, node `0x01`, raw
+32-byte children.
+
+Re-executed on 2026-08-21:
+
+| Check | Result |
+|---|---|
+| `tools/rfc6962_oracle.sh selftest` | PASS, exit 0 |
+| `tools/compare_vectors.py` RI-PY vs RI-RS | EQUAL + CONFORMANT, 0 diffs, exit 0 |
+| `tools/dq002_hash_domain_revalidation.py` | 41 checks, 0 failed, exit 0 |
+| RI-PY `conformance/merkle/` @ `badd0b19` | 158 passed |
+| RI-PY `conformance/canonical/` @ `3e8e0e32` | 13 + 1 + 13 passed; negative controls exit 0 |
+| RI-RS `hash_domains` · `byte_representations` · `ck003_dq002_ri_rs_conformance` · `golden` · `canonical_001` @ `35082d7b` | 17 + 18 + 1 + 10 + 5 passed |
+
+Source blob SHAs cited above re-verified at each repository's current head:
+RI-RS `src/merkle.rs` = `658d5b51e14830b03be8a4248ac06ca9731578ae`, RI-PY
+`audit/merkle.py` = `c0db98fbfb01eaf558c25d05e3696e78c3e5ffd5`. Both unchanged.
+The compatibility conclusion above therefore still holds: RI-PY's **production**
+audit path is still the legacy contract, deliberately, per the ADR migration
+rule. RI-PY's conformant implementation lives in the conformance-only module
+`conformance/merkle/rfc6962.py`.
+
 ## Decision state
 
-**DQ-002: OPEN — evidence sufficient to establish incompatibility; normative binding decision remains pending.**
+**DQ-002: BLOCKED** — the hash-domain contract is settled and cross-language
+conformance re-executes clean, but closure evidence is insufficient: the
+governing ADR is still `PROPOSED`, APS-001 §7.2 defers odd-node behaviour to an
+"approved Aura Merkle profile" that does not exist, `DEFECT-DQ002-F1/F2/F3`
+are all OPEN, no DQ-002 CI gate has ever executed successfully, and the
+depended-upon DQ-006 gate is itself OPEN. Residuals R-1…R-10 and the full
+criteria table are in
+[`closures/DQ-002_FINAL_CLOSURE.md`](../../closures/DQ-002_FINAL_CLOSURE.md) §12, §15.
 
-No production repository has been modified by this evidence pack.
+No production repository has been modified by this evidence pack or by the
+2026-08-21 revalidation.

@@ -2,7 +2,7 @@
 
 **Classification:** DECISION / WORKING
 **Status:** OPEN — EXECUTION CONTROL
-**Review date:** 2026-08-20 (reconciled by DQ-006 CLOSURE RECONCILIATION)
+**Review date:** 2026-08-21 (DQ-002 row reconciled by DQ-002 FINAL CLOSURE REVALIDATION; 2026-08-20 DQ-006 CLOSURE RECONCILIATION otherwise unchanged)
 
 ## Authority baseline
 
@@ -15,7 +15,7 @@ The document already defines the protocol execution lifecycle, fail-closed model
 | Item | Current evidence | Gate A status | Next evidence |
 |---|---|---|---|
 | APS-001 scope/execution lifecycle | APS-001 §1–2 | SUBSTANTIALLY DEFINED | Architecture review |
-| DQ-002 hash-domain | RI-RS model explicitly recorded | DECIDED / IMPLEMENTATION PENDING | Final ADR + fixture + conformance |
+| DQ-002 hash-domain | APS-001 §7.1–§7.2 records the model; cross-language equality re-executed 2026-08-21 (41/41 revalidation checks, RI-PY 158, RI-RS 51) | **BLOCKED** — see `closures/DQ-002_FINAL_CLOSURE.md` | ADR approval (R-1) + approved Merkle tree-construction profile (R-2) + close F1/F2/F3 (R-3…R-5) + successful CI run (R-6) |
 | DQ-003 version semantics | APS-001 §12 distinguishes protocol/schema version | OPEN — binding matrix required | Version fixture + conformance |
 | DQ-004 event semantics | APS-200 ENT-007 requires `event_type` but leaves semantics open | OPEN | Event registry/ADR + fixture |
 | Canonical serialization | APS-200 §8 binds RFC 8785 JCS, UTF-8 canonical bytes and the SHA-256 / RFC 6962 domains | DECIDED / NORMATIVE — evidence partial | Discriminating cross-language vector (DQ-006 R1) + entity schemas |

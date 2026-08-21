@@ -1,5 +1,12 @@
 # CROSS-LANGUAGE-002 — Execution Evidence Ledger
 
+> **Subordinate record — re-executed 2026-08-21.** Every execution result below
+> reproduced during the DQ-002 final closure revalidation (RI-PY `conformance/merkle/`
+> 158 passed; oracle selftest and vector comparison exit 0). Its §12 statement that
+> "DQ-002 remains OPEN" is superseded only in vocabulary: the DQ-002 status of record
+> is **BLOCKED**, per [`closures/DQ-002_FINAL_CLOSURE.md`](../../closures/DQ-002_FINAL_CLOSURE.md),
+> which governs where the two differ.
+
 **Scope:** CK-003 / DQ-002 — does RI-PY implement the same Merkle contract as
 RI-RS and as the DQ-002 normative rule?
 
