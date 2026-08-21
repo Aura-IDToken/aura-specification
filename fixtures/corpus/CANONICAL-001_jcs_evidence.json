@@ -1,0 +1,60 @@
+{
+  "fixture_id": "CANONICAL-001",
+  "profile": "RFC8785-JCS",
+  "protocol_object": {
+    "event_type": "AUDIT_RECORD",
+    "protocol_version": "1.0",
+    "schema_version": "1.0",
+    "payload": {
+      "value": 42
+    }
+  },
+  "canonicalization": {
+    "algorithm": "RFC8785-JCS",
+    "encoding": "UTF-8",
+    "canonical_bytes_length": 100,
+    "canonical_bytes_hex": "7b226576656e745f74797065223a2241554449545f5245434f5244222c227061796c6f6164223a7b2276616c7565223a34327d2c2270726f746f636f6c5f76657273696f6e223a22312e30222c22736368656d615f76657273696f6e223a22312e30227d"
+  },
+  "hash_domain": {
+    "canonical_sha256_hex": "b6c3660ce6dee498b37443a92bf87c5efead6fe863fcf19197c0baeda139a4e6",
+    "leaf_algorithm": "SHA-256(0x00 || canonical_bytes)",
+    "merkle_leaf_hash_hex": "ce6b36733d97699230f37d80a14e14104c19d2e787526a6fc3aaae6b6648c039",
+    "node_algorithm": "SHA-256(0x01 || left_digest_bytes || right_digest_bytes)",
+    "tree_semantics": "RFC6962"
+  },
+  "oracle_status": "INDEPENDENTLY_CALCULATED",
+  "implementation_status": {
+    "RI-PY": "EXECUTED_PASS",
+    "RI-RS": "EXECUTED_PASS",
+    "cross_language_equality": "PASS"
+  },
+  "normative_authority": "APS-200 §8",
+  "conformance_requirement": "CONF-003",
+  "execution_evidence": {
+    "gate": "CROSS-LANGUAGE-001",
+    "ri_py": {
+      "repository": "Aura-IDToken/aura-poc-a-core-v3.3",
+      "execution_commit": "49d0e4f67e90a7a47e9f067bfc42ab40ee59a56f",
+      "evidence_commit": "3e8e0e326a1cfec71e001f4901fc1ee5b7c28c4e",
+      "engine": "rfc8785==0.1.4",
+      "artifact_path": "conformance/corpus/canonical-001/ri-py.json",
+      "artifact_sha256": "6b5b5ccd54901181b9af45421d051ea5ea53096fbf632ab1e25a66705f2b856c",
+      "reachable_from_default_branch": false
+    },
+    "ri_rs": {
+      "repository": "Aura-IDToken/aura-guard-v1.3",
+      "execution_commit": "4e9e2284ccdac6d2f40e038e33b4eaeec847aaa2",
+      "evidence_commit": "420653e232cb0ff1e365edd2e4a5eb294d2bb2a0",
+      "engine": "serde_json_canonicalizer==0.3.2",
+      "artifact_path": "conformance/corpus/canonical-001/ri-rs.json",
+      "artifact_sha256": "a6ebad019118a7806ae927c4802a60056cb9e0c90f3cb1ef2a5e0cf359af329c",
+      "reachable_from_default_branch": false
+    },
+    "negative_controls": "PASS",
+    "closure_record": "closures/DQ-006_CLOSURE_PACKAGE.md"
+  },
+  "profile_discrimination": {
+    "jcs_discriminating": false,
+    "note": "JCS-degenerate vector: sorted-JSON serialization (sort_keys, no whitespace, no ASCII escaping) yields byte-identical output, and therefore the identical SHA-256 and leaf. This fixture verifies cross-implementation agreement, not conformance to RFC 8785. A discriminating vector is required — see closures/DQ-006_CLOSURE_PACKAGE.md residual R1."
+  }
+}

@@ -199,8 +199,8 @@ This draft does not itself grant approval.
 
 The following must be closed before APS-001 can be approved:
 
-1. exact APS-200 canonical serialization profile and machine-readable schemas;
-2. exact APS-300 Evidence Pack schema and cryptographic binding;
+1. machine-readable APS-200 entity schemas — *the canonical serialization profile itself is closed: APS-200 §8 binds RFC 8785 JCS, UTF-8 canonical bytes and the SHA-256 / RFC 6962 domains*;
+2. exact APS-300 Evidence Pack schema — *the cryptographic binding is closed: APS-300 §5.1 binds `evidence_hash` to APS-200 §8 canonical bytes*;
 3. DQ-004 event-type semantics;
 4. conformance coverage for all 15 invariants;
 5. canonical APS-500 fixture corpus;

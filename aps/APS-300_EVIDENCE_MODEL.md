@@ -5,7 +5,7 @@ Version: 1.0-DRAFT
 Status: DRAFT  
 Classification: Normative Specification  
 Authority: APS-001 · APS-100 · APS-200  
-Last Review: 2026-07-23
+Last Review: 2026-08-20
 
 ---
 
@@ -70,7 +70,39 @@ Every Evidence object MUST contain at minimum:
 | `previous_evidence_hash` | string | SHOULD | Hash of the previous Evidence object (if chain exists) |
 | `attestation_reference` | string | MUST | object_id of the associated Attestation (ENT-006) |
 
-> **TODO**: Define the canonical algorithm for computing `evidence_hash`. Must reference INV-011 and specify whether the hash covers the full JSON serialization or a field-ordered canonical form.
+### 5.1 Canonical byte domain
+
+Every hash field in the table above is computed over **canonical bytes as defined by APS-200 §8**. APS-200 §8 is the sole normative authority for canonical serialization; this section binds the Evidence Model to it and does not restate or vary it.
+
+For an Evidence object `E`:
+
+```text
+canonical_bytes(E) = UTF-8( RFC8785_JCS( E without the `evidence_hash` member ) )
+evidence_hash(E)   = SHA-256( canonical_bytes(E) )
+```
+
+`evidence_hash` is recorded as a lowercase hexadecimal string. The hexadecimal text is a *representation* of the digest; it is never itself a digest input (APS-200 §8.4).
+
+`input_hash` and `output_hash` are `SHA-256(canonical_bytes(...))` of the canonical input and canonical output objects respectively, under the same profile.
+
+### 5.2 Domain separation
+
+The following are distinct values and MUST NOT be conflated, substituted for one another, or inferred to be equal by name:
+
+| Value | Definition | Authority |
+|-------|------------|-----------|
+| `canonical_bytes` | Representation output of APS-200 §8 | APS-200 §8.2 |
+| `evidence_hash` | `SHA-256` over the canonical bytes of `E` with `evidence_hash` removed | APS-300 §5.1 |
+| Merkle leaf hash | `SHA-256(0x00 \|\| canonical_bytes)` | APS-200 §8.5 / DQ-002 |
+| Merkle interior-node hash | `SHA-256(0x01 \|\| left \|\| right)` | APS-200 §8.5 / DQ-002 |
+
+An `evidence_hash` is **not** automatically a Merkle leaf hash. Where an Evidence object is also entered into a Merkle structure, the leaf value MUST be computed with the leaf domain above, over the same `canonical_bytes`.
+
+### 5.3 Migration
+
+Evidence generated before APS-200 §8 bound the canonical serialization profile retains its original serialization and hash-profile identity (APS-200 §8.8). Such evidence MUST NOT be silently reinterpreted as RFC 8785 / RFC 6962 evidence, and MUST NOT be compared for equality against evidence produced under this profile without an explicit, version-bound migration record.
+
+> **Traceability**: INV-011 · CONF-003 · CONF-004 · CONF-010 · APS-200 §8 · CANONICAL-001.
 
 ---
 
@@ -106,7 +138,7 @@ Evidence MUST:
 
 If an implementation stores execution history, successive Evidence objects MAY form a chain via `previous_evidence_hash`.
 
-The specification does not mandate a specific cryptographic algorithm but requires that chain integrity be independently verifiable.
+Where the chain exists, `previous_evidence_hash` MUST carry the `evidence_hash` of the preceding Evidence object as defined in §5.1. No alternative chain-link algorithm or byte domain is permitted, and chain integrity MUST be independently verifiable from the Evidence objects alone.
 
 Evidence chain type: `EVID-CHAIN`
 

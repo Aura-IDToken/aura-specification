@@ -1,0 +1,13 @@
+{
+  "fixture_id": "FIX-INV-007",
+  "invariant": "INV-007",
+  "purpose": "Detect floating-point values in protocol-bound runtime data.",
+  "input": {
+    "integer_value": 100000,
+    "fixed_point_scale": 100000
+  },
+  "expected": {
+    "runtime_numeric_domain": "integer_only",
+    "float_present": false
+  }
+}

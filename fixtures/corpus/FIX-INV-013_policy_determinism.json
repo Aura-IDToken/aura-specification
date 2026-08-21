@@ -1,0 +1,14 @@
+{
+  "fixture_id": "FIX-INV-013",
+  "invariant": "INV-013",
+  "purpose": "Verify identical policy version and identical inputs produce identical decisions.",
+  "input": {
+    "policy_version": "FIXTURE-UNBOUND",
+    "canonical_input": "FIXTURE_INPUT_REQUIRED"
+  },
+  "expected": {
+    "repeat_evaluations_equal": true,
+    "decision_digest_equal": true
+  },
+  "status": "PARAMETRIC_FIXTURE_PENDING_CONCRETE_CORE_POLICY"
+}
