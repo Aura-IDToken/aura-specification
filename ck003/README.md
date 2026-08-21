@@ -27,9 +27,22 @@ The single authoritative DQ-006 record is [`closures/DQ-006_CLOSURE_PACKAGE.md`]
 
 The normative canonical serialization rule lives in **APS-200 §8** (single authority), with the evidence-hash byte domain in **APS-300 §5**, the decision in **ADR-CK003-DQ006**, and the conformance requirement in **CONF-003**.
 
-**DQ-006 status: OPEN** — specification closure complete; conformance evidence partial.
+**DQ-006 status: OPEN** — specification decision settled; final conformance closure evidence remains incomplete.
 
-Cross-language byte, SHA-256 and RFC 6962 leaf equality on CANONICAL-001 is executed and PASS. Closure is withheld because CANONICAL-001 is JCS-degenerate (it cannot distinguish RFC 8785 from sorted JSON), the evidence is unmerged in both reference repositories, and the verdict is unratified. Residuals R1–R4 are listed in the closure package §13.
+CROSS-LANGUAGE-001 establishes PASS for CANONICAL-001 byte, SHA-256 and RFC 6962 leaf equality. It does not by itself prove RFC 8785 profile discrimination. Closure is therefore withheld until the mandatory final-closure execution order is satisfied.
+
+### Final closure execution
+
+The controlled execution order is [`ck003/dq-006-final-closure-execution/DQ-006_FINAL_CLOSURE_EXECUTION_ORDER.md`](dq-006-final-closure-execution/DQ-006_FINAL_CLOSURE_EXECUTION_ORDER.md).
+
+The mandatory residuals are:
+
+- **R1:** execute a JCS-discriminating fixture independently in RI-PY and RI-RS;
+- **R2:** select and document exactly one authoritative RI-RS conformance boundary;
+- **R3:** make the cited reference-implementation evidence reachable from reviewable/default branches or an explicitly accepted immutable publication mechanism;
+- **R4:** Chief Architect ratification after R1–R3 and evidence review.
+
+No status transition to `CLOSED` may be inferred from CANONICAL-001 equality alone.
 
 This does not by itself close DQ-002, APS-001, INV-001…INV-015, or the release gate.
 
