@@ -61,6 +61,20 @@ Every entity MUST contain the following fields:
 
 For ENT-007, the common `integrity_hash` rule is further constrained by §5 ENT-007: the `audit_record_hash` field is included in the integrity preimage. Thus `integrity_hash` commits to the complete Audit Record hash identity while remaining non-self-referential.
 
+### 4.1 Digest Field Representation
+
+All SHA-256 digest fields defined by APS-200 MUST be represented as exactly 64 lowercase hexadecimal ASCII characters encoding the 32-byte digest value.
+
+A digest comparison is performed over the underlying 32 digest bytes. The canonical stored representation is the lowercase hexadecimal form only; uppercase hexadecimal, `0x` prefixes, base64, whitespace, or alternate textual encodings are non-conformant for normative string fields.
+
+The `previous_record_hash` genesis sentinel is therefore represented as:
+
+```text
+0000000000000000000000000000000000000000000000000000000000000000
+```
+
+This is the textual encoding of 32 zero bytes, not a special keyword.
+
 ---
 
 ## 5. Entity Definitions
@@ -234,7 +248,7 @@ For a non-genesis record `R[n]`:
 R[n].previous_record_hash = R[n-1].audit_record_hash
 ```
 
-The genesis record MUST use the all-zero 32-byte digest as its `previous_record_hash` sentinel. The exact canonical textual encoding of the stored digest value is governed by the approved fixture profile and MUST be identical across conformant implementations.
+The genesis record MUST use the all-zero 32-byte digest as its `previous_record_hash` sentinel. Its canonical textual representation is defined by §4.1.
 
 The first Audit Record in a session MUST have `sequence_number = 0`. Subsequent records MUST increase monotonically by one within that session.
 
@@ -341,6 +355,37 @@ integrity_hash
 ```
 
 EP-001 does not make `event_payload_hash` depend on `audit_record_hash` or `integrity_hash`.
+
+### 5.6 ENT-007 Extension Policy
+
+For the current P0-2 conformance profile, ENT-007 is a **closed canonical hash surface**. An implementation MUST NOT add undeclared fields to an ENT-007 record.
+
+A field may be added to ENT-007 only by a later `schema_version` whose normative specification explicitly declares the field and its hash-domain treatment. Such a version MUST update the inclusion/exclusion matrix and provide new golden fixtures before claiming conformance.
+
+Unknown or undeclared fields MUST be rejected in the P0-2 conformance profile. This rule prevents two implementations from accepting the same semantic record while hashing different field sets.
+
+### 5.7 Machine-Readable Verification Error Codes
+
+A conformant verifier MUST expose a stable machine-readable error code for the first applicable failure. The normative codes for the P0-2 conformance profile are:
+
+| Code | Condition |
+|---|---|
+| `E_REQUIRED_FIELD_MISSING` | Required ENT-007 field is absent |
+| `E_UNEXPECTED_FIELD` | Undeclared ENT-007 field is present |
+| `E_PAYLOAD_INVALID_JSON` | Event Payload is not valid JSON |
+| `E_PAYLOAD_DUPLICATE_KEY` | Event Payload contains duplicate object member names |
+| `E_PAYLOAD_TOP_LEVEL_TYPE` | Event Payload top-level value is not an object |
+| `E_PAYLOAD_SCHEMA` | Event Payload violates the applicable event schema |
+| `E_PAYLOAD_HASH_MISMATCH` | Recomputed `event_payload_hash` differs |
+| `E_AUDIT_RECORD_HASH_MISMATCH` | Recomputed `audit_record_hash` differs |
+| `E_INTEGRITY_HASH_MISMATCH` | Recomputed `integrity_hash` differs |
+| `E_PREVIOUS_RECORD_HASH_MISMATCH` | `previous_record_hash` does not equal predecessor `audit_record_hash` |
+| `E_GENESIS_INVALID` | Genesis sentinel or genesis position is invalid |
+| `E_SEQUENCE_INVALID` | Sequence number violates session ordering |
+| `E_CANONICALIZATION_INVALID` | Required canonical representation cannot be produced or verified |
+| `E_DIGEST_ENCODING_INVALID` | Digest field is not 64 lowercase hexadecimal characters representing 32 bytes |
+
+The verifier MUST report the most specific applicable code. Implementations MAY provide additional diagnostic data, but MUST NOT change the normative code value or use an implementation-specific code in place of one of the codes above for a covered condition.
 
 ---
 
