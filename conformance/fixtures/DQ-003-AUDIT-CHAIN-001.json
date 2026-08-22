@@ -1,0 +1,88 @@
+{
+  "fixture_id": "DQ-003-AUDIT-CHAIN-001",
+  "status": "EXPERIMENTAL",
+  "contract": "Audit Record Contract v0",
+  "candidate": "C",
+  "hash_domains": {
+    "audit_record": "02",
+    "event_payload": "none",
+    "merkle_leaf": "00",
+    "merkle_interior": "01"
+  },
+  "genesis": "0000000000000000000000000000000000000000000000000000000000000000",
+  "records": [
+    {
+      "record": {
+        "created_at": "2026-08-22T00:00:00Z",
+        "event_payload_hash": "55d4b8e2aa7999dd26574b366ee883be3550a7616ec6dd9103966b9a8ba6da26",
+        "event_type": "policy_decision",
+        "integrity_hash": "e11ce3e977391ff1d21326b699c5c90efdf0899920ee5b39e308ca7f3ed6cf02",
+        "object_id": "dq003-record-0",
+        "object_type": "audit_record",
+        "previous_record_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "protocol_version": "1.0",
+        "schema_version": "ENT-007",
+        "sequence_number": 0,
+        "audit_record_hash": "ea04f9084c4cf27ddf34fbad8fbb8b09c1307ba7d3235dbda684cf907d18ac87"
+      },
+      "canonical_input_without_derived_hashes": "{\"created_at\":\"2026-08-22T00:00:00Z\",\"event_payload_hash\":\"55d4b8e2aa7999dd26574b366ee883be3550a7616ec6dd9103966b9a8ba6da26\",\"event_type\":\"policy_decision\",\"object_id\":\"dq003-record-0\",\"object_type\":\"audit_record\",\"previous_record_hash\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"protocol_version\":\"1.0\",\"schema_version\":\"ENT-007\",\"sequence_number\":0}",
+      "canonical_bytes_hex": "7b22637265617465645f6174223a22323032362d30382d32325430303a30303a30305a222c226576656e745f7061796c6f61645f68617368223a2235356434623865326161373939396464323635373462333636656538383362653335353061373631366563366464393130333936366239613862613664613236222c226576656e745f74797065223a22706f6c6963795f6465636973696f6e222c226f626a6563745f6964223a2264713030332d7265636f72642d30222c226f626a6563745f74797065223a2261756469745f7265636f7264222c2270726576696f75735f7265636f72645f68617368223a2230303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030222c2270726f746f636f6c5f76657273696f6e223a22312e30222c22736368656d615f76657273696f6e223a22454e542d303037222c2273657175656e63655f6e756d626572223a307d",
+      "event_payload": {"action":"ALLOW","resource":"demo/resource","subject":"demo-user"},
+      "event_payload_hash": "55d4b8e2aa7999dd26574b366ee883be3550a7616ec6dd9103966b9a8ba6da26",
+      "audit_record_hash": "ea04f9084c4cf27ddf34fbad8fbb8b09c1307ba7d3235dbda684cf907d18ac87",
+      "integrity_hash": "e11ce3e977391ff1d21326b699c5c90efdf0899920ee5b39e308ca7f3ed6cf02"
+    },
+    {
+      "record": {
+        "created_at": "2026-08-22T00:00:01Z",
+        "event_payload_hash": "48177f9151649f527c810ae14c177d43bac3dc4ae5e7488c7eefb2b15bde8f0e",
+        "event_type": "policy_decision",
+        "integrity_hash": "0e8b6a40e61ca19690dd62f9d84a1852456d398c4d477db3036e2cdb939ba43f",
+        "object_id": "dq003-record-1",
+        "object_type": "audit_record",
+        "previous_record_hash": "ea04f9084c4cf27ddf34fbad8fbb8b09c1307ba7d3235dbda684cf907d18ac87",
+        "protocol_version": "1.0",
+        "schema_version": "ENT-007",
+        "sequence_number": 1,
+        "audit_record_hash": "c4a2f9e2a0da2acfa0fe2930db5cce080c3d3e1d0ea5d5562f6979665c5f9fcc"
+      },
+      "canonical_input_without_derived_hashes": "{\"created_at\":\"2026-08-22T00:00:01Z\",\"event_payload_hash\":\"48177f9151649f527c810ae14c177d43bac3dc4ae5e7488c7eefb2b15bde8f0e\",\"event_type\":\"policy_decision\",\"object_id\":\"dq003-record-1\",\"object_type\":\"audit_record\",\"previous_record_hash\":\"ea04f9084c4cf27ddf34fbad8fbb8b09c1307ba7d3235dbda684cf907d18ac87\",\"protocol_version\":\"1.0\",\"schema_version\":\"ENT-007\",\"sequence_number\":1}",
+      "canonical_bytes_hex": "7b22637265617465645f6174223a22323032362d30382d32325430303a30303a30315a222c226576656e745f7061796c6f61645f68617368223a2234383137376639313531363439663532376338313061653134633137376434336261633364633461653565373438386337656566623262313562646538663065222c226576656e745f74797065223a22706f6c6963795f6465636973696f6e222c226f626a6563745f6964223a2264713030332d7265636f72642d31222c226f626a6563745f74797065223a2261756469745f7265636f7264222c2270726576696f75735f7265636f72645f68617368223a2265613034663930383463346366323764646633346662616438666262386230396331333037626137643332333564626461363834636639303764313861633837222c2270726f746f636f6c5f76657273696f6e223a22312e30222c22736368656d615f76657273696f6e223a22454e542d303037222c2273657175656e63655f6e756d626572223a317d",
+      "event_payload": {"action":"REVIEW","resource":"demo/resource","subject":"demo-user"},
+      "event_payload_hash": "48177f9151649f527c810ae14c177d43bac3dc4ae5e7488c7eefb2b15bde8f0e",
+      "audit_record_hash": "c4a2f9e2a0da2acfa0fe2930db5cce080c3d3e1d0ea5d5562f6979665c5f9fcc",
+      "integrity_hash": "0e8b6a40e61ca19690dd62f9d84a1852456d398c4d477db3036e2cdb939ba43f"
+    },
+    {
+      "record": {
+        "created_at": "2026-08-22T00:00:02Z",
+        "event_payload_hash": "22a5bb0e61dc8f04bcdec79a0c934c3e64b0468a27c388b6aab80cfc1c7b589a",
+        "event_type": "policy_decision",
+        "integrity_hash": "6ad1d8b0bb0ee843e8baa66b380b76e2206a52c71e405f2046db11db63e19712",
+        "object_id": "dq003-record-2",
+        "object_type": "audit_record",
+        "previous_record_hash": "c4a2f9e2a0da2acfa0fe2930db5cce080c3d3e1d0ea5d5562f6979665c5f9fcc",
+        "protocol_version": "1.0",
+        "schema_version": "ENT-007",
+        "sequence_number": 2,
+        "audit_record_hash": "f359442dd493d0bceedc1f07aafb3016f8341f46857aa84cb79a948e2a47804f"
+      },
+      "canonical_input_without_derived_hashes": "{\"created_at\":\"2026-08-22T00:00:02Z\",\"event_payload_hash\":\"22a5bb0e61dc8f04bcdec79a0c934c3e64b0468a27c388b6aab80cfc1c7b589a\",\"event_type\":\"policy_decision\",\"object_id\":\"dq003-record-2\",\"object_type\":\"audit_record\",\"previous_record_hash\":\"c4a2f9e2a0da2acfa0fe2930db5cce080c3d3e1d0ea5d5562f6979665c5f9fcc\",\"protocol_version\":\"1.0\",\"schema_version\":\"ENT-007\",\"sequence_number\":2}",
+      "canonical_bytes_hex": "7b22637265617465645f6174223a22323032362d30382d32325430303a30303a30325a222c226576656e745f7061796c6f61645f68617368223a2232326135626230653631646338663034626364656337396130633933346333653634623034363861323763333838623661616238306366633163376235383961222c226576656e745f74797065223a22706f6c6963795f6465636973696f6e222c226f626a6563745f6964223a2264713030332d7265636f72642d32222c226f626a6563745f74797065223a2261756469745f7265636f7264222c2270726576696f75735f7265636f72645f68617368223a2263346132663965326130646132616366613066653239333064623563636530383063336433653164306561356435353632663639373936363563356639666363222c2270726f746f636f6c5f76657273696f6e223a22312e30222c22736368656d615f76657273696f6e223a22454e542d303037222c2273657175656e63655f6e756d626572223a327d",
+      "event_payload": {"action":"DENY","resource":"demo/resource","subject":"demo-user"},
+      "event_payload_hash": "22a5bb0e61dc8f04bcdec79a0c934c3e64b0468a27c388b6aab80cfc1c7b589a",
+      "audit_record_hash": "f359442dd493d0bceedc1f07aafb3016f8341f46857aa84cb79a948e2a47804f",
+      "integrity_hash": "6ad1d8b0bb0ee843e8baa66b380b76e2206a52c71e405f2046db11db63e19712"
+    }
+  ],
+  "negative_cases": {
+    "field_mutation": "FAIL",
+    "payload_mutation": "FAIL",
+    "previous_record_hash_mutation": "FAIL",
+    "record_reorder": "FAIL",
+    "record_deletion": "FAIL",
+    "record_duplication": "FAIL",
+    "wrong_domain_prefix": "FAIL",
+    "cross_domain_hash_substitution": "FAIL"
+  }
+}
