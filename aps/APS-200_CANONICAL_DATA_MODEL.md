@@ -5,7 +5,7 @@ Version: 1.0-DRAFT
 Status: DRAFT  
 Classification: Normative Specification  
 Authority: APS-001 · APS-100  
-Last Review: 2026-08-20
+Last Review: 2026-08-22
 
 ---
 
@@ -58,6 +58,8 @@ Every entity MUST contain the following fields:
 | `integrity_hash` | string | MUST | `SHA-256(canonical_bytes)` of this object, excluding `integrity_hash` itself. Canonical bytes are defined by §8. |
 
 > **Note on self-reference.** A digest field cannot cover its own value. `integrity_hash` therefore excludes itself from the canonicalized object, matching the rule already stated for `evidence_hash` in APS-300 §5. This makes an existing implicit constraint explicit; it does not introduce a new one.
+
+For ENT-007, the common `integrity_hash` rule is further constrained by §5 ENT-007: the `audit_record_hash` field is included in the integrity preimage. Thus `integrity_hash` commits to the complete Audit Record hash identity while remaining non-self-referential.
 
 ---
 
@@ -159,6 +161,93 @@ See APS-300 for the full Evidence Model. The canonical Evidence object fields ar
 | `sequence_number` | integer | MUST | Monotonically increasing sequence number within a session |
 | `previous_record_hash` | string | MUST | Hash of the previous Audit Record (chain link) |
 | `event_payload_hash` | string | MUST | Hash of the event payload |
+| `audit_record_hash` | string | MUST | Domain-separated SHA-256 hash defined by §5.1; derived and MUST NOT be supplied as an independent semantic input |
+
+### 5.1 ENT-007 Audit Record Hash Contract
+
+The `audit_record_hash` is the normative cryptographic identity used for Audit Record chain linkage. It is distinct from `integrity_hash`, certificate fingerprints, and RFC 6962-style Merkle hashes.
+
+For an ENT-007 record `R`, define the Audit Record hash preimage object `R_AR` as the canonical ENT-007 object containing all fields required by the ENT-007 contract **except**:
+
+- `audit_record_hash`; and
+- `integrity_hash`.
+
+The canonical bytes MUST be produced using the RFC 8785 JCS profile defined in §8.
+
+```text
+AuditRecordHashPreimage(R) =
+    0x02 || JCS(R_AR)
+
+audit_record_hash(R) =
+    SHA-256(AuditRecordHashPreimage(R))
+```
+
+`0x02` is one raw octet. It MUST NOT be represented as the ASCII characters `0x02`, a hexadecimal string, or another textual wrapper.
+
+The `audit_record_hash` MUST NOT depend on `integrity_hash`. This exclusion prevents a circular dependency and makes the Audit Record hash independently recomputable from the normative source fields.
+
+### 5.2 ENT-007 Integrity Hash Contract
+
+The Common Object Contract `integrity_hash` rule applies to ENT-007 with one explicit dependency rule:
+
+```text
+IntegrityPreimage(R) =
+    JCS(R_I)
+
+integrity_hash(R) =
+    SHA-256(IntegrityPreimage(R))
+```
+
+where `R_I` is the complete canonical ENT-007 object **excluding only `integrity_hash` itself**.
+
+Therefore `R_I` includes the derived `audit_record_hash`.
+
+The dependency is intentionally one-directional:
+
+```text
+ENT-007 source fields
+        │
+        ├───────────────┐
+        ▼               ▼
+ event_payload_hash  audit_record_hash
+                         │
+                         ▼
+                  integrity_hash
+                         │
+                         ▼
+          next.previous_record_hash
+```
+
+Normative dependency rules:
+
+1. `audit_record_hash` MUST NOT include `integrity_hash` in its preimage.
+2. `integrity_hash` MUST include `audit_record_hash` in its preimage.
+3. Neither digest may include its own field value.
+4. `previous_record_hash` MUST refer to the preceding record's `audit_record_hash`, not its `integrity_hash`.
+5. Certificate and Merkle digests MUST NOT be substituted for `audit_record_hash`.
+
+### 5.3 ENT-007 Chain and Genesis Rule
+
+For a non-genesis record `R[n]`:
+
+```text
+R[n].previous_record_hash = R[n-1].audit_record_hash
+```
+
+The genesis record MUST use the all-zero 32-byte digest as its `previous_record_hash` sentinel. The exact canonical textual encoding of the stored digest value is governed by the approved fixture profile and MUST be identical across conformant implementations.
+
+The first Audit Record in a session MUST have `sequence_number = 0`. Subsequent records MUST increase monotonically by one within that session.
+
+### 5.4 ENT-007 Derived-Field Rules
+
+The following fields are derived and MUST be independently recomputable by a conformant verifier:
+
+- `event_payload_hash` — from the precisely defined event payload;
+- `audit_record_hash` — from §5.1;
+- `integrity_hash` — from §5.2;
+- `previous_record_hash` — from the predecessor's `audit_record_hash`, except for genesis.
+
+A conformant implementation MUST reject an Audit Record when recomputation produces a different value for any in-scope derived digest, when canonical bytes differ, when the predecessor link is incorrect, or when the genesis/sequence rule is violated.
 
 ---
 
@@ -208,6 +297,13 @@ Every object MUST pass:
 4. Integrity validation (integrity_hash matches computed hash)
 5. APS-100 invariant validation
 
+For ENT-007, validation additionally MUST include:
+6. `event_payload_hash` recomputation against the defined event payload;
+7. `audit_record_hash` recomputation using §5.1;
+8. `previous_record_hash` linkage to the predecessor's `audit_record_hash`, or the genesis sentinel;
+9. `sequence_number` validation under §5.3;
+10. canonical-byte equality under §8.
+
 ---
 
 ## 8. Serialization Requirements
@@ -225,6 +321,8 @@ SHA-256(0x00 || B) = RFC 6962-style leaf hash where applicable
 ```
 
 The leaf prefix `0x00` is one raw octet. It MUST NOT be represented as the ASCII characters `0x00`, a hexadecimal string, or another textual wrapper. RFC 6962-style interior-node hashing uses `0x01` followed by the two raw 32-byte child digests.
+
+For ENT-007, §5.1 additionally defines the Audit Record hash domain `0x02`. The `0x02` prefix is one raw octet and is reserved for the normative Audit Record hash domain.
 
 The canonicalization/hash boundary is implementation-independent. RI-PY and RI-RS have independently executed CANONICAL-001 under CK-003 DQ-006 and produced byte-identical canonical bytes, SHA-256 digests and leaf digests. The corresponding closure evidence is normative decision evidence, not a production dependency requirement.
 
@@ -287,5 +385,5 @@ The event-type vocabulary and validation contract are governed by `aps/EVENT_TYP
 | ENT-004 | INV-013 | EVID-CORE | — |
 | ENT-005 | INV-004, INV-005, INV-011 | EVID-CORE | CONF-004, CONF-009 |
 | ENT-006 | INV-005 | EVID-CONF | CONF-005 |
-| ENT-007 | INV-003, INV-012 | EVID-AUDIT | CONF-003, CONF-012 |
+| ENT-007 | INV-003, INV-011, INV-012 | EVID-AUDIT | CONF-003, CONF-012 |
 | ENT-008 | INV-009, INV-015 | EVID-CORE | CONF-008 |
