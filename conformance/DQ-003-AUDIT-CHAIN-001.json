@@ -1,13 +1,15 @@
 {
   "fixture_id": "DQ-003-AUDIT-CHAIN-001",
   "contract": "APS-200",
-  "status": "GOLDEN-FIXTURE-CANDIDATE",
-  "purpose": "Independent audit-chain fixture derived from the frozen P0-2 contract. Hash values are generated mechanically from these exact inputs; implementations are evaluated against the resulting values.",
+  "status": "GOLDEN-FIXTURE",
+  "purpose": "Independent audit-chain fixture derived from the frozen P0-2 contract. Expected values are mechanically generated from the exact fixture inputs and self-verified before being frozen.",
   "hash_algorithm": "SHA-256",
   "canonicalization": "RFC 8785 JCS",
   "digest_encoding": "lowercase hexadecimal ASCII, 64 characters",
   "audit_record_domain_separator": "02",
   "genesis_previous_record_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "generation_method": "Independent fixture computation over the declared inputs; no RI-PY or RI-RS implementation was used to derive expected values.",
+  "self_verification": "PASS",
   "records": [
     {
       "record_id": "record-000",
@@ -20,9 +22,9 @@
         "event_type": "AUDIT_DECISION",
         "sequence_number": 0,
         "previous_record_hash": "0000000000000000000000000000000000000000000000000000000000000000",
-        "event_payload_hash": null,
-        "audit_record_hash": null,
-        "integrity_hash": null
+        "event_payload_hash": "a303ba4e3edd8659dfe653f2173e9671375972dce77d3f5d57bc42702b45ebde",
+        "audit_record_hash": "cbbc5104a848650d4b6cea175462b50779b40077c815cf3622875e8fc5689e79",
+        "integrity_hash": "70526acd3dd66f435a4051e7a6c4d1f892fd170be8ea4d00f40347a01febe57a"
       },
       "event_payload": {
         "action": "ALLOW",
@@ -30,9 +32,14 @@
         "subject": "fixture-subject"
       },
       "expected": {
-        "event_payload_hash": null,
-        "audit_record_hash": null,
-        "integrity_hash": null
+        "event_payload_hash": "a303ba4e3edd8659dfe653f2173e9671375972dce77d3f5d57bc42702b45ebde",
+        "audit_record_hash": "cbbc5104a848650d4b6cea175462b50779b40077c815cf3622875e8fc5689e79",
+        "integrity_hash": "70526acd3dd66f435a4051e7a6c4d1f892fd170be8ea4d00f40347a01febe57a"
+      },
+      "canonical_preimages": {
+        "event_payload_jcs": "{\"action\":\"ALLOW\",\"resource\":\"fixture-resource\",\"subject\":\"fixture-subject\"}",
+        "audit_record_jcs": "{\"created_at\":\"2026-01-01T00:00:00Z\",\"event_payload_hash\":\"a303ba4e3edd8659dfe653f2173e9671375972dce77d3f5d57bc42702b45ebde\",\"event_type\":\"AUDIT_DECISION\",\"object_id\":\"00000000-0000-4000-8000-000000000000\",\"object_type\":\"AuditRecord\",\"previous_record_hash\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"protocol_version\":\"1.0\",\"schema_version\":\"1.0\",\"sequence_number\":0}",
+        "integrity_jcs": "{\"audit_record_hash\":\"cbbc5104a848650d4b6cea175462b50779b40077c815cf3622875e8fc5689e79\",\"created_at\":\"2026-01-01T00:00:00Z\",\"event_payload_hash\":\"a303ba4e3edd8659dfe653f2173e9671375972dce77d3f5d57bc42702b45ebde\",\"event_type\":\"AUDIT_DECISION\",\"object_id\":\"00000000-0000-4000-8000-000000000000\",\"object_type\":\"AuditRecord\",\"previous_record_hash\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"protocol_version\":\"1.0\",\"schema_version\":\"1.0\",\"sequence_number\":0}"
       }
     },
     {
@@ -45,10 +52,10 @@
         "created_at": "2026-01-01T00:00:01Z",
         "event_type": "AUDIT_DECISION",
         "sequence_number": 1,
-        "previous_record_hash": null,
-        "event_payload_hash": null,
-        "audit_record_hash": null,
-        "integrity_hash": null
+        "previous_record_hash": "cbbc5104a848650d4b6cea175462b50779b40077c815cf3622875e8fc5689e79",
+        "event_payload_hash": "fabc602b7e214526b7cd2175cc0163ff6ad51268776972bd9c326ad15f2224a1",
+        "audit_record_hash": "08704c4ea7d361e99592bed22e52f60a0c6c9c80f158ec8c126fc56015268902",
+        "integrity_hash": "748de582b5f801cc74340f5daa8c9e1d3cef272902bcb46c3d2b4624da9c6591"
       },
       "event_payload": {
         "action": "DENY",
@@ -56,9 +63,14 @@
         "subject": "fixture-subject"
       },
       "expected": {
-        "event_payload_hash": null,
-        "audit_record_hash": null,
-        "integrity_hash": null
+        "event_payload_hash": "fabc602b7e214526b7cd2175cc0163ff6ad51268776972bd9c326ad15f2224a1",
+        "audit_record_hash": "08704c4ea7d361e99592bed22e52f60a0c6c9c80f158ec8c126fc56015268902",
+        "integrity_hash": "748de582b5f801cc74340f5daa8c9e1d3cef272902bcb46c3d2b4624da9c6591"
+      },
+      "canonical_preimages": {
+        "event_payload_jcs": "{\"action\":\"DENY\",\"resource\":\"fixture-resource\",\"subject\":\"fixture-subject\"}",
+        "audit_record_jcs": "{\"created_at\":\"2026-01-01T00:00:01Z\",\"event_payload_hash\":\"fabc602b7e214526b7cd2175cc0163ff6ad51268776972bd9c326ad15f2224a1\",\"event_type\":\"AUDIT_DECISION\",\"object_id\":\"00000000-0000-4000-8000-000000000001\",\"object_type\":\"AuditRecord\",\"previous_record_hash\":\"cbbc5104a848650d4b6cea175462b50779b40077c815cf3622875e8fc5689e79\",\"protocol_version\":\"1.0\",\"schema_version\":\"1.0\",\"sequence_number\":1}",
+        "integrity_jcs": "{\"audit_record_hash\":\"08704c4ea7d361e99592bed22e52f60a0c6c9c80f158ec8c126fc56015268902\",\"created_at\":\"2026-01-01T00:00:01Z\",\"event_payload_hash\":\"fabc602b7e214526b7cd2175cc0163ff6ad51268776972bd9c326ad15f2224a1\",\"event_type\":\"AUDIT_DECISION\",\"object_id\":\"00000000-0000-4000-8000-000000000001\",\"object_type\":\"AuditRecord\",\"previous_record_hash\":\"cbbc5104a848650d4b6cea175462b50779b40077c815cf3622875e8fc5689e79\",\"protocol_version\":\"1.0\",\"schema_version\":\"1.0\",\"sequence_number\":1}"
       }
     }
   ],
@@ -82,6 +94,6 @@
     "Compute integrity_hash = SHA-256(JCS(integrity-preimage)).",
     "For non-genesis records, previous_record_hash MUST equal the predecessor audit_record_hash.",
     "Do not substitute integrity_hash, certificate fingerprints, or Merkle hashes for previous_record_hash.",
-    "Null digest fields are generation placeholders only and MUST NOT be hashed as protocol values."
+    "The frozen expected values MUST be reproduced exactly by an independent verifier."
   ]
 }
