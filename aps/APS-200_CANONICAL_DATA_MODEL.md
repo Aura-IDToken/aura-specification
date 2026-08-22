@@ -55,7 +55,7 @@ Every entity MUST contain the following fields:
 | `protocol_version` | string | MUST | APS version this object conforms to (e.g., `1.0`) |
 | `schema_version` | string | MUST | Schema version of this entity definition |
 | `created_at` | string (ISO 8601) | MUST | Timestamp of object creation (UTC) |
-| `integrity_hash` | string | MUST | `SHA-256(canonical_bytes)` of this object, excluding `integrity_hash` itself. Canonical bytes are defined by §8. |
+| `integrity_hash` | string | MUST | `SHA-256(canonical_bytes(object))` of this object, excluding `integrity_hash` itself. Canonical bytes are defined by §8. |
 
 > **Note on self-reference.** A digest field cannot cover its own value. `integrity_hash` therefore excludes itself from the canonicalized object, matching the rule already stated for `evidence_hash` in APS-300 §5. This makes an existing implicit constraint explicit; it does not introduce a new one.
 
@@ -139,7 +139,7 @@ See APS-300 for the full Evidence Model. The canonical Evidence object fields ar
 **Purpose**: Formal confirmation of conformance.
 
 | Field | Type | Requirement | Description |
-|-------|------|-------------|-------------|
+|-------|--------|-------------|-------------|
 | Common Object Contract fields | — | MUST | See §4 |
 | `attestation_type` | string | MUST | Type (e.g., `CONFORMANCE`, `EXECUTION`) |
 | `attested_execution_id` | string | MUST | The execution_id this attests |
@@ -160,7 +160,7 @@ See APS-300 for the full Evidence Model. The canonical Evidence object fields ar
 | `event_type` | string | MUST | Canonical event type; normative vocabulary is governed by `aps/EVENT_TYPE_REGISTRY.md` |
 | `sequence_number` | integer | MUST | Monotonically increasing sequence number within a session |
 | `previous_record_hash` | string | MUST | Hash of the previous Audit Record (chain link) |
-| `event_payload_hash` | string | MUST | Hash of the event payload |
+| `event_payload_hash` | string | MUST | SHA-256 hash of the canonical Event Payload defined by EP-001 (§5.5) |
 | `audit_record_hash` | string | MUST | Domain-separated SHA-256 hash defined by §5.1; derived and MUST NOT be supplied as an independent semantic input |
 
 ### 5.1 ENT-007 Audit Record Hash Contract
@@ -242,12 +242,105 @@ The first Audit Record in a session MUST have `sequence_number = 0`. Subsequent 
 
 The following fields are derived and MUST be independently recomputable by a conformant verifier:
 
-- `event_payload_hash` — from the precisely defined event payload;
+- `event_payload_hash` — from EP-001;
 - `audit_record_hash` — from §5.1;
 - `integrity_hash` — from §5.2;
 - `previous_record_hash` — from the predecessor's `audit_record_hash`, except for genesis.
 
 A conformant implementation MUST reject an Audit Record when recomputation produces a different value for any in-scope derived digest, when canonical bytes differ, when the predecessor link is incorrect, or when the genesis/sequence rule is violated.
+
+### 5.5 EP-001 — Event Payload Contract
+
+**Purpose**: Defines the canonical payload committed by `event_payload_hash` for ENT-007.
+
+**Boundary and ownership**
+
+The Event Payload is the application/event data associated with one Audit Record. It is **not** the Audit Record envelope. The payload MUST exclude:
+
+- all Common Object Contract fields;
+- `event_type`;
+- `sequence_number`;
+- `previous_record_hash`;
+- `event_payload_hash`;
+- `audit_record_hash`;
+- `integrity_hash`.
+
+The payload is therefore owned by the event semantics, while ENT-007 owns the immutable audit envelope and its derived hashes. The payload MAY be persisted or transported separately; `event_payload_hash` is the normative commitment that binds it to the Audit Record.
+
+**Payload type**
+
+For conformance purposes, an Event Payload MUST be a JSON object. JSON arrays, strings, numbers, booleans, and `null` MUST NOT be used as the top-level Event Payload.
+
+Payload member values MAY use the JSON value types permitted by RFC 8785 JCS: object, array, string, number, boolean, and `null`, subject to the event-specific schema. Event-specific schemas MAY constrain these values further.
+
+**Canonicalization**
+
+The canonical bytes of the Event Payload MUST be produced using RFC 8785 JSON Canonicalization Scheme (JCS), encoded as UTF-8. The payload MUST be canonicalized before hashing. Implementations MUST NOT hash implementation-specific in-memory serialization, pretty-printed JSON, language-native object representations, or non-JCS JSON serialization.
+
+**UTF-8 requirements**
+
+The Event Payload MUST be valid Unicode JSON and its canonical JCS representation MUST be encoded as UTF-8. Invalid UTF-8 byte sequences are not a valid payload representation. Implementations MUST NOT perform locale-dependent transcoding or normalization outside the JCS processing defined by RFC 8785.
+
+**Duplicate keys**
+
+Duplicate member names in a JSON object are invalid for conformance. An implementation MUST reject a payload containing duplicate object member names before calculating `event_payload_hash`. It MUST NOT silently apply first-key-wins, last-key-wins, merge, or implementation-specific duplicate-key behavior.
+
+**Hash preimage**
+
+For Event Payload `P`:
+
+```text
+EventPayloadHashPreimage(P) = JCS(P)
+
+event_payload_hash(P) =
+    SHA-256(EventPayloadHashPreimage(P))
+```
+
+No domain separator is added to the Event Payload hash in EP-001. Domain separation for the Audit Record identity is provided independently by `0x02` in §5.1.
+
+**Verification and rejection**
+
+A conformant verifier MUST:
+
+1. parse the supplied Event Payload as JSON;
+2. reject malformed JSON;
+3. reject duplicate object member names;
+4. reject a non-object top-level payload;
+5. validate the payload against the applicable event-specific schema, if one is declared by the event contract;
+6. canonicalize the payload using RFC 8785 JCS;
+7. encode the canonical representation as UTF-8;
+8. compute `SHA-256(JCS(P))`;
+9. compare the result with `event_payload_hash`.
+
+The verifier MUST reject the Audit Record if any required step fails or if the recomputed hash differs from the supplied `event_payload_hash`.
+
+**Normative dependency**
+
+The resulting dependency is:
+
+```text
+Event Payload
+      │
+      ▼
+    JCS(P)
+      │
+      ▼
+SHA-256
+      │
+      ▼
+event_payload_hash
+      │
+      ▼
+    ENT-007
+      │
+      ▼
+audit_record_hash
+      │
+      ▼
+integrity_hash
+```
+
+EP-001 does not make `event_payload_hash` depend on `audit_record_hash` or `integrity_hash`.
 
 ---
 
@@ -258,132 +351,3 @@ A conformant implementation MUST reject an Audit Record when recomputation produ
 | Field | Type | Requirement | Description |
 |-------|------|-------------|-------------|
 | Common Object Contract fields | — | MUST | See §4 |
-| `implementation_id` | string | MUST | Canonical ID (e.g., `RI-PY`, `RI-RS`) |
-| `implementation_name` | string | MUST | Human-readable name |
-| `implementation_version` | string | MUST | Semantic version of the implementation |
-| `aps_version` | string | MUST | APS version this implementation claims conformance with |
-| `conformance_report_id` | string | SHOULD | Reference to Conformance Report |
-
----
-
-## 6. Relationships
-
-```
-Evaluation Request (ENT-002)
-        │
-        ▼
-Evaluation Result (ENT-003)
-        │
-        ▼
-Evidence (ENT-005)
-        │
-        ▼
-Attestation (ENT-006)
-        │
-        ▼
-Audit Record (ENT-007)
-```
-
-Every relationship MUST be traceable via object_id references.
-
----
-
-## 7. Validation Rules
-
-Every object MUST pass:
-1. Structure validation (required fields present)
-2. Type validation (field types match schema)
-3. Required field validation
-4. Integrity validation (integrity_hash matches computed hash)
-5. APS-100 invariant validation
-
-For ENT-007, validation additionally MUST include:
-6. `event_payload_hash` recomputation against the defined event payload;
-7. `audit_record_hash` recomputation using §5.1;
-8. `previous_record_hash` linkage to the predecessor's `audit_record_hash`, or the genesis sentinel;
-9. `sequence_number` validation under §5.3;
-10. canonical-byte equality under §8.
-
----
-
-## 8. Serialization Requirements
-
-For the current normative JSON interoperability profile, implementations MUST use **RFC 8785 JSON Canonicalization Scheme (JCS)** when canonical JSON serialization is required by this specification.
-
-The canonical serialization boundary is the UTF-8 byte sequence emitted by the JCS profile. Semantic JSON equivalence, map insertion order, implementation-specific serializers, whitespace conventions, or textual/hexadecimal representations MUST NOT be used as substitutes for canonical-byte equality.
-
-For a canonical object `O`:
-
-```text
-JCS(O) = canonical UTF-8 bytes B
-SHA-256(B) = record/integrity digest where applicable
-SHA-256(0x00 || B) = RFC 6962-style leaf hash where applicable
-```
-
-The leaf prefix `0x00` is one raw octet. It MUST NOT be represented as the ASCII characters `0x00`, a hexadecimal string, or another textual wrapper. RFC 6962-style interior-node hashing uses `0x01` followed by the two raw 32-byte child digests.
-
-For ENT-007, §5.1 additionally defines the Audit Record hash domain `0x02`. The `0x02` prefix is one raw octet and is reserved for the normative Audit Record hash domain.
-
-The canonicalization/hash boundary is implementation-independent. RI-PY and RI-RS have independently executed CANONICAL-001 under CK-003 DQ-006 and produced byte-identical canonical bytes, SHA-256 digests and leaf digests. The corresponding closure evidence is normative decision evidence, not a production dependency requirement.
-
-Conformance engines used for this verification are:
-
-- RI-PY: `rfc8785==0.1.4` — conformance-only;
-- RI-RS: `serde_json_canonicalizer==0.3.2` — conformance-only.
-
-These implementation dependencies do not mandate insertion of either library into production runtime code. Production implementations MUST satisfy the RFC 8785 semantics; the named engines are reference conformance tools.
-
-The canonical serialization profile is version-bound. A change affecting canonical bytes, number/string serialization, field inclusion, hash-domain inputs, or conformance outcomes MUST be treated as a versioned protocol change and MUST undergo compatibility and fixture impact analysis.
-
-### CANONICAL-001 reference vector
-
-Input object:
-
-```json
-{"event_type":"AUDIT_RECORD","payload":{"value":42},"protocol_version":"1.0","schema_version":"1.0"}
-```
-
-Canonical byte length: `100`.
-
-Canonical bytes (hex):
-
-```text
-7b226576656e745f74797065223a2241554449545f5245434f5244222c227061796c6f6164223a7b2276616c7565223a34327d2c2270726f746f636f6c5f76657273696f6e223a22312e30222c22736368656d615f76657273696f6e223a22312e30227d
-```
-
-SHA-256:
-
-```text
-b6c3660ce6dee498b37443a92bf87c5efead6fe863fcf19197c0baeda139a4e6
-```
-
-RFC 6962 leaf:
-
-```text
-ce6b36733d97699230f37d80a14e14104c19d2e787526a6fc3aaae6b6648c039
-```
-
-The executable cross-language evidence and provenance are maintained under `ck003/dq-006-closure/` and the reference implementation conformance repositories.
-
----
-
-## 9. JSON Schema
-
-Machine-readable schema definitions for canonical fixtures and shared object contracts are maintained under `fixtures/schemas/`. Entity-specific schemas remain subject to APS-200 completion and MUST be added before APS-001 v1.0 approval where required by the relevant entity contract.
-
-The event-type vocabulary and validation contract are governed by `aps/EVENT_TYPE_REGISTRY.md`. That registry MUST be incorporated into the approved APS-200 profile before DQ-004 can be closed.
-
----
-
-## 10. Traceability
-
-| Entity | Related Invariants | Related Evidence | Related CONF |
-|--------|-------------------|------------------|--------------|
-| ENT-001 | INV-009, INV-015 | EVID-CORE | CONF-008 |
-| ENT-002 | INV-001, INV-003 | EVID-CORE | CONF-001, CONF-003 |
-| ENT-003 | INV-001, INV-003, INV-013 | EVID-CORE | CONF-001, CONF-003 |
-| ENT-004 | INV-013 | EVID-CORE | — |
-| ENT-005 | INV-004, INV-005, INV-011 | EVID-CORE | CONF-004, CONF-009 |
-| ENT-006 | INV-005 | EVID-CONF | CONF-005 |
-| ENT-007 | INV-003, INV-011, INV-012 | EVID-AUDIT | CONF-003, CONF-012 |
-| ENT-008 | INV-009, INV-015 | EVID-CORE | CONF-008 |
