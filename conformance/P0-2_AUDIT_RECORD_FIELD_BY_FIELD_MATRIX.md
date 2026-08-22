@@ -1,41 +1,91 @@
 # P0-2 — ENT-007 Audit Record Field-by-Field Hash Domain Matrix
 
-**Status:** REVIEW GATE — HASH DEPENDENCY PROMOTED / NOT YET FROZEN  
+**Status:** FINAL REVIEW GATE — NOT YET FROZEN  
 **Branch:** `dq/dq-003-audit-record-hash-domain`  
-**Contract:** APS-200 ENT-007 / Audit Record Contract v0  
-**Purpose:** Resolve the field-level canonical and hash-domain contract before implementation remediation and Golden Fixture freeze.
+**Authority:** APS-200 §4, §5, §5.1–§5.5  
+**Purpose:** Establish the final field inclusion/exclusion contract for ENT-007 before P0-2 freeze and Golden Fixture creation.
 
-> **Important:** The hash dependency has now been promoted into the APS-200 draft on this branch, but P0-2 remains open until all remaining field/domain gaps are resolved and the contract is explicitly frozen.
+## 1. Authority and scope
 
-## 1. Current authority
+This matrix is derived directly from the current APS-200 draft on this branch.
 
-APS-200 defines ENT-007 as an immutable auditable event record with the Common Object Contract plus `event_type`, `sequence_number`, `previous_record_hash`, `event_payload_hash`, and now `audit_record_hash`.
+ENT-007 consists of the Common Object Contract fields plus:
 
-APS-200 §4 requires `integrity_hash` as the Common Object Contract digest excluding itself. APS-200 §5.1 now defines the `0x02` Audit Record hash domain and §5.2 defines the one-way dependency in which `integrity_hash` commits to the already-computed `audit_record_hash`.
+- `event_type`
+- `sequence_number`
+- `previous_record_hash`
+- `event_payload_hash`
+- `audit_record_hash`
 
-## 2. ENT-007 field matrix
+`integrity_hash` is inherited from the Common Object Contract and is a derived field.
 
-| Field | Type | Required | In `audit_record_hash`? | In `integrity_hash`? | Derived | Status |
-|---|---|---:|---:|---:|---:|---|
-| `object_id` | string | MUST | YES | YES | NO | OPEN detail review |
-| `object_type` | string | MUST | YES | YES | NO | OPEN detail review |
-| `protocol_version` | string | MUST | YES | YES | NO | OPEN detail review |
-| `schema_version` | string | MUST | YES | YES | NO | OPEN detail review |
-| `created_at` | string (ISO 8601 UTC) | MUST | YES | YES | NO | OPEN grammar review |
-| `integrity_hash` | string | MUST | **NO** | **NO — self excluded** | YES | PROMOTED |
-| `event_type` | string | MUST | YES | YES | NO | OPEN registry/profile review |
-| `sequence_number` | integer | MUST | YES | YES | NO | PROMOTED: genesis `0` |
-| `previous_record_hash` | string | MUST | YES | YES | verifier reconstruction | PROMOTED: predecessor `audit_record_hash` |
-| `event_payload_hash` | string | MUST | YES | YES | YES | OPEN: payload boundary |
-| `audit_record_hash` | string | MUST | **NO — self excluded** | YES | YES | PROMOTED |
+The matrix distinguishes three concepts:
 
-All fields are JCS-encoded when present in a canonical ENT-007 object. Exact hash-string encoding and extension-field policy remain open until fixture freeze.
+1. **Audit Record hash preimage** — `R_AR`, used only for `audit_record_hash`.
+2. **Integrity hash preimage** — `R_I`, used only for `integrity_hash`.
+3. **Event Payload preimage** — `JCS(P)`, used only for `event_payload_hash`.
 
-## 3. Resolved dependency: `audit_record_hash` ↔ `integrity_hash`
+## 2. Final ENT-007 inclusion/exclusion matrix
 
-### 3.1 Audit Record hash preimage
+| Field | Type | Required | Event Payload Hash | Audit Record Hash | Integrity Hash | Derived? | Genesis behavior | Verification |
+|---|---|---:|---|---|---|---|---|---|
+| `object_id` | string | MUST | OUTSIDE payload | INCLUDE | INCLUDE | NO | ordinary | exact canonical value |
+| `object_type` | string | MUST | OUTSIDE payload | INCLUDE | INCLUDE | NO | ordinary | exact canonical value |
+| `protocol_version` | string | MUST | OUTSIDE payload | INCLUDE | INCLUDE | NO | ordinary | exact canonical value |
+| `schema_version` | string | MUST | OUTSIDE payload | INCLUDE | INCLUDE | NO | ordinary | exact canonical value |
+| `created_at` | string (ISO 8601 UTC) | MUST | OUTSIDE payload | INCLUDE | INCLUDE | NO | ordinary | exact canonical value |
+| `integrity_hash` | string | MUST | OUTSIDE payload | EXCLUDE — self | EXCLUDE — self | YES | derived after record hash | recompute and compare |
+| `event_type` | string | MUST | EXCLUDE | INCLUDE | INCLUDE | NO | ordinary | registry + exact canonical value |
+| `sequence_number` | integer | MUST | EXCLUDE | INCLUDE | INCLUDE | NO | MUST be `0` for first record | monotonicity |
+| `previous_record_hash` | string | MUST | EXCLUDE | INCLUDE | INCLUDE | YES / verifier-linked | genesis sentinel for first record | predecessor linkage |
+| `event_payload_hash` | string | MUST | EXCLUDE | INCLUDE | INCLUDE | YES | ordinary; payload hash still required | recompute from EP-001 |
+| `audit_record_hash` | string | MUST | EXCLUDE | EXCLUDE — self | INCLUDE | YES | derived from record preimage | recompute using `0x02` |
 
-For ENT-007 record `R`, define:
+### 2.1 Interpretation rules
+
+- **INCLUDE** means the field/value is present in the canonical JCS object used for that digest.
+- **EXCLUDE** means the field/value MUST NOT occur in that digest's canonical preimage.
+- **OUTSIDE payload** means the field belongs to the Audit Record envelope and is not part of `event_payload`.
+- `event_payload_hash` is a derived ENT-007 field but is an input to `audit_record_hash` and `integrity_hash`.
+- `audit_record_hash` is an input to `integrity_hash` but not to itself.
+- `integrity_hash` is not an input to either `audit_record_hash` or itself.
+
+## 3. Event Payload contract alignment
+
+EP-001 (§5.5) defines the Event Payload as application/event data associated with one Audit Record and explicitly excludes the entire Audit Record envelope:
+
+```text
+Common Object Contract fields
+object_id
+object_type
+protocol_version
+schema_version
+created_at
+integrity_hash
+
+event_type
+sequence_number
+previous_record_hash
+event_payload_hash
+audit_record_hash
+```
+
+The top-level Event Payload MUST be a JSON object. Member values MAY use JSON object, array, string, number, boolean, or null subject to the event-specific schema.
+
+The payload is canonicalized with RFC 8785 JCS and encoded as UTF-8 before hashing:
+
+```text
+EventPayloadHashPreimage(P) = JCS(P)
+event_payload_hash(P) = SHA-256(JCS(P))
+```
+
+Duplicate object member names are invalid and MUST be rejected before hashing.
+
+Therefore the raw Event Payload is **not duplicated** inside ENT-007 hash preimages. Its commitment enters ENT-007 through `event_payload_hash`.
+
+## 4. Audit Record hash preimage
+
+For ENT-007 record `R`:
 
 ```text
 R_AR = R excluding:
@@ -49,11 +99,13 @@ audit_record_hash(R) =
     SHA-256(AuditRecordHashPreimage(R))
 ```
 
-`0x02` is one raw octet. It MUST NOT be represented as ASCII text, a hexadecimal string, or another textual wrapper.
+`0x02` MUST be one raw octet. It MUST NOT be encoded as the ASCII characters `0x02`, as a hexadecimal string, or as another textual wrapper.
 
-### 3.2 Integrity hash preimage
+Because `event_payload_hash` is included in `R_AR`, the Audit Record identity commits to the Event Payload commitment without embedding the raw payload.
 
-The existing Common Object Contract rule remains:
+## 5. Integrity hash preimage
+
+For ENT-007 record `R`:
 
 ```text
 R_I = R excluding:
@@ -64,42 +116,23 @@ IntegrityPreimage(R) = JCS(R_I)
 integrity_hash(R) = SHA-256(IntegrityPreimage(R))
 ```
 
-Because `R_I` contains `audit_record_hash`, the integrity digest commits to the final Audit Record identity.
+Therefore `R_I` contains `audit_record_hash` and `event_payload_hash`.
 
-### 3.3 Dependency graph
-
-```text
-source fields
-     │
-     ├───────────────┐
-     ▼               ▼
-event_payload_hash  audit_record_hash
-                         │
-                         ▼
-                  integrity_hash
-                         │
-                         ▼
-          next.previous_record_hash
-```
-
-The only allowed hash dependency between the two digests is:
+The dependency is strictly:
 
 ```text
-audit_record_hash → integrity_hash
+Event Payload
+     ↓
+event_payload_hash
+     ↓
+audit_record_hash
+     ↓
+integrity_hash
 ```
 
 There is no reverse dependency and no cycle.
 
-### 3.4 Explicit prohibitions
-
-The following are non-conformant:
-
-- including `integrity_hash` in the `audit_record_hash` preimage;
-- excluding `audit_record_hash` from the ENT-007 `integrity_hash` preimage while claiming the Common Object Contract rule;
-- treating `integrity_hash`, certificate fingerprints, Merkle hashes, or legacy `chain_hash` as aliases for `audit_record_hash`;
-- allowing an adapter to invent a different hash domain.
-
-## 4. Chain rule and genesis
+## 6. Chain and genesis
 
 For non-genesis record `R[n]`:
 
@@ -107,21 +140,37 @@ For non-genesis record `R[n]`:
 R[n].previous_record_hash = R[n-1].audit_record_hash
 ```
 
-Genesis uses a 32-byte all-zero digest sentinel. The first record uses `sequence_number = 0`; subsequent records increment monotonically within the session.
-
-The exact stored string/byte encoding of the sentinel and digest fields remains a fixture-level freeze item.
-
-## 5. Event payload boundary
-
-Candidate rule:
+The first record MUST have:
 
 ```text
-event_payload_hash = SHA-256(JCS(event_payload))
+sequence_number = 0
+previous_record_hash = 32-byte all-zero digest sentinel
 ```
 
-The exact `event_payload` boundary remains open. Once defined, `event_payload_hash` is included as an ENT-007 field in the `audit_record_hash` preimage; the raw payload is not duplicated unless explicitly defined as an ENT-007 field.
+Subsequent records MUST increment `sequence_number` by one within the session and MUST reference the immediately preceding record's `audit_record_hash`.
 
-## 6. Domain separation
+The exact canonical textual encoding of digest fields remains a representation-level freeze item and is intentionally not invented by this matrix.
+
+## 7. Canonical representation
+
+All fields included in `R_AR` and `R_I` MUST be serialized according to the RFC 8785 JCS profile referenced by APS-200 §8.
+
+The canonical JCS result MUST be UTF-8 encoded before SHA-256 input.
+
+For the Event Payload, the same RFC 8785 JCS + UTF-8 rule applies.
+
+The following are therefore non-conformant:
+
+- language-native object serialization;
+- pretty-printed JSON;
+- implementation-specific map ordering;
+- locale-dependent serialization;
+- non-JCS JSON serialization;
+- textual encoding of the `0x02` domain separator.
+
+## 8. Domain separation
+
+The currently defined hash domains remain distinct:
 
 ```text
 0x00 → RFC 6962-style Merkle leaf
@@ -129,46 +178,68 @@ The exact `event_payload` boundary remains open. Once defined, `event_payload_ha
 0x02 → Audit Record hash
 ```
 
-These domains are semantically distinct and MUST NOT be substituted for one another.
+`event_payload_hash` uses no additional domain separator under EP-001.
 
-## 7. Verification contract
+Certificate, Merkle, and legacy chain digests MUST NOT be substituted for `audit_record_hash`.
 
-A conformant verifier must recompute:
+## 9. Verification semantics
+
+A conformant verifier MUST perform the following dependency-ordered checks:
 
 ```text
-1. event_payload_hash
-2. audit_record_hash
-3. integrity_hash
-4. predecessor linkage
-5. genesis condition
-6. sequence monotonicity
-7. canonical-byte equality
+1. Parse Event Payload.
+2. Reject malformed JSON.
+3. Reject duplicate object member names.
+4. Reject non-object top-level payload.
+5. Validate the applicable event-specific payload schema, when declared.
+6. JCS-canonicalize the Event Payload.
+7. UTF-8 encode the canonical payload.
+8. Compute event_payload_hash.
+9. Compare event_payload_hash.
+10. Construct R_AR and compute audit_record_hash using 0x02.
+11. Compare audit_record_hash.
+12. Construct R_I and compute integrity_hash.
+13. Compare integrity_hash.
+14. Verify previous_record_hash against the predecessor audit_record_hash, except genesis.
+15. Verify genesis sentinel and sequence_number rules.
+16. Verify canonical serialization and required field presence.
 ```
 
-It must reject modified source fields, payload/hash mismatch, incorrect predecessor linkage, incorrect derived hashes, incorrect `0x02` domain, or non-canonical serialization.
+The verifier MUST reject when any required derived value differs, a required field is absent, an excluded field contaminates a hash preimage, canonicalization differs, the predecessor link is invalid, or the genesis/sequence rule is violated.
 
-## 8. Remaining P0-2 freeze blockers
+Machine-readable error-code names are still a freeze item; this matrix intentionally specifies rejection conditions rather than inventing an unapproved error vocabulary.
 
-- [ ] Exact final ENT-007 field semantics and extension policy.
-- [ ] Exact canonical inclusion/exclusion list.
-- [ ] Exact `event_payload` boundary.
-- [ ] Exact `event_payload_hash` preimage.
-- [x] `audit_record_hash` preimage promoted to APS-200 §5.1.
-- [x] `0x02` Audit Record domain promoted to APS-200 §5.1.
-- [x] `integrity_hash` preimage/dependency promoted to APS-200 §5.2.
-- [x] predecessor dependency on `audit_record_hash` promoted to APS-200 §5.3.
-- [ ] Exact hash string/byte encoding.
-- [x] Genesis sentinel defined as 32-byte zero digest; stored encoding remains open.
-- [x] Genesis sequence-number rule defined as `0`.
-- [ ] Exact machine-readable verification failure semantics.
-- [x] Merkle `0x00`/`0x01` relationship retained and separated from `0x02`.
+## 10. APS-200 consistency check
 
-## 9. Gate
+| APS-200 rule | Matrix result | Status |
+|---|---|---|
+| Common Object Contract fields | included in both ENT-007 digest domains except self-excluded `integrity_hash` | PASS |
+| `integrity_hash` excludes itself | excluded from `R_I` | PASS |
+| `audit_record_hash` field | added to ENT-007 | PASS |
+| `audit_record_hash` excludes itself | excluded from `R_AR` | PASS |
+| `audit_record_hash` excludes `integrity_hash` | excluded from `R_AR` | PASS |
+| `integrity_hash` includes `audit_record_hash` | included in `R_I` | PASS |
+| `previous_record_hash` | links to predecessor `audit_record_hash` | PASS |
+| Genesis | zero digest + sequence `0` | PASS, encoding still open |
+| Event Payload | EP-001 boundary and JCS hash | PASS |
+| RFC 8785 JCS | used for all canonical preimages | PASS |
+| `0x02` | raw Audit Record domain separator | PASS |
+| Merkle `0x00` / `0x01` | remains separate | PASS |
 
-**P0-2 remains OPEN.**
+## 11. Remaining freeze blockers
 
-The dependency decision is now promoted into the APS-200 draft on this branch:
+Only representation/verification items remain:
 
-> `audit_record_hash` is computed first from the canonical ENT-007 record excluding both derived hashes; `integrity_hash` is then computed over the canonical ENT-007 record excluding only `integrity_hash`, thereby committing to the already-computed `audit_record_hash`. There is no reverse dependency and no cycle.
+- [ ] exact digest field encoding (`hex` vs another already-authorized canonical representation);
+- [ ] exact genesis sentinel stored representation;
+- [ ] exact machine-readable verification error codes;
+- [ ] final extension-field policy for ENT-007, if extensions are permitted;
+- [ ] final cross-document reference check for APS-200 §8 and the event type registry.
 
-This does not freeze the Golden Fixture and does not authorize RI-PY/RI-RS remediation yet.
+No unresolved semantic dependency remains between `event_payload_hash`, `audit_record_hash`, and `integrity_hash` in the current DQ-003 contract.
+
+## 12. Gate
+
+**P0-2 remains OPEN — FINAL REVIEW.**
+
+The field inclusion/exclusion semantics are now aligned with the current APS-200 draft. Freeze is blocked only by the representation-level items listed in §11. No implementation remediation and no Golden Fixture freeze should occur before those items are explicitly resolved.
