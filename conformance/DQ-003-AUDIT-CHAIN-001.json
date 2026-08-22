@@ -1,0 +1,56 @@
+{
+  "fixture_id": "DQ-003-AUDIT-CHAIN-001",
+  "contract": "APS-200",
+  "status": "GOLDEN-FIXTURE-CANDIDATE",
+  "purpose": "Independent audit-chain fixture derived from the frozen P0-2 contract; implementation adapters MUST be evaluated against these values without modifying protocol semantics.",
+  "hash_algorithm": "SHA-256",
+  "canonicalization": "RFC 8785 JCS",
+  "digest_encoding": "lowercase hexadecimal ASCII, 64 characters",
+  "audit_record_domain_separator": "02",
+  "genesis_previous_record_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "records": [
+    {
+      "record_id": "record-000",
+      "event_payload": {
+        "action": "ALLOW",
+        "resource": "fixture-resource",
+        "subject": "fixture-subject"
+      },
+      "expected": {
+        "sequence_number": 0,
+        "previous_record_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "event_payload_hash": "TODO_COMPUTE_FROM_JCS_PAYLOAD",
+        "audit_record_hash": "TODO_COMPUTE_FROM_0x02_PLUS_JCS_AUDIT_RECORD_PREIMAGE",
+        "integrity_hash": "TODO_COMPUTE_FROM_JCS_INTEGRITY_PREIMAGE"
+      }
+    },
+    {
+      "record_id": "record-001",
+      "event_payload": {
+        "action": "DENY",
+        "resource": "fixture-resource",
+        "subject": "fixture-subject"
+      },
+      "expected": {
+        "sequence_number": 1,
+        "previous_record_hash": "DERIVED_FROM_record-000.audit_record_hash",
+        "event_payload_hash": "TODO_COMPUTE_FROM_JCS_PAYLOAD",
+        "audit_record_hash": "TODO_COMPUTE_FROM_0x02_PLUS_JCS_AUDIT_RECORD_PREIMAGE",
+        "integrity_hash": "TODO_COMPUTE_FROM_JCS_INTEGRITY_PREIMAGE"
+      }
+    }
+  ],
+  "verification_requirements": [
+    "Parse Event Payload as JSON.",
+    "Reject duplicate object member names.",
+    "Require object as top-level Event Payload.",
+    "Canonicalize Event Payload using RFC 8785 JCS.",
+    "Compute event_payload_hash = SHA-256(JCS(payload)).",
+    "Build audit-record preimage from ENT-007 excluding audit_record_hash and integrity_hash.",
+    "Compute audit_record_hash = SHA-256(0x02 || JCS(audit-record-preimage)).",
+    "Build integrity preimage from ENT-007 excluding integrity_hash and including audit_record_hash.",
+    "Compute integrity_hash = SHA-256(JCS(integrity-preimage)).",
+    "For non-genesis records, previous_record_hash MUST equal the predecessor audit_record_hash.",
+    "Do not substitute integrity_hash, certificate fingerprints, or Merkle hashes for previous_record_hash."
+  ]
+}
