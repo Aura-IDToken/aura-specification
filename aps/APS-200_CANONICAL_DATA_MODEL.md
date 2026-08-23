@@ -212,9 +212,15 @@ Every object MUST pass:
 
 ## 8. Serialization Requirements
 
+Representation boundary: A transport representation is not, by itself, the canonical representation of a protocol object. Where this specification requires canonical serialization, the canonical representation MUST be established by the canonical serialization profile defined in this section. A transport encoding or wire representation MUST NOT be treated as canonical solely because it is used for transport.
+
 For the current normative JSON interoperability profile, implementations MUST use **RFC 8785 JSON Canonicalization Scheme (JCS)** when canonical JSON serialization is required by this specification.
 
-The canonical serialization boundary is the UTF-8 byte sequence emitted by the JCS profile. Semantic JSON equivalence, map insertion order, implementation-specific serializers, whitespace conventions, or textual/hexadecimal representations MUST NOT be used as substitutes for canonical-byte equality.
+The canonical serialization boundary is the UTF-8 byte sequence emitted by the JCS profile, which constitutes `canonical_bytes`. Semantic JSON equivalence, map insertion order, implementation-specific serializers, whitespace conventions, or textual/hexadecimal representations MUST NOT be used as substitutes for canonical-byte equality.
+
+Cross-implementation determinism: For the same semantic protocol object, when canonical serialization is required under the same applicable canonical serialization profile, every conformant implementation MUST produce byte-identical `canonical_bytes`.
+
+Digest-input boundary: Where a cryptographic operation explicitly requires canonical serialization, the digest input MUST be the applicable `canonical_bytes` and MUST NOT be substituted with a non-canonical serialization, an implementation-specific serialization, a textual representation of the canonical bytes, or a textual representation of the resulting digest.
 
 For a canonical object `O`:
 
@@ -225,6 +231,8 @@ SHA-256(0x00 || B) = RFC 6962-style leaf hash where applicable
 ```
 
 The leaf prefix `0x00` is one raw octet. It MUST NOT be represented as the ASCII characters `0x00`, a hexadecimal string, or another textual wrapper. RFC 6962-style interior-node hashing uses `0x01` followed by the two raw 32-byte child digests.
+
+Serialization scope: Canonical serialization defines the canonical representation and byte representation of the protocol object. It does not, by itself, define event semantics, event-type vocabulary, protocol-version compatibility semantics, identity semantics, entity-schema ownership, migration authority, or DQ-003/DQ-004 closure criteria.
 
 The canonicalization/hash boundary is implementation-independent. RI-PY and RI-RS have independently executed CANONICAL-001 under CK-003 DQ-006 and produced byte-identical canonical bytes, SHA-256 digests and leaf digests. The corresponding closure evidence is normative decision evidence, not a production dependency requirement.
 
