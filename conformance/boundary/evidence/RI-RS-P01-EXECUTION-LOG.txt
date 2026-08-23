@@ -1,0 +1,35 @@
+warning: variant `NOT_TRANSFERRED` should have an upper camel case name
+  --> ../ri_rs_receiver.rs:39:5
+   |
+39 |     NOT_TRANSFERRED,
+   |     ^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `NotTransferred`
+   |
+   = note: `#[warn(non_camel_case_types)]` (part of `#[warn(nonstandard_style)]`) on by default
+
+== RI-RS intake ==
+artifact_path       : ../p01/FIX-DIGEST-P01.canonical.json
+octets_read         : 15
+octets_hex          : 7b2261223a312c2262223a2278227d
+
+== R-VAL-001..012 (schema/receipt validation only) ==
+R-VAL-001  PASS  schema identity/version present — schema_id=BC-02.1-COMMON-RECEIPT schema_version=1
+R-VAL-002  PASS  fixture identity fields present — fixture_id=FIX-DIGEST-P01 fixture_artifact_identity=FIX-DIGEST-P01.canonical.json
+R-VAL-003  PASS  handoff state belongs to closed domain — status=TRANSFERRED (domain: TRANSFERRED|NOT_TRANSFERRED|ERROR)
+R-VAL-004  PASS  received length is explicit — octet_length=15 intake=15 raw_octets=15 b64_decoded=15
+R-VAL-005  PASS  recomputed hash is receiver-derived — receiver_derived=ecf9e98ec0641e23113ff3ce8bdc78d0ddd249886517fd4a7f68cc83d4e65667 independent_recompute=ecf9e98ec0641e23113ff3ce8bdc78d0ddd249886517fd4a7f68cc83d4e65667 validate_schema=ok
+R-VAL-006  PASS  receiver identity preserved — receiver_id=RI-RS language=Rust
+R-VAL-007  PASS  implementation identity preserved — implementation_id=aura-ri-rs implementation_version=1.0.0 source_commit=49e848a007b18b78240100246f7cc348cf9ebd62
+R-VAL-008  PASS  adapter identity preserved — adapter_id=BC-02.3-RS-P01-HANDOFF-ADAPTER adapter_version=1.0.0
+R-VAL-009  PASS  environment identity preserved — environment_id=aura-ccr-linux-x86_64-rust-1.94.1 platform=Linux-x86_64-6.18.44-fc-v21 (x86_64-unknown-linux-gnu) runtime=rustc 1.94.1 (e408947bf 2026-03-25) / cargo 1.94.1 (29ea6fb6a 2026-03-24)
+R-VAL-010  PASS  raw material is not silently reconstructed — receipt octets == octets read from issued artifact (15 octets); Base64 transport decodes to the same octets
+R-VAL-011  PASS  deterministic serialization possible — stable_repeat=true lexicographic_keys=true compact=true null_free=true bytes=870
+R-VAL-012  PASS  no conformance-result authority — forbidden_key=None forbidden_value=None field_set_exact=true
+
+== BC-02.1 receipt (deterministic transport form) ==
+{"adapter":{"adapter_id":"BC-02.3-RS-P01-HANDOFF-ADAPTER","adapter_version":"1.0.0"},"environment":{"environment_id":"aura-ccr-linux-x86_64-rust-1.94.1","platform":"Linux-x86_64-6.18.44-fc-v21 (x86_64-unknown-linux-gnu)","runtime":"rustc 1.94.1 (e408947bf 2026-03-25) / cargo 1.94.1 (29ea6fb6a 2026-03-24)"},"fixture":{"fixture_artifact_identity":"FIX-DIGEST-P01.canonical.json","fixture_id":"FIX-DIGEST-P01"},"handoff":{"method":"local-octet-file-transfer","status":"TRANSFERRED"},"received":{"octet_length":15,"raw_octets":"eyJhIjoxLCJiIjoieCJ9","recomputed_sha256":"ecf9e98ec0641e23113ff3ce8bdc78d0ddd249886517fd4a7f68cc83d4e65667"},"receiver":{"implementation_id":"aura-ri-rs","implementation_version":"1.0.0","language":"Rust","receiver_id":"RI-RS","source_commit":"49e848a007b18b78240100246f7cc348cf9ebd62"},"schema_id":"BC-02.1-COMMON-RECEIPT","schema_version":1}
+
+receipt written to: ../evidence/RI-RS-P01-RECEIPT.json
+
+B-VAL-014 NOT EXECUTED
+§4.5 NO RESULT
+CONFORMANCE NOT DETERMINED
