@@ -96,7 +96,7 @@ Mutations MUST be applied to temporary copies and MUST NOT remain in the committ
 
 ### 4.5 Prohibited-input controls
 
-The implementation MUST NOT accept, as a digest input, any form listed in APS-200 §8.4. Where the boundary can be driven with such an input, the attempt MUST fail rather than produce a digest.
+The implementation MUST NOT accept, as a digest input, any form listed in APS-200 §8 — Digest-input boundary. Where the boundary can be driven with such an input, the attempt MUST fail rather than produce a digest.
 
 ---
 
