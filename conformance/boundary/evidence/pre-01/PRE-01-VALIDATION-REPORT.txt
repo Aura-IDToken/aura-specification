@@ -1,0 +1,112 @@
+BC-02.1 PRE-01 — ENGINEERING VALIDATION REPORT
+
+Engineering validation of a schema correction. NOT C1-C8, NOT CONF-003
+section 4.5, NOT N-01..N-08, NOT B-VAL-014, NOT a conformance result.
+
+PRE-01-001  PASS
+    fixture_artifact_identity originates from exact issued artifact bytes
+      - same transfer unit, two declared identities: 'aaaaaaaa...' / 'bbbbbbbb...' -> field tracks declaration, not the received buffer: True
+      - declared identity is not read back from either operand: True
+      - artifact NAME rejected where artifact IDENTITY is required: True
+      - read-only: SHA-256(issued P-01 octets)=ecf9e98ec0641e23113ff3ce8bdc78d0ddd249886517fd4a7f68cc83d4e65667 == declared construction fingerprint: True
+      - scope limit: no issuance record exists in any in-scope repository, so the declared identity is bound to the repository-resident issued artifact only, not to an issuance authority record
+
+PRE-01-002  PASS
+    receipt_digest originates from the actual receiver buffer
+      - recorded=8dfff8675069e2382143edfbd3536930122871289ae456f6ec7e2febb636bc48 independent SHA-256(received.raw_octets)=8dfff8675069e2382143edfbd3536930122871289ae456f6ec7e2febb636bc48 equal=True
+      - source_material=RECEIVED_BUFFER source_material_ref=received.raw_octets source=RECEIVER_RECOMPUTED source_material_octet_length=10
+      - receive() admits no digest parameter: True
+      - calculation_path=received transfer unit -> received.raw_octets -> SHA-256 -> digest_operands.receipt_digest.value
+
+PRE-01-003  PASS
+    input_segment_sha256 has an independently identifiable source
+      - input_segment.octets recorded as raw octets, length 5, distinct from the received buffer of length 10
+      - recorded=f0393febe8baaa55e32f7be2a7cc180bf34e52137d99e056c817a9c07b8f239a independent SHA-256(input_segment.octets)=f0393febe8baaa55e32f7be2a7cc180bf34e52137d99e056c817a9c07b8f239a equal=True
+      - source_material=INPUT_SEGMENT source_material_ref=input_segment.octets source=RECEIVER_RECOMPUTED raw_input_encoding=base16
+      - Base64 transport of input_segment.octets reverses to the recorded octets: True
+      - calculation_path=received transfer unit -> decode(input_segment.raw_input_encoding) -> input_segment.octets -> SHA-256 -> digest_operands.input_segment_sha256.value
+
+PRE-01-004  PASS
+    the two digest operands do not share a previously computed value
+      - differential case (raw_input_encoding=base16): receipt_digest=8dfff8675069e238... input_segment_sha256=f0393febe8baaa55... equal=False -- two values from one buffer would be equal here; they are not
+      - each operand reproduces SHA-256 of its own material independently: True
+      - identity case: values coincide (True) while the two source buffers remain distinct objects (True); equality is observed, not assigned
+      - the two operand observers are distinct callables and neither admits a digest, expected value, or the other operand: True
+      - COPIED_FROM_OTHER_OPERAND is representable in the source domain and is not used by either operand: True
+
+PRE-01-005  PASS
+    provenance for both operands is explicit
+      - receipt_digest: all provenance links resolvable from the operand: True (what was hashed=RECEIVED_BUFFER, source material ref=received.raw_octets, calculation path=True, receiver=PRE-01-SCHEMA-HARNESS, implementation=bc021-receipt-v2-reference, adapter=PRE-01-SCHEMA-HARNESS-ADAPTER, source commit=working-tree, environment=pre-01-schema-validation, receiver-recomputed=RECEIVER_RECOMPUTED)
+      - receipt_digest: operand provenance agrees with receipt-level identities: True
+      - input_segment_sha256: all provenance links resolvable from the operand: True (what was hashed=INPUT_SEGMENT, source material ref=input_segment.octets, calculation path=True, receiver=PRE-01-SCHEMA-HARNESS, implementation=bc021-receipt-v2-reference, adapter=PRE-01-SCHEMA-HARNESS-ADAPTER, source commit=working-tree, environment=pre-01-schema-validation, receiver-recomputed=RECEIVER_RECOMPUTED)
+      - input_segment_sha256: operand provenance agrees with receipt-level identities: True
+
+PRE-01-006  PASS
+    received_octet_length originates from the actual received buffer
+      - received.octet_length=10 len(received.raw_octets)=10 equal=True
+      - received.octet_length=10 differs from input_segment.octet_length=5: True -- the length is the receiver buffer's, not the segment's
+      - transport: decoded raw_octets length 10 equals recorded octet_length 10: True
+
+PRE-01-007  PASS
+    absence/null cannot silently encode UNKNOWN or ABSENT semantics
+      - unbound issuance_id renders as an explicit state object {'detail': 'synthetic validation vector has no issuance record', 'state': 'UNKNOWN'}, not as null and not as a bare string: True
+      - UNKNOWN, ABSENT, ERROR and REJECT are separately representable: ['ABSENT', 'ERROR', 'REJECT', 'UNKNOWN']
+      - no null anywhere in the transport mapping: True
+      - null is not constructible as a field value: the transport serializer refuses any null (see null_free above)
+      - empty string rejected as an issuance_id: True
+      - a bound value and an unresolved value have different transport types, so one cannot be read as the other: True
+
+PRE-01-008  PASS
+    the schema/receipt mechanism cannot emit a conformance classification
+      - result-authority keys present: none
+      - conformance classifications present: none
+      - receipt construction refuses a classification smuggled into a free-text field: True
+      - handoff status domain is closed and non-evaluative: ['ERROR', 'NOT_TRANSFERRED', 'TRANSFERRED']
+      - top-level field set: ['adapter', 'digest_operands', 'environment', 'fixture', 'handoff', 'input_segment', 'received', 'receiver', 'schema_id', 'schema_version']
+      - the schema defines no conformance_result field and no equivalent result-authority field
+
+PRE-01-009  PASS
+    existing FIX-DIGEST-P01 remains unchanged
+      - SHA-256=ecf9e98ec0641e23113ff3ce8bdc78d0ddd249886517fd4a7f68cc83d4e65667 declared=ecf9e98ec0641e23113ff3ce8bdc78d0ddd249886517fd4a7f68cc83d4e65667 equal=True
+      - octet length=15 declared=15 equal=True
+      - git status for the artifact path: clean
+      - the artifact was opened read-only and never handed to a receiver
+
+PRE-01-010  PASS
+    APS-200 / CONF-003 and all other protected authority artifacts remain untouched
+      - working-tree entries: ['conformance/boundary/BC-02.1-COMMON-RECEIPT-SCHEMA-v2.md', 'conformance/boundary/BC-02.1-PRE-01-SCHEMA-CORRECTION-RECORD.md', 'conformance/boundary/evidence/pre-01/PRE-01-VALIDATION-REPORT.txt', 'conformance/boundary/schema/.gitignore', 'conformance/boundary/schema/bc021_receipt_v2.py', 'conformance/boundary/schema/pre01_validation.py']
+      - entries outside the authorized PRE-01 path set: none
+      - aps/APS-200_CANONICAL_DATA_MODEL.md: present, modified=False
+      - APS-200 — Canonical Data Model_260723_192852.txt: present, modified=False
+      - conformance/CONF-003_CANONICAL_SERIALIZATION.md: present, modified=False
+      - ck003/DQ-004_EVENT_TYPE_SEMANTICS.md: present, modified=False
+      - conformance/boundary/p01/FIX-DIGEST-P01.canonical.json: present, modified=False
+      - conformance/boundary/BC-02.1-COMMON-RECEIPT-SCHEMA-v1.md: present, modified=False
+      - conformance/boundary/B-VAL-014-DEFINITION-RECONCILIATION-RECORD.md: present, modified=False
+      - conformance/boundary/CONTROLLED-P01-HANDOFF-RECORD.md: present, modified=False
+      - conformance/boundary/BC-02-CUSTODIAN-CLOSURE-RECORD.md: present, modified=False
+      - conformance/boundary/BC-02-CROSS-RECEIVER-PREEXEC-AUDIT.md: present, modified=False
+      - conformance/boundary/BC-02.3-RI-RS-RECEIVER-v1.md: present, modified=False
+      - conformance/boundary/ri_rs_receiver.rs: present, modified=False
+      - conformance/boundary/ri-rs/src/bin/p01_handoff.rs: present, modified=False
+      - conformance/boundary/evidence/controlled-p01-handoff/RI-PY-P01-RECEIPT.json: present, modified=False
+      - conformance/boundary/evidence/controlled-p01-handoff/RI-RS-P01-RECEIPT.json: present, modified=False
+      - D-2.3, D-2.4 and ENT-007 were searched for and are not present as artifacts in this repository; they are therefore unmodified by absence
+
+SUMMARY
+  PRE-01-001   PASS
+  PRE-01-002   PASS
+  PRE-01-003   PASS
+  PRE-01-004   PASS
+  PRE-01-005   PASS
+  PRE-01-006   PASS
+  PRE-01-007   PASS
+  PRE-01-008   PASS
+  PRE-01-009   PASS
+  PRE-01-010   PASS
+
+B-VAL-014                NOT EXECUTED
+CONF-003 section 4.5     NO RESULT
+N-01..N-08               NOT EXECUTED
+P-01 re-handoff          NOT PERFORMED
+CONFORMANCE              NOT DETERMINED
