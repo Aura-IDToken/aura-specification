@@ -74,7 +74,7 @@ PRE-01-009  PASS
 
 PRE-01-010  PASS
     APS-200 / CONF-003 and all other protected authority artifacts remain untouched
-      - working-tree entries: ['conformance/boundary/BC-02.1-COMMON-RECEIPT-SCHEMA-v2.md', 'conformance/boundary/BC-02.1-PRE-01-SCHEMA-CORRECTION-RECORD.md', 'conformance/boundary/evidence/pre-01/PRE-01-VALIDATION-REPORT.txt', 'conformance/boundary/schema/.gitignore', 'conformance/boundary/schema/bc021_receipt_v2.py', 'conformance/boundary/schema/pre01_validation.py']
+      - working-tree entries: ['conformance/boundary/BC-02.1-PRE-01-SCHEMA-CORRECTION-RECORD.md', 'conformance/boundary/evidence/pre-01/PRE-01-VALIDATION-REPORT.txt']
       - entries outside the authorized PRE-01 path set: none
       - aps/APS-200_CANONICAL_DATA_MODEL.md: present, modified=False
       - APS-200 — Canonical Data Model_260723_192852.txt: present, modified=False
