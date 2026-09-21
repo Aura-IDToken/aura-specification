@@ -1,0 +1,28 @@
+# BC-02.3 RI-RS execution harness.
+#
+# Build/execution scaffolding only. This package introduces no normative
+# specification content and does not modify the BC-02.3 construction artifact,
+# which is referenced in place at ../ri_rs_receiver.rs.
+
+[package]
+name = "ri-rs-boundary"
+version = "1.0.0"
+edition = "2021"
+publish = false
+
+[lib]
+name = "ri_rs_receiver"
+path = "../ri_rs_receiver.rs"
+
+[[bin]]
+name = "p01_handoff"
+path = "src/bin/p01_handoff.rs"
+
+[dependencies]
+sha2 = "0.10"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+base64 = "0.22"
+
+[dev-dependencies]
+serde_json = "1"

@@ -1,0 +1,30 @@
+{
+  "digest_manifest_version": "CK003-DIGESTS-0.1",
+  "status": "EXPECTED_VALUES_PENDING_CANONICAL_SERIALIZATION",
+  "algorithm": "SHA-256",
+  "hash_domain": {
+    "leaf": "SHA-256(0x00 || canonical_bytes)",
+    "node": "SHA-256(0x01 || left_digest_bytes || right_digest_bytes)",
+    "tree": "RFC-6962 semantics"
+  },
+  "entries": [
+    {"id":"CK003-001","expected_digest":null,"reason":"legacy fixture identity/path not resolved"},
+    {"id":"CK003-002","expected_digest":null,"reason":"legacy fixture identity/path not resolved"},
+    {"id":"CK003-003","expected_digest":null,"reason":"legacy fixture identity/path not resolved"},
+    {"id":"CK003-004","expected_digest":null,"reason":"legacy fixture identity/path not resolved"},
+    {"id":"CK003-005","expected_digest":null,"reason":"legacy fixture identity/path not resolved"},
+    {"id":"CK003-006","expected_digest":null,"reason":"legacy fixture identity/path not resolved"},
+    {"id":"CK003-007","expected_digest":null,"reason":"legacy fixture identity/path not resolved"},
+    {"id":"CK003-008","expected_digest":null,"reason":"legacy fixture identity/path not resolved"},
+    {"id":"CK003-009","expected_digest":null,"reason":"legacy fixture identity/path not resolved"},
+    {"id":"CK003-010","expected_digest":null,"reason":"legacy fixture identity/path not resolved"},
+    {"id":"FIX-INV-007","expected_digest":null,"reason":"canonical serialization profile not frozen"},
+    {"id":"FIX-INV-012","expected_digest":null,"reason":"event vocabulary not normatively closed"},
+    {"id":"FIX-INV-013","expected_digest":null,"reason":"concrete policy fixture not bound"},
+    {"id":"FIX-INV-014","expected_digest":null,"reason":"APS-500 corpus/version binding not frozen"},
+    {"id":"FIX-INV-015","expected_digest":null,"reason":"APS-000 identity binding not frozen"},
+    {"id":"FIX-CK003-DQ002-RFC6962-2LEAF","expected_digest":"fixture-defined","reason":"use the explicit expected values contained by the normative DQ-002 fixture"},
+    {"id":"FIX-CK003-DQ002-CROSS-LANGUAGE","expected_digest":"fixture-defined","reason":"use the explicit cross-language expected values from the DQ-002 fixture"}
+  ],
+  "rule": "null is intentional and MUST NOT be interpreted as zero, empty digest, or PASS. Expected digests may be populated only after canonical bytes are frozen and the fixture itself is immutable."
+}

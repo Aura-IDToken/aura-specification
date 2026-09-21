@@ -1,0 +1,30 @@
+$ python3 -m conformance.boundary.ri_py_adapter <artifact> --fixture-id FIX-DIGEST-P01 ...
+executed_at_utc=2026-08-23T21:36:53Z
+
+== RI-PY intake ==
+artifact_path : /home/user/aura-specification/conformance/boundary/p01/FIX-DIGEST-P01.canonical.json
+octets_read   : 15
+
+== R-VAL-001..012 (schema/receipt validation only) ==
+R-VAL-001  PASS  schema identity/version present - schema_id='BC-02.1-COMMON-RECEIPT' schema_version=1
+R-VAL-002  PASS  fixture identity fields present - fixture_id='FIX-DIGEST-P01' fixture_artifact_identity='FIX-DIGEST-P01.canonical.json'
+R-VAL-003  PASS  handoff state belongs to closed domain - status='TRANSFERRED' method='repository-resident-octet-file-transfer' domain=['ERROR', 'NOT_TRANSFERRED', 'TRANSFERRED']
+R-VAL-004  PASS  received length is explicit - octet_length=15 len(raw_octets)=15
+R-VAL-005  PASS  recomputed hash is explicitly receiver-derived - recorded='ecf9e98ec0641e23113ff3ce8bdc78d0ddd249886517fd4a7f68cc83d4e65667' independent_recompute='ecf9e98ec0641e23113ff3ce8bdc78d0ddd249886517fd4a7f68cc83d4e65667' receive_accepts_digest_parameter=False
+R-VAL-006  PASS  receiver identity preserved - receiver_id='RI-PY' language='Python'
+R-VAL-007  PASS  implementation identity preserved - implementation_id='aura-ri-py' implementation_version='1.0.0' source_commit='d943807c359af982fd573ec4ff690b7fa265dc42' distinct_from_receiver_id=True
+R-VAL-008  PASS  adapter identity preserved - adapter_id='BC-02.2-RI-PY-BOUNDARY-ADAPTER' adapter_version='1.0.0' distinct_from_implementation_and_receiver=True
+R-VAL-009  PASS  environment identity preserved - environment_id='ri-py-linux-x86_64-cpython-3.11.15' platform='Linux-x86_64-6.18.44-fc-v21' runtime='CPython 3.11.15'
+R-VAL-010  PASS  raw material is not silently reconstructed - raw_octets_type=bytes transport_encoding=base64 reversible=True
+R-VAL-011  PASS  deterministic serialization is possible - stable_repeat=True lexicographic_keys=True null_free=True compact=True octets=802
+R-VAL-012  PASS  schema contains no conformance-result authority - forbidden_keys=[] forbidden_values=[] field_set_exact=True
+
+== BC-02.1 receipt (deterministic transport form) ==
+{"adapter":{"adapter_id":"BC-02.2-RI-PY-BOUNDARY-ADAPTER","adapter_version":"1.0.0"},"environment":{"environment_id":"ri-py-linux-x86_64-cpython-3.11.15","platform":"Linux-x86_64-6.18.44-fc-v21","runtime":"CPython 3.11.15"},"fixture":{"fixture_artifact_identity":"FIX-DIGEST-P01.canonical.json","fixture_id":"FIX-DIGEST-P01"},"handoff":{"method":"repository-resident-octet-file-transfer","status":"TRANSFERRED"},"received":{"octet_length":15,"raw_octets":"eyJhIjoxLCJiIjoieCJ9","recomputed_sha256":"ecf9e98ec0641e23113ff3ce8bdc78d0ddd249886517fd4a7f68cc83d4e65667"},"receiver":{"implementation_id":"aura-ri-py","implementation_version":"1.0.0","language":"Python","receiver_id":"RI-PY","source_commit":"d943807c359af982fd573ec4ff690b7fa265dc42"},"schema_id":"BC-02.1-COMMON-RECEIPT","schema_version":1}
+
+receipt written to: /home/user/aura-specification/conformance/boundary/evidence/controlled-p01-handoff/RI-PY-P01-RECEIPT.json
+
+B-VAL-014 NOT EXECUTED
+CONF-003 section 4.5 NO RESULT
+CONFORMANCE NOT DETERMINED
+EXIT=0

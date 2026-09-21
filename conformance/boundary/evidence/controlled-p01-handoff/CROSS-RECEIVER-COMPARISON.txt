@@ -1,0 +1,87 @@
+=== ISSUED ARTIFACT (pre-intake, outside both receivers) ===
+path                  : /home/user/aura-specification/conformance/boundary/p01/FIX-DIGEST-P01.canonical.json
+octet_length          : 15
+octets_hex            : 7b2261223a312c2262223a2278227d
+independent SHA-256   : ecf9e98ec0641e23113ff3ce8bdc78d0ddd249886517fd4a7f68cc83d4e65667
+issued identity match : True
+trailing newline      : False
+
+=== A. RECEIVED OCTETS ===
+RI-PY octets hex      : 7b2261223a312c2262223a2278227d
+RI-RS octets hex      : 7b2261223a312c2262223a2278227d
+RI-PY == RI-RS        : True
+RI-PY == issued file  : True
+RI-RS == issued file  : True
+
+=== B. OCTET LENGTH ===
+RI-PY declared/decoded: 15 / 15
+RI-RS declared/decoded: 15 / 15
+issued length         : 15
+all three equal       : True
+
+=== C. RECEIVER-DERIVED DIGEST ===
+RI-PY receiver-derived: ecf9e98ec0641e23113ff3ce8bdc78d0ddd249886517fd4a7f68cc83d4e65667
+RI-RS receiver-derived: ecf9e98ec0641e23113ff3ce8bdc78d0ddd249886517fd4a7f68cc83d4e65667
+independent(RI-PY oct): ecf9e98ec0641e23113ff3ce8bdc78d0ddd249886517fd4a7f68cc83d4e65667
+independent(RI-RS oct): ecf9e98ec0641e23113ff3ce8bdc78d0ddd249886517fd4a7f68cc83d4e65667
+RI-PY == RI-RS        : True
+both == independent   : True
+both == issued identity: True
+NOT digest of Base64 chars: True
+
+=== D. FIXTURE IDENTITY ===
+RI-PY fixture_id / artifact_identity: FIX-DIGEST-P01 / FIX-DIGEST-P01.canonical.json
+RI-RS fixture_id / artifact_identity: FIX-DIGEST-P01 / FIX-DIGEST-P01.canonical.json
+both identify FIX-DIGEST-P01: True
+both identify the artifact  : True
+
+=== E. PROVENANCE (independence expected; identity NOT required) ===
+  receiver.receiver_id              RI-PY=RI-PY                                          RI-RS=RI-RS
+  receiver.implementation_id        RI-PY=aura-ri-py                                     RI-RS=aura-ri-rs
+  receiver.language                 RI-PY=Python                                         RI-RS=Rust
+  receiver.implementation_version   RI-PY=1.0.0                                          RI-RS=1.0.0
+  receiver.source_commit            RI-PY=d943807c359af982fd573ec4ff690b7fa265dc42       RI-RS=49e848a007b18b78240100246f7cc348cf9ebd62
+  adapter.adapter_id                RI-PY=BC-02.2-RI-PY-BOUNDARY-ADAPTER                 RI-RS=BC-02.3-RS-P01-HANDOFF-ADAPTER
+  adapter.adapter_version           RI-PY=1.0.0                                          RI-RS=1.0.0
+  environment.environment_id        RI-PY=ri-py-linux-x86_64-cpython-3.11.15             RI-RS=ri-rs-linux-x86_64-rust-1.94.1
+  environment.platform              RI-PY=Linux-x86_64-6.18.44-fc-v21                    RI-RS=Linux-x86_64-6.18.44-fc-v21
+  environment.runtime               RI-PY=CPython 3.11.15                                RI-RS=rustc 1.94.1 (e408947bf 2026-03-25)
+  all provenance fields present in both: True
+
+=== F. RECEIPT SCHEMA (BC-02.1) ===
+  RI-PY schema_id/version : BC-02.1-COMMON-RECEIPT / 1
+  RI-PY field set exact   : True
+  RI-PY lexicographic keys: True
+  RI-PY compact / no null : True / True
+  RI-PY handoff status    : TRANSFERRED (closed domain)
+  RI-RS schema_id/version : BC-02.1-COMMON-RECEIPT / 1
+  RI-RS field set exact   : True
+  RI-RS lexicographic keys: True
+  RI-RS compact / no null : True / True
+  RI-RS handoff status    : TRANSFERRED (closed domain)
+
+=== G. AUTHORITY ISOLATION ===
+  RI-PY forbidden keys   : none
+  RI-PY forbidden values : none
+  RI-RS forbidden keys   : none
+  RI-RS forbidden values : none
+
+=== SECTION 10 — logical receipt bytes vs file termination (A-OBS-01) ===
+  RI-PY logical serialized receipt : 802 octets, sha256=34eb945c1c8d47e837e14bb19801fa4db1ad27e256b4d994f53373cea2e692b2
+  RI-PY stored file                : 803 octets, trailing 0x0A=True
+  RI-RS logical serialized receipt : 816 octets, sha256=b4f0fdacd295d2154e5ce2eec11beae3fb4c0032ba33c49f6b9f202d97c7c624
+  RI-RS stored file                : 817 octets, trailing 0x0A=True
+  Serialization is unmodified; the extra octet is file termination convention only.
+
+=== RECEIPT DIFFERENCES (identical artifact, independent receivers) ===
+  .adapter.adapter_id                RI-PY='BC-02.2-RI-PY-BOUNDARY-ADAPTER'               RI-RS='BC-02.3-RS-P01-HANDOFF-ADAPTER'
+  .environment.environment_id        RI-PY='ri-py-linux-x86_64-cpython-3.11.15'           RI-RS='ri-rs-linux-x86_64-rust-1.94.1'
+  .environment.runtime               RI-PY='CPython 3.11.15'                              RI-RS='rustc 1.94.1 (e408947bf 2026-03-25)'
+  .receiver.implementation_id        RI-PY='aura-ri-py'                                   RI-RS='aura-ri-rs'
+  .receiver.language                 RI-PY='Python'                                       RI-RS='Rust'
+  .receiver.receiver_id              RI-PY='RI-PY'                                        RI-RS='RI-RS'
+  .receiver.source_commit            RI-PY='d943807c359af982fd573ec4ff690b7fa265dc42'     RI-RS='49e848a007b18b78240100246f7cc348cf9ebd62'
+  differing fields: 7 - all are provenance/language, which BC-02.1 does not require to match
+
+OBSERVATION ONLY. NOT A CONFORMANCE RESULT.
+B-VAL-014 NOT EXECUTED / CONF-003 4.5 NO RESULT / CONFORMANCE NOT DETERMINED

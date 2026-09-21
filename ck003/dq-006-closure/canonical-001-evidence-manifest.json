@@ -1,0 +1,55 @@
+{
+  "fixture": "CANONICAL-001",
+  "decision": "DQ-006",
+  "gate": "CROSS-LANGUAGE-001",
+  "status": "PASS",
+  "canonicalization": {
+    "profile": "RFC 8785 JCS",
+    "ri_py_engine": "rfc8785==0.1.4",
+    "ri_rs_engine": "serde_json_canonicalizer==0.3.2"
+  },
+  "hash_domain": {
+    "digest": "SHA-256(canonical_bytes)",
+    "leaf": "SHA-256(0x00 || canonical_bytes)",
+    "leaf_domain_octet": "00"
+  },
+  "observed": {
+    "canonical_bytes_len": 100,
+    "canonical_bytes_sha256": "b6c3660ce6dee498b37443a92bf87c5efead6fe863fcf19197c0baeda139a4e6",
+    "leaf_sha256": "ce6b36733d97699230f37d80a14e14104c19d2e787526a6fc3aaae6b6648c039"
+  },
+  "ri_py": {
+    "repository": "Aura-IDToken/aura-poc-a-core-v3.3",
+    "execution_commit": "49d0e4f67e90a7a47e9f067bfc42ab40ee59a56f",
+    "evidence_commit": "3e8e0e326a1cfec71e001f4901fc1ee5b7c28c4e",
+    "artifact_path": "conformance/corpus/canonical-001/ri-py.json"
+  },
+  "ri_rs": {
+    "repository": "Aura-IDToken/aura-guard-v1.3",
+    "execution_commit": "4e9e2284ccdac6d2f40e038e33b4eaeec847aaa2",
+    "evidence_commit": "420653e232cb0ff1e365edd2e4a5eb294d2bb2a0",
+    "artifact_path": "conformance/corpus/canonical-001/ri-rs.json"
+  },
+  "equality": {
+    "canonical_bytes": "PASS",
+    "sha256": "PASS",
+    "leaf_sha256": "PASS",
+    "independent_recomputation": "PASS",
+    "frozen_expected_cross_check": "PASS"
+  },
+  "negative_controls": {
+    "modified_bytes_rejected": true,
+    "modified_sha_rejected": true,
+    "wrong_leaf_domain_rejected": true
+  },
+  "production_integrity": {
+    "ri_py_core_unchanged": true,
+    "ri_py_audit_unchanged": true,
+    "ri_rs_src_unchanged": true,
+    "ri_rs_production_cargo_unchanged": true
+  },
+  "scope": {
+    "closes": ["DQ-006"],
+    "does_not_close": ["DQ-002", "APS-001", "INV-001..INV-015", "release-gate"]
+  }
+}

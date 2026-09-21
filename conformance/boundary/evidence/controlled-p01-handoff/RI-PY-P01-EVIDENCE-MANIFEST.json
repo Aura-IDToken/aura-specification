@@ -1,0 +1,34 @@
+{
+  "files": {
+    "CROSS-RECEIVER-COMPARISON.txt": {
+      "octet_length": 5124,
+      "sha256": "1520f50a059a29429bfeb32162fea9269eaafb56ff25429041c2cd5d644c3384"
+    },
+    "RI-PY-P01-EXECUTION-LOG.txt": {
+      "octet_length": 3176,
+      "sha256": "dc23f41c915e86490ded12bf0265766aa55fa4f3c0ca629b6e81c877c08a4ae2"
+    },
+    "RI-PY-P01-EXECUTION-TIMESTAMP.txt": {
+      "octet_length": 45,
+      "sha256": "6c9994aaa9e4c2040bd22f3d8e12f3ac87ef5e4ff3fc13a78eff0cb8575aafa5"
+    },
+    "RI-PY-P01-RECEIPT.json": {
+      "octet_length": 803,
+      "sha256": "7356537db900d058a65640a036919a69cc7bbb0bac5abb8b573baa4610ab17f3"
+    },
+    "conformance/boundary/p01/FIX-DIGEST-P01.canonical.json": {
+      "octet_length": 15,
+      "sha256": "ecf9e98ec0641e23113ff3ce8bdc78d0ddd249886517fd4a7f68cc83d4e65667"
+    }
+  },
+  "manifest_id": "RI-PY-P01-EVIDENCE-MANIFEST",
+  "manifest_version": 1,
+  "receipt_representation": {
+    "logical_serialized_octet_length": 802,
+    "logical_serialized_sha256": "34eb945c1c8d47e837e14bb19801fa4db1ad27e256b4d994f53373cea2e692b2",
+    "stored_file_octet_length": 803,
+    "stored_file_sha256": "7356537db900d058a65640a036919a69cc7bbb0bac5abb8b573baa4610ab17f3",
+    "stored_file_trailing_newline": true
+  },
+  "scope": "Controlled P-01 Handoff, RI-PY receiver side. Evidence only; no conformance result; B-VAL-014 not executed; CONF-003 4.5 no result."
+}

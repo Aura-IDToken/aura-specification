@@ -1,0 +1,12 @@
+{
+  "fixture_id": "FIX-INV-012",
+  "invariant": "INV-012",
+  "purpose": "Validate ENT-007 event_type registry membership and canonical token syntax.",
+  "input": {
+    "event_type": "__REGISTRY_ENTRY_REQUIRED__"
+  },
+  "expected": {
+    "strict_conformance": "REJECT_UNTIL_REGISTERED",
+    "syntax": "^[A-Z][A-Z0-9_]*$"
+  }
+}

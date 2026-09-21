@@ -1,0 +1,13 @@
+{
+  "fixture_id": "FIX-INV-015",
+  "invariant": "INV-015",
+  "purpose": "Verify unique canonical identity for a protocol artifact under the APS-000 identity contract.",
+  "input": {
+    "artifact_identity": "CANONICAL_IDENTITY_REQUIRED"
+  },
+  "expected": {
+    "identity_is_canonical": true,
+    "identity_is_unique": true
+  },
+  "status": "BLOCKED_UNTIL_APS000_IDENTITY_FIELDS_ARE_BOUND_TO_FIXTURE"
+}

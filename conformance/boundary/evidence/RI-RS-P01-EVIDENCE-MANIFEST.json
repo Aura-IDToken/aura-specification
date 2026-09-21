@@ -1,0 +1,47 @@
+{
+  "files": {
+    "BC-02.1-COMMON-RECEIPT-SCHEMA-v1.md": {
+      "octet_length": 9622,
+      "sha256": "a10f3931558adbcb5bfb66e5556fb9a69499854a8b00ca9bac6e86617a43e2be"
+    },
+    "BC-02.3-RI-RS-RECEIVER-v1.md": {
+      "octet_length": 3653,
+      "sha256": "d05ea9f76407c5f51ffff0769fcbb7ec6e027853cafddfc8532e11174a4ed66a"
+    },
+    "evidence/RI-RS-P01-EXECUTION-LOG.txt": {
+      "octet_length": 3331,
+      "sha256": "be541bffbe484c5a195b912394a841c8448d0c627fee4a265b8d6fb47fc31f84"
+    },
+    "evidence/RI-RS-P01-EXECUTION-TIMESTAMP.txt": {
+      "octet_length": 45,
+      "sha256": "3b1515be81add05daf41b74b560cbefd076bdedd977a09b013ccc7773740f85a"
+    },
+    "evidence/RI-RS-P01-RECEIPT.json": {
+      "octet_length": 871,
+      "sha256": "0c953eb90c3ca902537a124ca89bac6f3732fb4f81b5411b326206a755e66f6c"
+    },
+    "p01/FIX-DIGEST-P01.canonical.json": {
+      "octet_length": 15,
+      "sha256": "ecf9e98ec0641e23113ff3ce8bdc78d0ddd249886517fd4a7f68cc83d4e65667"
+    },
+    "ri-rs/Cargo.lock": {
+      "octet_length": 5093,
+      "sha256": "014713549f263a029fb086925165cfaa6b5b0b6289a2bacb9658c47abadce1d0"
+    },
+    "ri-rs/Cargo.toml": {
+      "octet_length": 603,
+      "sha256": "17e300b16014aaf949736ea59d112f15ed5d6fac40fb63bddf4de38fafb693ad"
+    },
+    "ri-rs/src/bin/p01_handoff.rs": {
+      "octet_length": 14586,
+      "sha256": "13b6d516b9937bb05cf8ea110823b8d848cb8eaf55c3b2b2840f14d632d82843"
+    },
+    "ri_rs_receiver.rs": {
+      "octet_length": 7249,
+      "sha256": "c4c9754d32123ed8845c943efe2f3a442197f394f709c50da92be3e68a053407"
+    }
+  },
+  "manifest_id": "RI-RS-P01-EVIDENCE-MANIFEST",
+  "manifest_version": 1,
+  "scope": "Controlled P-01 Handoff, RI-RS receiver side. Evidence only; no conformance result."
+}

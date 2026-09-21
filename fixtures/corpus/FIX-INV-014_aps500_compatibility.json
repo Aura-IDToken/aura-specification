@@ -1,0 +1,13 @@
+{
+  "fixture_id": "FIX-INV-014",
+  "invariant": "INV-014",
+  "purpose": "Verify implementation compatibility against the applicable APS-500 conformance corpus.",
+  "input": {
+    "corpus_version": "APS-500-VERSION-BOUND",
+    "fixture_set": "APS-500"
+  },
+  "expected": {
+    "all_applicable_fixtures_pass": true
+  },
+  "status": "BLOCKED_UNTIL_APS500_CORPUS_VERSION_IS_NORMATIVELY_BOUND"
+}
