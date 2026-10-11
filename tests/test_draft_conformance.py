@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import builtins
+import contextlib
 import importlib.util
+import io
 import json
 import tempfile
 import unittest
@@ -18,6 +21,20 @@ def load_module(module_name: str, path: Path):
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+
+def load_gate_with_missing_dependencies(module_name: str, blocked: set[str]):
+    original_import = builtins.__import__
+
+    def guarded_import(name, globals=None, locals=None, fromlist=(), level=0):
+        if any(name == dependency or name.startswith(dependency + ".") for dependency in blocked):
+            raise ImportError(f"simulated missing dependency: {name}")
+        return original_import(name, globals, locals, fromlist, level)
+
+    path = ROOT / "scripts" / "check-fix001-evidence.py"
+    with mock.patch("builtins.__import__", side_effect=guarded_import):
+        return load_module(module_name, path)
 
 
 fix001 = load_module("check_fix001_evidence", ROOT / "scripts" / "check-fix001-evidence.py")
@@ -99,6 +116,88 @@ class DraftRunnerTests(unittest.TestCase):
         self.assertEqual({result["status"] for result in results}, {"FAIL"})
         self.assertEqual({result["id"] for result in results}, set(runner.FIX001_CONF_IDS))
         self.assertTrue(all("fix001 boom" in result["note"] for result in results))
+
+
+class Fix001DependencyTests(unittest.TestCase):
+    def test_import_with_both_dependencies_available(self) -> None:
+        gate = load_gate_with_missing_dependencies("gate_deps_available", set())
+        self.assertIsNotNone(gate.jcs)
+        self.assertIsNotNone(gate.Draft202012Validator)
+        gate.require_runtime_dependencies()
+
+    def test_import_without_jcs_and_gate_fails_without_pass_output(self) -> None:
+        gate = load_gate_with_missing_dependencies("gate_without_jcs", {"jcs"})
+        self.assertIsNone(gate.jcs)
+        self.assertIsNotNone(gate.Draft202012Validator)
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            with self.assertRaisesRegex(RuntimeError, "Missing dependency: jcs"):
+                gate.run_fix001_gate()
+        self.assertNotIn("PASS", output.getvalue())
+
+    def test_import_without_jsonschema_and_gate_fails_without_pass_output(self) -> None:
+        gate = load_gate_with_missing_dependencies("gate_without_jsonschema", {"jsonschema"})
+        self.assertIsNotNone(gate.jcs)
+        self.assertIsNone(gate.Draft202012Validator)
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            with self.assertRaisesRegex(RuntimeError, "Missing dependency: jsonschema"):
+                gate.run_fix001_gate()
+        self.assertNotIn("PASS", output.getvalue())
+
+    def test_import_without_both_dependencies_and_gate_fails_without_pass_output(self) -> None:
+        gate = load_gate_with_missing_dependencies(
+            "gate_without_both_dependencies", {"jcs", "jsonschema"}
+        )
+        self.assertIsNone(gate.jcs)
+        self.assertIsNone(gate.Draft202012Validator)
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            with self.assertRaisesRegex(RuntimeError, "jcs and/or jsonschema"):
+                gate.run_fix001_gate()
+        self.assertNotIn("PASS", output.getvalue())
+
+
+class Fix001MutationTests(unittest.TestCase):
+    def test_hash_mutation_changes_digest_even_when_first_character_is_f(self) -> None:
+        original = "f" + ("a" * 63)
+        mutated = fix001.mutate_hash_first_character(original)
+        self.assertNotEqual(mutated, original)
+        self.assertEqual(len(mutated), 64)
+        self.assertRegex(mutated, r"^[0-9a-f]{64}$")
+        self.assertEqual(mutated[1:], original[1:])
+
+    def test_hash_mutation_changes_digest_when_first_character_is_zero(self) -> None:
+        original = "0" + ("b" * 63)
+        mutated = fix001.mutate_hash_first_character(original)
+        self.assertNotEqual(mutated, original)
+        self.assertEqual(mutated[0], "1")
+        self.assertEqual(mutated[1:], original[1:])
+
+    def test_mutation_detection_changes_hash_that_starts_with_f(self) -> None:
+        original_hash = "f" + ("a" * 63)
+        fixture = {
+            "expected_evidence": {
+                "evidence_object": {"output_hash": original_hash}
+            }
+        }
+        seen_hashes: list[str] = []
+
+        def verify_mutated_fixture(mutated: dict) -> None:
+            new_hash = mutated["expected_evidence"]["evidence_object"]["output_hash"]
+            seen_hashes.append(new_hash)
+            self.assertNotEqual(new_hash, original_hash)
+            raise AssertionError("simulated integrity mismatch")
+
+        with mock.patch.object(fix001, "verify_pack_hashes", side_effect=verify_mutated_fixture):
+            fix001.verify_mutation_detection(fixture)
+
+        self.assertEqual(len(seen_hashes), 1)
+        self.assertEqual(fixture["expected_evidence"]["evidence_object"]["output_hash"], original_hash)
+
+    def test_hash_mutation_rejects_empty_digest(self) -> None:
+        with self.assertRaisesRegex(ValueError, "must not be empty"):
+            fix001.mutate_hash_first_character("")
 
 
 if __name__ == "__main__":
