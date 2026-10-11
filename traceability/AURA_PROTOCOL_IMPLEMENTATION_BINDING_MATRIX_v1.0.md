@@ -140,6 +140,8 @@ These are initial evidence-register entries, not a claim that protocol-wide conf
 
 ## 6. Canonicalization profiles remain separate
 
+**Normative decision vs conformance gate:** the current authoritative [DQ-006 Closure Package](https://github.com/vaidt/aura-specification/blob/main/closures/DQ-006_CLOSURE_PACKAGE.md) §1–3 states that the RFC 8785 JCS decision is settled and normatively bound in APS-200 §8 and APS-300 §5. The overall DQ-006 status remains OPEN because conformance evidence is partial. Do not downgrade the decision because the gate is open, and do not infer implementation conformance from the settled decision.
+
 **Normative decision status:** the current authoritative [DQ-006 Closure Package](https://github.com/vaidt/aura-specification/blob/main/closures/DQ-006_CLOSURE_PACKAGE.md) §1–3 expressly states that the RFC 8785 JCS decision is settled and normatively bound in APS-200 §8 and APS-300 §5. The package's overall status remains OPEN because conformance evidence is partial. Do not use the OPEN gate status to downgrade the decision's normative status, and do not use the settled decision to infer implementation conformance.
 
 
