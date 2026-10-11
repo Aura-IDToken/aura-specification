@@ -37,7 +37,7 @@
 
 `required authority rulings → DQ-004 remaining work → DQ-006 R1–R4 → DQ-003 RI promotion → APS-200 → APS-300 → APS-100 / APS-400 / APS-500 / APS-900 / APS-950 reconciliation → fixture promotion + full INV/CONF matrix → expanded runner + CI → RI-PY/RI-RS evidence → APS-001 approval → release evidence`.
 
-This order follows the dependency findings in `00_MASTER_COMPLETION_PLAN.md` and the active DQ execution order in `ck003/CK003_BLOCKER_REGISTER.md`. The handover assessment's CFL-001 ruling is a decision prerequisite only where a proposed normative change crosses the corpora; the assessment itself does not create authority.
+This order follows the dependency findings in `00_MASTER_COMPLETION_PLAN.md` and the active DQ execution order in `ck003/CK003_BLOCKER_REGISTER.md`. The CFL-001 gate above is this completion plan's narrower sequencing decision: it is a prerequisite for cross-corpus normative decisions, not every closure activity. The handover assessment's own recommended sequence sets CFL-001 as Step 0 and says it “Blocks: everything” (`ck003/handover-assessment/09_RECOMMENDED_SEQUENCE.md`). This plan does not revise that finding or resolve CFL-001; the assessment is non-constitutive and does not itself create authority.
 
 ## Immediate backlog — NOW
 
