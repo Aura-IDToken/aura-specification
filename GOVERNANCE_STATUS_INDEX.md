@@ -41,3 +41,4 @@ These artifacts are useful context, but they do not by themselves create approva
 | [`AURA_NORMATIVE_CONTRACT_CONFLICT_REGISTER_v1.3.md`](AURA_NORMATIVE_CONTRACT_CONFLICT_REGISTER_v1.3.md) | Proposed conflict register / not effective governance act |
 | [`AURA-DOCUMENTATION-NORMALIZATION-AUDIT-v1.md`](AURA-DOCUMENTATION-NORMALIZATION-AUDIT-v1.md) | Diagnostic audit only |
 | [`AURA-DOCUMENTATION-NORMALIZATION-CONTROL-REVIEW-v1.md`](AURA-DOCUMENTATION-NORMALIZATION-CONTROL-REVIEW-v1.md) | Controlled analysis only |
+| [`governance/AURA-AFI-AEP-001_FOUNDING_INSTRUMENT_AND_AUTHORITY_EVIDENCE_PROCEDURE_v0.1-DRAFT.md`](governance/AURA-AFI-AEP-001_FOUNDING_INSTRUMENT_AND_AUTHORITY_EVIDENCE_PROCEDURE_v0.1-DRAFT.md) | Proposed authority-evidence procedure; non-constitutive and not ratified |

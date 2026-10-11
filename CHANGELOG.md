@@ -10,6 +10,7 @@ Versioning follows the model defined in [VERSIONING.md](VERSIONING.md).
 ## [Unreleased]
 
 ### Added
+- `governance/AURA-AFI-AEP-001_FOUNDING_INSTRUMENT_AND_AUTHORITY_EVIDENCE_PROCEDURE_v0.1-DRAFT.md` as a proposed, non-constitutive procedure for documenting Genesis authority evidence
 - Initial canonical repository structure
 - Root governance documents (GOVERNANCE.md, CONTRIBUTING.md, VERSIONING.md, STYLE_GUIDE.md)
 - Directory scaffold for all specification areas
