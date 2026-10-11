@@ -25,14 +25,30 @@ from pathlib import Path
 
 try:
     import jcs
+except ImportError:  # pragma: no cover - optional dependency guard
+    jcs = None
+
+try:
     from jsonschema import Draft202012Validator
-except ImportError as exc:  # pragma: no cover - dependency guard
-    raise SystemExit(
-        "Missing dependency: jcs and/or jsonschema. Install with `python -m pip install jcs jsonschema`."
-    ) from exc
+except ImportError:  # pragma: no cover - optional dependency guard
+    Draft202012Validator = None
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def require_runtime_dependencies() -> None:
+    missing = []
+    if jcs is None:
+        missing.append("jcs")
+    if Draft202012Validator is None:
+        missing.append("jsonschema")
+    if missing:
+        raise RuntimeError(
+            "Missing dependency: "
+            + " and/or ".join(missing)
+            + ". Install with `python -m pip install jcs jsonschema`."
+        )
 FIXTURE_PATH = ROOT / "fixtures" / "core" / "FIX-001_BASIC_EVALUATION.json"
 SCHEMA_DIR = ROOT / "fixtures" / "schemas"
 EXPANDED_SCHEMA_CACHE: dict[str, object] = {}
@@ -52,6 +68,7 @@ def load_json(path: Path) -> dict:
 
 
 def canonical_json(value: object) -> str:
+    require_runtime_dependencies()
     return jcs.canonicalize(value).decode("utf-8")
 
 
@@ -87,6 +104,7 @@ def expand_local_refs(node: object, cache: dict[str, object] | None = None) -> o
 
 
 def validate_schema(schema_name: str, instance: object) -> None:
+    require_runtime_dependencies()
     if schema_name not in EXPANDED_SCHEMA_CACHE:
         EXPANDED_SCHEMA_CACHE[schema_name] = expand_local_refs(load_json(SCHEMA_DIR / schema_name))
     schema = copy.deepcopy(EXPANDED_SCHEMA_CACHE[schema_name])
@@ -507,10 +525,19 @@ def verify_traceability(fixture: dict) -> None:
     )
 
 
+def mutate_hash_first_character(digest: str) -> str:
+    """Return a deterministic, valid-hex digest string different from the input."""
+    if not digest:
+        raise ValueError("Digest must not be empty")
+    replacement = "0" if digest[0] != "0" else "1"
+    return replacement + digest[1:]
+
+
 def verify_mutation_detection(fixture: dict) -> None:
     mutated = copy.deepcopy(fixture)
+    original_hash = mutated["expected_evidence"]["evidence_object"]["output_hash"]
     mutated["expected_evidence"]["evidence_object"]["output_hash"] = (
-        "f" + mutated["expected_evidence"]["evidence_object"]["output_hash"][1:]
+        mutate_hash_first_character(original_hash)
     )
     try:
         verify_pack_hashes(mutated)
