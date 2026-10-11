@@ -39,7 +39,7 @@ Any claim that a historical Aura-IDToken repository or artifact constitutes a cu
 ## 3. Governing principles
 
 1. **Evidence states do not ratify protocol decisions.** A technical result cannot create normative effect.
-2. **Normative decisions and conformance gates are separate axes.** A settled decision may have an open evidence gate; an open gate does not silently unsettle the decision.
+2. **Normative decisions and conformance gates are separate axes.** A settled decision can coexist with an open evidence gate; an open gate does not silently unsettle the decision.
 3. **Missing evidence stays missing.** Use explicit statuses such as `UNBOUND`, `NOT-RUN`, `BLOCKED`, `PARTIAL-COVERAGE`, or `CONFLICT`; never infer a pass.
 4. **Historical reconstruction is not an original artifact.** Reconstructed data MUST remain separately identified and cannot be substituted for a lost original corpus without an explicit authorization and provenance record.
 5. **Authorization is scope-bound.** Wave 1 authorization applies only to its recorded repository, baseline, branch, and path scope. It MUST NOT be extended by analogy to another repository, historical corpus, or runtime campaign.
