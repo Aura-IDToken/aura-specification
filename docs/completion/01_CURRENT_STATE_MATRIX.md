@@ -35,9 +35,32 @@
 
 ## Execution order
 
-`required authority rulings → DQ-004 remaining work → DQ-006 R1–R4 → DQ-003 RI promotion → APS-200 → APS-300 → APS-100 / APS-400 / APS-500 / APS-900 / APS-950 reconciliation → fixture promotion + full INV/CONF matrix → expanded runner + CI → RI-PY/RI-RS evidence → APS-001 approval → release evidence`.
+CFL-001 is a prerequisite for work that depends on selecting a governing authority ladder across the specification and implementation corpora. It is **not presented by this completion plan as a prerequisite for every evidence-preparation activity**. The work split below is a planning distinction, not an authority ruling.
 
-This order follows the dependency findings in `00_MASTER_COMPLETION_PLAN.md` and the active DQ execution order in `ck003/CK003_BLOCKER_REGISTER.md`. The CFL-001 gate above is this completion plan's narrower sequencing decision: it is a prerequisite for cross-corpus normative decisions, not every closure activity. The handover assessment's own recommended sequence sets CFL-001 as Step 0 and says it “Blocks: everything” (`ck003/handover-assessment/09_RECOMMENDED_SEQUENCE.md`). This plan does not revise that finding or resolve CFL-001; the assessment is non-constitutive and does not itself create authority.
+**A CFL-001 ruling is required before:**
+
+- selecting or adopting the precedence rule for a conflict between the specification corpus and the implementation corpus;
+- approving, promoting, or superseding a normative decision or requirement whose meaning or effect depends on which corpus governs;
+- treating cross-corpus semantic reconciliation, a conformance conclusion, DQ closure/status transition, APS-001 approval, or release-readiness claim as authoritative where that conclusion depends on the unresolved precedence question.
+
+**Before that ruling, the following may only be prepared or recorded as non-constitutive evidence work, within any separately applicable authorization:**
+
+- DQ-006 R1/R3 evidence preparation: execute candidate discriminating vectors and make already-produced evidence reachable, while recording observations without promoting an unapproved expected-value oracle or claiming normative closure;
+- DQ-003 RI runs against the existing local compatibility matrix, with results recorded as observations pending any required approval;
+- DQ-004 local draft-gate and fixture work, without treating draft registry entries as approved protocol vocabulary;
+- APS-200/APS-300 draft schema work, fixture/runner/CI expansion, and traceability-gap recording, provided they remain draft/local and do not silently settle cross-corpus semantics.
+
+These activities do not resolve CFL-001, select an RI-RS authority boundary, ratify a DQ decision, or authorize a normative change. Work that cannot be separated from a cross-corpus normative choice remains blocked pending the ruling. DQ-006 R2/R4 and other approval/status transitions must be assessed against their actual authority dependency rather than inferred to be cleared by successful execution.
+
+For planning, the non-constitutive evidence/preparation stream is:
+
+`DQ-004 local evidence work ∥ DQ-006 R1/R3 evidence work ∥ DQ-003 RI observations ∥ draft schemas / fixtures / runner / CI / traceability`.
+
+The authority-dependent stream is:
+
+`CFL-001 ruling → apply the ruling to affected cross-corpus normative questions → required DQ/APS approval or status transitions → APS-001 approval → release-readiness decision`.
+
+This order is consistent with the dependency findings in `00_MASTER_COMPLETION_PLAN.md` and the active DQ execution order in `ck003/CK003_BLOCKER_REGISTER.md`, while making explicit which activities are preparatory and which require authority. The handover assessment's own recommended sequence sets CFL-001 as Step 0 and says it “Blocks: everything” (`ck003/handover-assessment/09_RECOMMENDED_SEQUENCE.md`). This completion plan does not revise that finding or resolve CFL-001; the assessment is non-constitutive and does not itself create authority. Its broader stop recommendation remains a recorded position, and this plan does not claim authority to override it.
 
 ## Immediate backlog — NOW
 
