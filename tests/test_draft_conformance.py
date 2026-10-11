@@ -174,6 +174,27 @@ class Fix001MutationTests(unittest.TestCase):
         self.assertEqual(mutated[0], "1")
         self.assertEqual(mutated[1:], original[1:])
 
+    def test_mutation_detection_changes_hash_that_starts_with_f(self) -> None:
+        original_hash = "f" + ("a" * 63)
+        fixture = {
+            "expected_evidence": {
+                "evidence_object": {"output_hash": original_hash}
+            }
+        }
+        seen_hashes: list[str] = []
+
+        def verify_mutated_fixture(mutated: dict) -> None:
+            new_hash = mutated["expected_evidence"]["evidence_object"]["output_hash"]
+            seen_hashes.append(new_hash)
+            self.assertNotEqual(new_hash, original_hash)
+            raise AssertionError("simulated integrity mismatch")
+
+        with mock.patch.object(fix001, "verify_pack_hashes", side_effect=verify_mutated_fixture):
+            fix001.verify_mutation_detection(fixture)
+
+        self.assertEqual(len(seen_hashes), 1)
+        self.assertEqual(fixture["expected_evidence"]["evidence_object"]["output_hash"], original_hash)
+
     def test_hash_mutation_rejects_empty_digest(self) -> None:
         with self.assertRaisesRegex(ValueError, "must not be empty"):
             fix001.mutate_hash_first_character("")
