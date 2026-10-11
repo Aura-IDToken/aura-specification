@@ -32,7 +32,8 @@ A populated row does not, by itself, establish that a requirement is normative o
 
 ### 2.1 Evidence vocabulary
 
-- **NORMATIVE-BOUND** — current authoritative normative source and exact scope established.
+- **NORMATIVE-BOUND** — the applicable governance/authority chain establishes the exact clause, scope, and effective normative force for the claim being made.
+- **REPORTED-NORMATIVE-BOUND** — the current record of reference expressly describes a decision as normatively bound, but this matrix does not independently adjudicate any separate ratification/effect condition. This is a qualified report of source status, not an independent finding of constitutive effectiveness.
 - **DRAFT-SOURCE** — source exists but is labelled draft/proposed, or normative effect is not established for the exact clause.
 - **PROFILE-BOUND** — versioned product/test profile is explicit; this does not elevate it to protocol-wide norm.
 - **SOURCE-OBSERVED** — source behavior inspected at a pinned commit; no execution claim implied.
@@ -76,7 +77,7 @@ A code commit or green CI check does not grant normative effect. A governance re
 
 ## 3. Required row schema
 
-Every requirement-to-implementation binding MUST use the following fields. Unknown values must be UNBOUND, NOT-RUN, BLOCKED, or another defined status—not guessed.
+Every **complete requirement-to-implementation binding record** MUST use the following fields. Unknown values must be UNBOUND, NOT-RUN, BLOCKED, or another defined status—not guessed. The summary table in §5 is an initial gap inventory, not a set of complete schema-conformant binding records. Its rows are summaries only; they do not satisfy this schema and must not be represented as fully bound records or as proof of conformance.
 
 | Field | Meaning / minimum acceptable value |
 |---|---|
@@ -107,49 +108,78 @@ Every requirement-to-implementation binding MUST use the following fields. Unkno
 
 **No silent nulls:** every missing value needs a reason and the next required evidence. Digests MUST identify algorithm and byte domain. A digest over parsed/re-serialized JSON is not interchangeable with a digest over raw file bytes.
 
+### 3.1 Complete binding-record template
+
+The following is a template, not a populated record. Replace each placeholder only with source-bound evidence; otherwise retain an explicit unresolved status. A summary row in §5 does not become complete merely because this template is documented.
+
+```yaml
+binding_record:
+  binding_id: "<stable-id>"
+  requirement_id: UNBOUND
+  source_artifact: UNBOUND
+  source_status: UNBOUND
+  normative_effect: UNBOUND
+  invariant_id: UNBOUND
+  profile_id: UNBOUND
+  profile_scope: UNBOUND
+  implementation_id: UNBOUND
+  source_commit: UNBOUND
+  runner_entrypoint: UNBOUND
+  runtime_binding: UNBOUND
+  fixture_id: UNBOUND
+  fixture_digest: UNBOUND
+  expected_oracle: UNBOUND
+  execution_id: NOT-RUN
+  execution_result: NOT-RUN
+  coverage_limit: UNBOUND
+  evidence_refs: UNBOUND
+  provenance: UNBOUND
+  authorization_ref: NOT-GRANTED
+  release_binding: UNBOUND
+  matrix_disposition: UNBOUND
+  review_record: UNASSIGNED
+```
+
 ## 4. Repository and profile boundary register
 
 This register captures known roles and unresolved boundaries from the review baseline. It is not a repository-wide authority declaration.
 
 | ID | Repository / source | Observed role | Binding disposition | Boundary |
 |---|---|---|---|---|
-| RB-001 | `vaidt/aura-specification` | Protocol/specification and governance records; APS-200/300/400 headers retain DRAFT labels, while the current DQ-006 record explicitly settles and normatively binds the JCS decision to APS-200 §8 / APS-300 §5 | **NORMATIVE-BOUND for the specific JCS contract** per current DQ-006 record; other clauses retain their own status | Keep decision status separate from implementation/conformance-gate status. The DQ-006 gate remains OPEN; that does not unsettle the decision itself |
+| RB-001 | `vaidt/aura-specification` | Protocol/specification and governance records. The current DQ-006 record states that the RFC 8785 JCS decision is settled and normatively bound to APS-200 §8 / APS-300 §5; APS-200/300/400 document headers retain DRAFT labels | **REPORTED-NORMATIVE-BOUND** for the specific JCS decision as reported by DQ-006; no broader clause status is inferred and this matrix does not independently adjudicate any ratification/effect condition | Keep decision status, any applicable ratification/effect condition, and implementation/conformance-gate status separate. DQ-006 remains OPEN |
 | RB-002 | `vaidt/Aura-vNEXT` | Product M0 implementation with its own restricted `AURA-CANON/1` profile | PROFILE-BOUND | Product contract is not automatically equivalent to a legacy or protocol-wide canonicalization contract |
 | RB-003 | `vaidt/Aura-Guard` | Node ESM + Python verifier demonstrator; implementation-scoped JCS-lite behavior; protocol version observed as `unspecified` | SOURCE-OBSERVED / PARTIAL-COVERAGE | Not interchangeable with Rust `aura-guard-v1.3`; full RFC 8785 equivalence is not established by name or one fixture |
 | RB-004 | `vaidt/aura-guard-v1.3` | Rust middleware, chain logic and canonical-001 conformance test | EXECUTED-OBSERVED only for exact recorded CI attempt | Current-main and tested source commit differ in the recorded review; fixture does not discriminate full JCS behavior |
 | RB-005 | `vaidt/Aura-Conformance-Kit` | Fixture/helper and structural test-kit work | DRAFT-SOURCE / PARTIAL-COVERAGE | Not established as a complete independent protocol TCK |
-| RB-006 | `vaidt/Aura-Release-Management` | Release manifests, state/provenance control, custom release canonicalization | SOURCE-OBSERVED / BLOCKED where digest references fail to resolve | `AURA-RM-CANON/1` is metadata-specific, not the protocol payload profile |
+| RB-006 | `vaidt/Aura-Release-Management` | Intended release-manifest / provenance source; the specific manifest candidate cited in BM-006 was not source-verified during this audit | UNBOUND / SOURCE VERIFICATION REQUIRED for BM-006 until the primary manifest is immutably located and bound | `AURA-RM-CANON/1`, if established in the primary source, is metadata-specific and must not be substituted for the protocol payload profile |
 | RB-007 | `vaidt/Authority` | Constitutional change/authority records | SOURCE-OBSERVED | Repository existence alone does not establish an operative governance engine |
 | RB-008 | `vaidt/Crystal-panel-Aura-Protection` | System map / forensic traceability | NON-CONSTITUTIVE | Navigation and diagrams are not normative acts |
 | RB-009 | `vaidt/aura-l2-1-b-runtime-lab` | Private L2.1-B runtime/corpus scaffolding | BLOCKED / NOT-RUN | Runtime, runner and original corpus bindings are not established; repository presence does not authorize execution |
 
-## 5. Initial binding rows — current evidence disposition
+## 5. Initial binding summaries — current evidence disposition
 
-These are initial evidence-register entries, not a claim that protocol-wide conformance is complete. Unknown fields remain unbound.
+The following table is a **summary-only evidence/gap inventory**, not a set of complete binding records under §3. Every BM row remains incomplete unless and until a corresponding record implements every field in the §3.1 schema and binds the referenced evidence immutably. The statuses below must be read only within their stated limitations; no summary row is a complete conformance claim.
 
 | Binding ID | Requirement / invariant | Profile / fixture | Runner + source snapshot | Execution / result | Provenance + authorization | Disposition |
 |---|---|---|---|---|---|---|
-| BM-001 | **Normative contract:** RFC 8785 JCS → UTF-8 `canonical_bytes`; `SHA-256(canonical_bytes)`; RFC 6962 leaf `SHA-256(0x00 || canonical_bytes)` and node `SHA-256(0x01 || left || right)`, bound by current DQ-006 record to APS-200 §8 / APS-300 §5. CONF-003 / INV-003 are listed in APS-400, whose document header is DRAFT | `CANONICAL-001` at `aura-guard-v1.3/conformance/canonical/CANONICAL-001.json`; fixture is **not JCS-discriminating** | Rust test `conformance/canonical/canonical_001.rs`; tested commit `06a1d804e553f5c421c3ddaa133b6893bc2334e8`; CI run `35688714581`, job `114317737913`, attempt 5 | Five canonical tests passed in that job. Overall workflow was FAILURE due to other jobs (rustfmt/clippy/audit/deny). The run does **not** establish full RFC 8785 conformance; it establishes only that the recorded test path passed on its pinned source | CI evidence: https://github.com/vaidt/aura-guard-v1.3/actions/runs/35688714581. Current main was recorded as `c96377ac678151e5fef5756dbc31a3fff94de186`, two commits beyond the tested SHA. Current normative decision source: `closures/DQ-006_CLOSURE_PACKAGE.md` at main, §1–3 | NORMATIVE-BOUND (decision) / PARTIAL-COVERAGE (implementation evidence) |
+| BM-001 | **Decision status reported by DQ-006:** RFC 8785 JCS → UTF-8 `canonical_bytes`; `SHA-256(canonical_bytes)`; RFC 6962 leaf `SHA-256(0x00 || canonical_bytes)` and node `SHA-256(0x01 || left || right)`. DQ-006 §1 states the decision is settled and normatively bound to APS-200 §8 / APS-300 §5; this summary does not independently adjudicate any separate ratification/effect condition. CONF-003 / INV-003 are listed in APS-400, whose document header is DRAFT | `CANONICAL-001` at `aura-guard-v1.3/conformance/canonical/CANONICAL-001.json`; fixture is **not JCS-discriminating** | Rust test `conformance/canonical/canonical_001.rs`; tested commit `06a1d804e553f5c421c3ddaa133b6893bc2334e8`; CI run `35688714581`, job `114317737913`, attempt 5 | Five canonical tests passed in that job. Overall workflow was FAILURE due to other jobs (rustfmt/clippy/audit/deny). The run does **not** establish full RFC 8785 conformance; it establishes only that the recorded test path passed on its pinned source | CI evidence: https://github.com/vaidt/aura-guard-v1.3/actions/runs/35688714581. Current main was recorded as `c96377ac678151e5fef5756dbc31a3fff94de186`, two commits beyond the tested SHA. DQ-006 Closure Package at main, §1–3, is the source for the reported decision status; it reports the overall gate OPEN | REPORTED-NORMATIVE-BOUND (status reported by DQ-006; not independently adjudicated here) / PARTIAL-COVERAGE (implementation evidence) |
 | BM-002 | Cross-implementation agreement / INV-XIM-01 (implementation-level; not automatically protocol-normative) | Existing Node↔Python verifier cases; complete profile and corpus digest not bound in this row | Node CLI invokes `/app/py_verifier/aura_verify.py`; exact source and command bundle must be pinned per execution | Historical report recorded Node 61/61, Python 39/39, CLI 10/10 PASS for a prior campaign; not asserted for current HEAD | Secondary report until raw logs, commits, runner command, dependency/runtime and fixture digests are attached | HISTORICAL-OBSERVATION / UNBOUND |
 | BM-003 | Historical source-corpus reproduction; L2.1-B target (exact normative clause still needs binding) | Reconstructed 17-vector corpus SHA-256 `453a1302823340c3673e7fd3bd4760c07e4af172ba9293211c075f793f265bdb`; original corpus not recovered and original digest unknown | Python `json.dumps(... sort_keys=True, separators=(',', ':'))` matched 17/17 observed/reconstructed canonical strings in historical analysis; historical Node runner invocation/raw input route not bound | 17/17 is a behavior fingerprint, not source attribution and does not recover the lost original corpus; V2 remains experimental/non-binding | Exact source input bytes, derivation history and runner evidence are needed. L2.1-B execution authorization remains false/blocked in the campaign records | BLOCKED / HISTORICAL-OBSERVATION |
 | BM-004 | L2.1-B experimental raw/typed stage separation | Experimental V2: 19 vectors (12 RAW / 7 TYPED); manifest length 28,256 bytes; SHA-256 `e3cf2a8856025ae89fd9f9d4870a3ee047f70d16133b8324b2a8011ab048e2cf` | No runner commit SHA bound; runner entrypoints were candidates/proposals, not a recorded committed-runner execution | `PASS_PHYSICAL_INTEGRITY_SCHEMA; FAIL_FOR_GATE_E_READINESS`; `EXPERIMENTAL_NON_BINDING`; original corpus NOT_RECOVERED; observations NOT_RUN | Generator audit found typed schema-invalid descriptors, prior wrong 1e21 binary64 bits, missing direct typed NaN/lone-surrogate cases, raw surrogate stage expectation errors, ambiguous embedded/final manifest digests and stale-directory risk | BLOCKED / NOT-RUN |
 | BM-005 | Aura-vNEXT local `AURA-CANON/1` profile | Profile specifies integer-only, rejects null/floats/lone surrogates, UTF-8 output, UTF-16 key ordering, no Unicode normalization; profile/source digest must be pinned per claim | Exact runner entrypoint, commit, fixture digest and environment required per execution | Product M0 record/package/verify loop is documented as operational; this row has no raw run bundle of its own | Product-local evidence remains separate from protocol-wide authority and legacy compatibility | PROFILE-BOUND; execution bindings required |
-| BM-006 | Release provenance: manifest commit must exist and identify measured release source | `AURA_SYSTEM_STATE_MANIFEST_M0_RC0.yaml` in `Aura-Release-Management` | Exact verifier command/entrypoint and validation commit must be bound | Prior review found `release_control.commit_sha=6bfe7aa000000000000000000000000000000000` did not resolve in the declared repository | Until corrected through authorized change and reverified, that manifest cannot substantiate source-to-release provenance | BLOCKED |
-| BM-007 | DQ-006 conformance-gate criteria: JCS-discriminating vector, evidence reachable from a default branch, one RI-RS conformance boundary, and any remaining required closure/ratification linkage | **Decision status:** SETTLED and NORMATIVELY BOUND in APS-200 §8 / APS-300 §5, per current `closures/DQ-006_CLOSURE_PACKAGE.md` §1–3. **Gate status:** OPEN — specification decision closed, conformance evidence partial | No single runner closes this composite gate; each remaining criterion needs individually bound evidence | Gate remains OPEN. DQ-006 §10 records the degenerate fixture; §10/§12 identify reachability and RI-RS boundary issues. These are conformance/closure blockers, not an indication that the JCS decision itself is unsettled | Current record: `closures/DQ-006_CLOSURE_PACKAGE.md` on main (the source expressly declares itself the single authoritative DQ-006 closure record); matrix cannot close it | BLOCKED (gate) / NORMATIVE-BOUND (decision) |
+| BM-006 | Release provenance: bind a primary manifest to the exact source commit it claims to measure | `AURA_SYSTEM_STATE_MANIFEST_M0_RC0.yaml` is an **unverified candidate path** carried forward from review context; its current existence and contents were not established by this matrix audit | Verifier command/entrypoint and validation commit remain UNBOUND | A prior review context cited a `release_control.commit_sha` value, but this matrix has not verified the primary manifest, its current value, or a source-to-release mismatch | First locate and immutably bind the primary manifest by repository, path, version, commit SHA, and blob digest. Do not assert a current manifest defect until that record is verified; any corrective change requires separate authorization and re-verification | UNBOUND / SOURCE VERIFICATION REQUIRED |
+| BM-007 | DQ-006 residual criteria: a JCS-discriminating vector, evidence reachable from a default branch, a single RI-RS conformance boundary, and any remaining closure/ratification requirement | **Decision status as stated by DQ-006 §1:** SETTLED / described as NORMATIVELY BOUND to APS-200 §8 / APS-300 §5. **Conformance/procedural gate:** OPEN; DQ-006 §12 marks criteria 13–16 NOT MET, including conformance discrimination, default-branch reachability, RI-RS boundary disposition, and Chief Architect ratification of the verdict | No single runner closes this composite gate; each residual requires its own immutable source/evidence binding | DQ-006 §10 records the JCS-degenerate fixture; §10–§12 describe reachability, RI-RS boundary, and ratification gaps. This matrix records those statements and does not independently decide the effect of any ratification requirement | Record of reference: `closures/DQ-006_CLOSURE_PACKAGE.md` at main; its status is OPEN. This matrix cannot close or ratify DQ-006 | OPEN (gate) / REPORTED-NORMATIVE-BOUND (decision status as reported by DQ-006; not independently adjudicated here) |
 | BM-008 | P-008 result aggregation / empty-set / schema-invalid boundaries | Current status must be read through M1 closure and Wave 1 authorization; standalone P-008 file is listed as historical by Governance Status Index | Product-specific aggregator, fixtures and runner entrypoints need separate rows | Status index points to the M1 consolidated state, while APS-400 DRAFT §5 names `PARTIAL`, `NOT APPLICABLE`, `ERROR`. Any mapping between those vocabularies needs an explicit decision rather than silent substitution | Wave 1 authorization scopes permitted mutation to one repository and named path families; it is not automatically authorization for other repos or L2.1-B runtime execution | CONFLICT / SCOPE-BOUND |
 
 ## 6. Canonicalization profiles remain separate
 
-**Normative decision vs conformance gate:** the current authoritative [DQ-006 Closure Package](https://github.com/vaidt/aura-specification/blob/main/closures/DQ-006_CLOSURE_PACKAGE.md) §1–3 states that the RFC 8785 JCS decision is settled and normatively bound in APS-200 §8 and APS-300 §5. The overall DQ-006 status remains OPEN because conformance evidence is partial. Do not downgrade the decision because the gate is open, and do not infer implementation conformance from the settled decision.
-
-**Normative decision status:** the current authoritative [DQ-006 Closure Package](https://github.com/vaidt/aura-specification/blob/main/closures/DQ-006_CLOSURE_PACKAGE.md) §1–3 expressly states that the RFC 8785 JCS decision is settled and normatively bound in APS-200 §8 and APS-300 §5. The package's overall status remains OPEN because conformance evidence is partial. Do not use the OPEN gate status to downgrade the decision's normative status, and do not use the settled decision to infer implementation conformance.
-
+**Decision status and gate status must be recorded separately.** The current [DQ-006 Closure Package](https://github.com/vaidt/aura-specification/blob/main/closures/DQ-006_CLOSURE_PACKAGE.md) §1 states that the RFC 8785 JCS decision is settled and describes it as normatively bound to APS-200 §8 / APS-300 §5. The same record states that DQ-006 remains OPEN because its evidence does not discriminate RFC 8785 from ordinary sorted JSON; §§12–15 list additional unmet conformance/procedural criteria, including ratification of the verdict. This matrix records the source's stated position; it does not independently determine whether any ratification or authority precondition affects effectiveness. Do not infer implementation conformance from the decision statement, and do not use the open gate alone to negate the decision statement.
 
 Do not use the generic label “AURA canonicalization” without a versioned profile and exact byte-domain contract.
 
 | Profile / mechanism | What may be asserted | What must not be inferred |
 |---|---|---|
-| APS-200 §8 / RFC 8785 JCS references | Current authoritative DQ-006 closure package states the JCS decision is settled and normatively bound in APS-200 §8 / APS-300 §5; this binding is specific to that canonicalization/digest contract | The OPEN DQ-006 conformance gate does not make the decision itself unsettled. Conversely, the settled decision does not prove that a given implementation conforms. Other APS clauses must be evaluated separately |
+| APS-200 §8 / RFC 8785 JCS references | DQ-006 §1 states that the JCS decision is settled and normatively bound to APS-200 §8 / APS-300 §5; the matrix records this as REPORTED-NORMATIVE-BOUND without independently adjudicating any ratification/effect condition | The OPEN DQ-006 gate does not, by itself, negate the decision statement. Conversely, that statement does not prove that a given implementation conforms. Other APS clauses must be evaluated separately |
 | `AURA-CANON/1` in Aura-vNEXT | Behavior within the exact profile if profile, source and execution are bound | No automatic equivalence to RFC 8785, older repos, or an unbound protocol version |
 | Aura-Guard Node/Python JCS-lite | Specific behavior found in pinned source and exercised tests | Not automatically standards-complete or equivalent to Rust/JCS |
 | Rust `serde_json_canonicalizer` in conformance-only scope | Package exists and may be used by the conformance test path | Dependency presence does not prove the production serialization path uses it |
@@ -214,7 +244,7 @@ Do not promote beyond draft until:
 - [APS-300 Evidence Model](https://github.com/vaidt/aura-specification/blob/main/aps/APS-300_EVIDENCE_MODEL.md) — inspected header says v1.0-DRAFT
 - [APS-400 Conformance Test Matrix](https://github.com/vaidt/aura-specification/blob/main/aps/APS-400_CONFORMANCE_TEST_MATRIX.md) — inspected header says v1.0-DRAFT
 - [P-008 Ratification Record v1.0](https://github.com/vaidt/aura-specification/blob/main/AURA_P008_RATIFICATION_RECORD_v1.0.md) — listed as historical by current Governance Status Index; do not interpret standalone
-- [DQ-006 Closure Package](https://github.com/vaidt/aura-specification/blob/main/closures/DQ-006_CLOSURE_PACKAGE.md) — decision SETTLED / NORMATIVELY BOUND in APS-200 §8 and APS-300 §5; conformance gate OPEN
+- [DQ-006 Closure Package](https://github.com/vaidt/aura-specification/blob/main/closures/DQ-006_CLOSURE_PACKAGE.md) — §1 reports the JCS decision as SETTLED / NORMATIVELY BOUND to APS-200 §8 and APS-300 §5; status is OPEN and §§12–15 record unmet conformance/procedural criteria, including verdict ratification. This matrix records the source's stated status and does not independently adjudicate effectiveness.
 - [Rust Aura-Guard canonical fixture](https://github.com/vaidt/aura-guard-v1.3/blob/main/conformance/canonical/CANONICAL-001.json)
 - [Aura-Guard canonical test source](https://github.com/vaidt/aura-guard-v1.3/blob/main/conformance/canonical/canonical_001.rs)
 - [Recorded workflow run](https://github.com/vaidt/aura-guard-v1.3/actions/runs/35688714581)
