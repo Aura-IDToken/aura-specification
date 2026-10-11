@@ -1,10 +1,10 @@
 # AURA Founding Instrument and Authority Evidence Procedure
 
-Document ID: AURA-AFI-AEP-001  
-Version: 0.1-DRAFT  
-Status: PROPOSED · NON-CONSTITUTIVE · NOT RATIFIED  
-Normative Effect: NONE  
-Genesis Authorization: NOT GRANTED  
+Document ID: AURA-AFI-AEP-001<br>
+Version: 0.1-DRAFT<br>
+Status: PROPOSED · NON-CONSTITUTIVE · NOT RATIFIED<br>
+Normative Effect: NONE<br>
+Genesis Authorization: NOT GRANTED<br>
 Authority Basis: NOT PROVEN  
 Intended Use: Przegląd organizacyjny, prawny i dowodowy
 
