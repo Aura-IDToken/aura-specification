@@ -19,9 +19,9 @@ This draft does not itself establish a binding obligation, alter any protocol re
 
 ## 2. Identity, provenance, and authority boundaries
 
-The current project workspace is `vaidt`, including the proposed record-of-reference repository `vaidt/aura-specification`.
+The current project workspace is `vaidt`, including the proposed record-of-reference repository `vaidt/aura-specification`. The current ratified authority-binding record lists `Aura-IDToken` as a GitHub account of the bound signer. That account binding does not by itself establish authority over a particular repository or artifact.
 
-`Aura-IDToken` is treated in this procedure as a historical project attribution and interpretation context. Historical repository names, files, branches, commits, identities, or statements must not be interpreted as automatically equivalent to the current project's authoritative source, nor as automatically invalid. Their relevance must be established through explicit source, provenance, and authority bindings.
+Repositories and artifacts under the historical `Aura-IDToken` attribution are treated as historical project context. Their relevance must be established through explicit source, provenance, and authority bindings; they MUST NOT be treated as automatically equivalent to the current project's authoritative sources or as automatically invalid.
 
 The following concepts remain distinct and must not be inferred from one another:
 
@@ -34,7 +34,7 @@ The following concepts remain distinct and must not be inferred from one another
 - implementation or runtime authorization;
 - evidence execution and its result.
 
-Any claim that a historical Aura-IDToken record constitutes current authority must cite the current applicable authority-binding record and establish issuer, holder, scope, effective date, and validity. This draft does not adjudicate that question.
+Any claim that a historical Aura-IDToken repository or artifact constitutes a current authoritative source MUST cite the current applicable authority-binding record and establish issuer, holder, scope, effective date, and validity. This draft does not adjudicate that question.
 
 ## 3. Governing principles
 
@@ -62,9 +62,13 @@ Each blocker entered into the register SHOULD contain:
 | `owner` | Named remediation owner; role alone is insufficient if no individual is assigned |
 | `reviewer` | Independent reviewer or explicit `UNASSIGNED` |
 | `opened_at` | Timestamp and time zone |
-| `due_at` | Approved deadline and time zone, or `NOT-SET` |
+| `notice_ref` | Durable remediation-notice reference, or `NOT-ISSUED` |
+| `notice_issued_at` | Notice start-event timestamp and time zone, or `NOT-ISSUED` |
+| `remediation_plan_deadline` | Proposed / approved due timestamp and time zone, status, approval reference where approved, and amendment history, or `NOT-SET` |
+| `evidence_delivery_deadline` | Proposed / approved due timestamp and time zone, status, approval reference where approved, and amendment history, or `NOT-SET` |
 | `authorization_ref` | Applicable authorization and scope, or `NOT-GRANTED` |
 | `status` | `OPEN`, `IN-REMEDIATION`, `READY-FOR-REVIEW`, `OVERDUE`, `ACCEPTED`, `REJECTED`, or `DISPOSITIONED` |
+| `evidence_state` | Technical evidence state, such as `UNBOUND`, `NOT-RUN`, `BLOCKED`, `PARTIAL-COVERAGE`, or `CONFLICT`; distinct from workflow `status` |
 | `evidence_refs` | Immutable evidence references, logs, digests, and execution identifiers |
 | `decision_ref` | Explicit disposition record or `NONE` |
 
@@ -75,9 +79,11 @@ Unknown fields must be marked explicitly; they must not be guessed or left silen
 The following periods are proposals for approval, not existing binding deadlines:
 
 - **T0 — Registration:** the authorized process owner records the blocker and the baseline.
-- **Within 5 business days of a formally issued remediation notice:** the owner supplies a remediation plan, owner assignment, evidence plan, and delivery estimate.
-- **Within 10 business days of that notice:** the required evidence package is delivered, or a reasoned extension request is submitted before the due time.
-- **At due-time expiry:** if the acceptance criteria have not been met and no valid extension has been approved, the register transitions to `OVERDUE`. The gate remains at its existing `OPEN` / `BLOCKED` disposition.
+- **Within 5 business days of a formally issued remediation notice:** the owner supplies a remediation plan, owner assignment, evidence plan, and delivery estimate. The plan deadline is met by submitting those deliverables, not by later acceptance.
+- **Within 10 business days of that notice:** the required evidence package is delivered. The evidence-delivery deadline is met by delivery, not by later acceptance or review.
+- **At the plan due-time expiry:** if the required plan deliverables have not been submitted and no valid extension has been approved, the register transitions to `OVERDUE`.
+- **At the evidence due-time expiry:** if the required evidence package has not been delivered and no valid extension has been approved, the register transitions to `OVERDUE`. A package delivered on time but awaiting review remains `READY-FOR-REVIEW` and MUST NOT become `OVERDUE` because of reviewer latency.
+- `OVERDUE` records which deliverable and deadline were missed. It is an administrative workflow state, distinct from the technical evidence state; the gate remains at its existing `OPEN` / `BLOCKED` disposition.
 - **Escalation review:** a competent decision-maker records extension, scope restriction, campaign closure without certification, or another explicitly authorized disposition.
 
 A deadline becomes operative only after the competent authority approves this procedure or an individual notice under an already approved procedure. No clock is considered started merely because this draft was created or published.
@@ -96,7 +102,7 @@ The competent process owner issues a durable notice identifying required artifac
 
 ### Stage 3 — Mark overdue and escalate
 
-On expiry, record `OVERDUE`, the missed criterion, current evidence state, and escalation timestamp. Notify the designated decision-maker. The escalation record is administrative and does not alter normative protocol status.
+On expiry of the applicable plan or evidence-delivery deadline, record `OVERDUE`, the missed deliverable and deadline, current technical evidence state, and escalation timestamp. Notify the designated decision-maker. Timely submitted deliverables awaiting review remain `READY-FOR-REVIEW`; reviewer latency does not trigger `OVERDUE`. The escalation record is administrative and does not alter normative protocol status.
 
 The transition may be automated only after an approved source of truth for deadlines, a deterministic clock rule, access controls, and a durable audit log exist. Until then, `OVERDUE` must be marked by an accountable operator and must not be represented as automated.
 
@@ -104,7 +110,7 @@ The transition may be automated only after an approved source of truth for deadl
 
 A competent decision-maker records one of the following, with rationale and scope:
 
-- **EXTENSION-GRANTED** — new due date, reason, and approval reference;
+- **EXTENSION-GRANTED** — identify the plan and/or evidence deadline extended, new due date, reason, and approval reference; retain the prior deadline in the amendment history;
 - **REMEDIATION-ACCEPTED** — evidence passed the stated acceptance criteria after review;
 - **SCOPE-RESTRICTED** — the unsupported claim or campaign scope is removed, without misrepresenting the residual status;
 - **CAMPAIGN-CLOSED-NO-CERTIFICATION** — this campaign ends without certification;
@@ -130,7 +136,7 @@ Until that source binding is added, the items below are proposed remediation top
 
 ## 8. Required evidence package
 
-Where execution evidence is required, the record should bind at least:
+Where execution evidence is required, the record MUST bind each applicable element below:
 
 1. full source commit and relevant file/blob digests;
 2. exact fixture bytes and digest algorithm/domain;
@@ -143,7 +149,7 @@ Where execution evidence is required, the record should bind at least:
 9. independent review record;
 10. applicable authorization, its exact scope, and release/manifest binding when a release claim is made.
 
-If any mandatory element is absent, the claim must be downgraded to an evidence status appropriate to the gap; it must not be represented as a fully bound executed result.
+If any applicable mandatory element is absent, the claim MUST be downgraded to an evidence status appropriate to the gap; it MUST NOT be represented as a fully bound executed result.
 
 ## 9. Independence and conflict-of-interest controls
 
@@ -159,7 +165,7 @@ This draft is subordinate to current authoritative governance and authorization 
 - the current DQ-006 Closure Package distinguishes the settled RFC 8785 decision from its still-open evidence / procedural closure;
 - Wave 1 authorization remains restricted to its expressly listed repository, baseline, and paths;
 - if a PIBM matrix is identified and immutably source-bound by exact repository, path, version, commit SHA, and artifact/blob digest, it may be treated as a non-constitutive evidence-control artifact unless separately adopted through the applicable governance process; until then, this draft does not assert that such a matrix is present in the checked-in records;
-- historical Aura-IDToken records remain historical context unless their current role is explicitly established by applicable authoritative records.
+- the current authority-binding record lists `Aura-IDToken` as a GitHub account of the bound signer; this identity binding does not by itself establish authority over a particular repository or artifact, whose provenance and role must be established through applicable authoritative records.
 
 If this draft conflicts with a current authoritative record, this draft has no effect and must be revised or rejected; the conflict must not be resolved by silently changing precedence.
 
