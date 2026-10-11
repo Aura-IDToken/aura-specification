@@ -158,7 +158,7 @@ This draft is subordinate to current authoritative governance and authorization 
 - the Governance & Status Index governs selection of current record-of-reference documents;
 - the current DQ-006 Closure Package distinguishes the settled RFC 8785 decision from its still-open evidence / procedural closure;
 - Wave 1 authorization remains restricted to its expressly listed repository, baseline, and paths;
-- the PIBM matrix remains a non-constitutive evidence-control artifact unless separately adopted through the applicable governance process;
+- if a PIBM matrix is identified and immutably source-bound by exact repository, path, version, commit SHA, and artifact/blob digest, it may be treated as a non-constitutive evidence-control artifact unless separately adopted through the applicable governance process; until then, this draft does not assert that such a matrix is present in the checked-in records;
 - historical Aura-IDToken records remain historical context unless their current role is explicitly established by applicable authoritative records.
 
 If this draft conflicts with a current authoritative record, this draft has no effect and must be revised or rejected; the conflict must not be resolved by silently changing precedence.
