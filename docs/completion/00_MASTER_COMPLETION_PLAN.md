@@ -163,14 +163,14 @@ The smallest dependency set now controlling APS-001 approval readiness is:
 **Status:** OPEN
 **Goal:** identify the first downstream documents that must change once APS-001 gaps are agreed.
 
-Priority order:
-1. APS-100
-2. APS-200
-3. APS-300
-4. APS-400
-5. APS-500
-6. APS-900
-7. APS-950
+Priority order, based on the dependency findings below:
+1. APS-200 — closes the entity, identity, version-binding, and event-record contracts used by APS-001.
+2. APS-300 — closes the Evidence Pack, attestation, and profile contracts that depend on APS-200.
+3. APS-100 — aligns the invariant catalogue and verification detail after those contracts stabilize.
+4. APS-400 — align detailed procedures and evidence states with the stabilized invariant contracts.
+5. APS-500 — promote fixtures against the closed schemas and procedures.
+6. APS-900 — complete requirement-to-release traceability using the resulting contracts and evidence.
+7. APS-950 — align reference-implementation certification requirements with the completed conformance path.
 
 Tasks:
 1. Check each document's authority chain and APS-001 references.
@@ -498,12 +498,14 @@ WP-2 remains the active normative-reconciliation stream that feeds the next exec
 
 ## 7. Immediate execution order
 
-1. WP-1 — APS-001 gap list
-2. WP-2 — APS-100/200/300 reconciliation
-3. WP-3 — CK-003 blocker register
-4. WP-4 — INV → CONF → FIX traceability pass
-5. WP-5 — fixture promotion plan
-6. WP-6 — minimum automation plan
+WP-1 and WP-3 through WP-6 are **closed planning deliverables**, not the next work to execute. WP-2 remains active. Proceed in this order:
+
+1. Resolve any required authority ruling before making normative changes that depend on it; the handover assessment identifies cross-corpus precedence (CFL-001) as such a decision, but is non-constitutive.
+2. Close DQ-004's remaining registry/evidence work, then execute DQ-006 residuals in their prescribed R1–R4 order; promote DQ-003 from its local gate to RI-backed evidence. See `ck003/CK003_BLOCKER_REGISTER.md`.
+3. Apply the WP-2 corrections in dependency order: APS-200, APS-300, APS-100, then remaining APS-400/500/900/950 and CONF-document alignment.
+4. Promote the candidate fixtures and extend the invariant/conformance matrix; begin controlled execution with INV-007 and INV-013, followed by INV-003.
+5. Expand the existing draft runner and CI gate to cover the approved fixture/matrix scope, then collect RI-PY / RI-RS evidence.
+6. Complete APS-001 Architecture Review and approval, release traceability, and release readiness only after mandatory gates have objective evidence.
 
 ## 8. Exit criteria for the NOW stage
 

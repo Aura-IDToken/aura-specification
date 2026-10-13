@@ -27,15 +27,17 @@
 ## Immediate blockers
 
 1. **APS-001** is the root normative blocker.
-2. **INV-010** is mapped structurally, but CONF-011…CONF-015 still require executable evidence before they can support PASS claims.
-3. APS-200/300 now expose draft machine-readable schemas, but APS-300 remains incomplete beyond the current draft `EPR-CORE` working path and APS-200 still needs additional profile contracts.
-4. APS-500 does not yet provide the complete canonical fixture corpus required by APS-400/950.
-5. The repository now has a draft GitHub Actions conformance gate, but it still covers only the current local subset.
-6. CK-003 evidence exists, but unresolved DQ-004, DQ-006 residuals, and release-gate promotion still block closure.
+2. **CK-003 closure/promotion:** DQ-004 still needs broader approved registry coverage and RI evidence; DQ-006 is OPEN with residuals R1–R4; DQ-003 is ready only for local draft use pending RI evidence.
+3. **APS-200 → APS-300 → APS-100 reconciliation:** current draft schemas close only working-profile payloads; identity, attestation/profile, and broader contract gaps remain. APS-100 alignment follows stabilization of APS-200/300.
+4. **Conformance evidence:** the full INV/CONF matrix remains unverified. The runner covers only a repository-local subset, so no structural mapping or local PASS substitutes for implementation evidence.
+5. **Fixtures and release traceability:** APS-500 still lacks the complete promoted canonical fixture corpus needed for full APS-400/950 certification and release evidence.
+6. **CI expansion:** the draft workflow exists, but must be expanded to the approved full matrix and bound to RI evidence.
 
 ## Execution order
 
-`APS-001 → normative reconciliation → DQ closure → APS-200/300 schemas → complete INV/CONF matrix → fixtures → executable runner → CI → RI-PY/RI-RS certification → release evidence`.
+`required authority rulings → DQ-004 remaining work → DQ-006 R1–R4 → DQ-003 RI promotion → APS-200 → APS-300 → APS-100 / APS-400 / APS-500 / APS-900 / APS-950 reconciliation → fixture promotion + full INV/CONF matrix → expanded runner + CI → RI-PY/RI-RS evidence → APS-001 approval → release evidence`.
+
+This order follows the dependency findings in `00_MASTER_COMPLETION_PLAN.md` and the active DQ execution order in `ck003/CK003_BLOCKER_REGISTER.md`. The handover assessment's CFL-001 ruling is a decision prerequisite only where a proposed normative change crosses the corpora; the assessment itself does not create authority.
 
 ## Immediate backlog — NOW
 
