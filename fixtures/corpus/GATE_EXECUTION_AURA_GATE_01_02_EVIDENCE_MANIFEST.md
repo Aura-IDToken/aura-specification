@@ -95,3 +95,25 @@ No sealing, release, conformance declaration, or constitutional change is perfor
 - **Technical result:** 500/500 successful HTTP requests; 500 JSONL entries; 10 Merkle segments
 - **aura-replay verification:** `status=ok`; `verified_lineage=true`; `verified_segments=true`
 - **Tag:** `TECHNICAL_EVIDENCE_ONLY / EXECUTION_UNAUTHORIZED`
+
+
+## aura-poc-a-core-v3.3 — Core Gate 2 technical execution evidence
+
+- **Repository:** `vaidt/aura-poc-a-core-v3.3`
+- **Execution branch:** `validation/core-full-suite-128-docker-2026-10-14`
+- **Source revision:** `efc3a26e6e2fb4ec3238336ffb5452092c9a555d`
+- **Evidence environment:** GitHub Actions; native x86_64 and ARM64 runners; Python 3.12.15
+- **CI run:** [38629005599](https://github.com/vaidt/aura-poc-a-core-v3.3/actions/runs/38629005599)
+- **Full test suite:** 162 collected; 162 passed; 8 warnings; 17 subtests passed
+- **Architecture jobs:** x86_64 PASS; aarch64 PASS; ARI/drift comparison PASS
+- **Compared observations:** OBS-1 through OBS-5; 5/5 actual ARI/drift output pairs equal
+- **Common evaluator source SHA-256:** `0e57b68cb5d1f6418542446b41c9d50a2fab1fc61bf8b54e511bd94ffe394eff`
+- **Comparison artifact:** [core-003-cross-architecture-comparison](https://github.com/vaidt/aura-poc-a-core-v3.3/actions/runs/38629005599/artifacts/11924877790)
+- **Full-suite artifact:** [core-full-suite-docker-evidence](https://github.com/vaidt/aura-poc-a-core-v3.3/actions/runs/38629005599/artifacts/11925411485)
+- **Technical result:** CORE Gate 2 criteria 2.1–2.4 passed on the execution branch
+- **Integration status at record time:** validation branch only; source revision not merged into `main`
+- **Tag:** `TECHNICAL_EVIDENCE_ONLY / EXECUTION_UNAUTHORIZED`
+
+This entry records observed test execution and architecture-comparison results only. It does not authorize implementation, ratify arithmetic semantics, establish protocol conformance, close the specification repository's separate GATE-02 (B-VAL-014 / BNC-1), or claim that the source branch was integrated.
+
+The source repository's governing `CONSTITUTIONAL_DECREE.md` and `.github/copilot-tasks.md` were reviewed before integration. The requested source merge was not performed because the proposed core changes affect the frozen measurement instrument while the repository's task allowlist does not include CORE-001–CORE-004, and the project record does not establish the constitutive authority needed to override that gate. The CI evidence is retained as technical-only evidence pending the appropriate authority decision.
