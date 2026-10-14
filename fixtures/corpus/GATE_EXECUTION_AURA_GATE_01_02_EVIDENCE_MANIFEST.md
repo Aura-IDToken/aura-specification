@@ -117,3 +117,22 @@ No sealing, release, conformance declaration, or constitutional change is perfor
 This entry records observed test execution and architecture-comparison results only. It does not authorize implementation, ratify arithmetic semantics, establish protocol conformance, close the specification repository's separate GATE-02 (B-VAL-014 / BNC-1), or claim that the source branch was integrated.
 
 The source repository's governing `CONSTITUTIONAL_DECREE.md` and `.github/copilot-tasks.md` were reviewed before integration. The requested source merge was not performed because the proposed core changes affect the frozen measurement instrument while the repository's task allowlist does not include CORE-001–CORE-004, and the project record does not establish the constitutive authority needed to override that gate. The CI evidence is retained as technical-only evidence pending the appropriate authority decision.
+
+
+## aura-poc-a-core-v3.3 — post-merge main validation (2026-10-14)
+
+- **Pull request:** [#2 — CORE: integrate Gate 2 fixes and native x86_64/ARM64 evidence](https://github.com/vaidt/aura-poc-a-core-v3.3/pull/2)
+- **Merge commit:** [cdf9bbf2b8420732f85a77197ea753809edbb029](https://github.com/vaidt/aura-poc-a-core-v3.3/commit/cdf9bbf2b8420732f85a77197ea753809edbb029)
+- **Post-merge source revision:** `cdf9bbf2b8420732f85a77197ea753809edbb029` on `main`
+- **Docker-backed full-suite CI:** [run 38637889001](https://github.com/vaidt/aura-poc-a-core-v3.3/actions/runs/38637889001) — PASS
+- **Full test result:** 162 tests passed; 8 warnings; 17 subtests passed. The workflow's explicit gate observed 162 collected / 162 passed.
+- **Native architecture evidence:** x86_64 PASS; aarch64 PASS; comparison PASS; five observations (OBS-1–OBS-5) produced equal ARI/drift pairs.
+- **Evaluator source SHA-256 recorded by the comparison job:** `82183bc556a75d644c6b9940adf1970df29a0baa0c25cca522b0f97c3d840cc7`
+- **Comparison artifact:** [core-003-cross-architecture-comparison](https://github.com/vaidt/aura-poc-a-core-v3.3/actions/runs/38637889001/artifacts/11928044223)
+- **Full-suite artifact:** [core-full-suite-docker-evidence](https://github.com/vaidt/aura-poc-a-core-v3.3/actions/runs/38637889001/artifacts/11928946793)
+- **Architecture records:** [x86_64](https://github.com/vaidt/aura-poc-a-core-v3.3/actions/runs/38637889001/artifacts/11928463163); [aarch64](https://github.com/vaidt/aura-poc-a-core-v3.3/actions/runs/38637889001/artifacts/11929291463)
+- **Mandatory execution checks on the merged commit:** [run 38637888845](https://github.com/vaidt/aura-poc-a-core-v3.3/actions/runs/38637888845) — PASS for x86_64, ARM64, WASM compatibility, and cross-platform determinism comparison.
+- **Technical status:** merged into `main`; post-merge CI PASS
+- **Tag:** `TECHNICAL_EVIDENCE_ONLY / NORMATIVE_EFFECT_NONE`
+
+This entry records post-merge execution facts for the stated main commit. It does not ratify the selected signed-division semantics, establish protocol conformance, authorize deployment, or close the specification repository's separate GATE-02 / B-VAL-014 / BNC-1. The earlier entry's “not merged into main” wording describes the state at that earlier evidence-recording point and is retained as historical context; this entry records the later integration and validation result.
