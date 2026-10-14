@@ -172,3 +172,25 @@ This entry records observed technical execution for the stated merge commit only
 - **Tag:** `TECHNICAL_EVIDENCE_ONLY / NORMATIVE_EFFECT_NONE`.
 
 This entry records an observed run on a proposed source revision only. It does not establish that Gate 4 is merged into `main`, authorize deployment, establish full security or protocol conformance, prove authority continuity, ratify a normative contract, or declare AURA production-ready. A subsequent post-merge run on the actual merge commit is required before claiming Gate 4 validation on `main`.
+
+
+## aura-guard-v1.3 — Gate 4 external-client E2E post-merge validation (2026-10-14)
+
+- **Implementation PR:** [#7 — Gate 4: external-client black-box end-to-end validation](https://github.com/vaidt/aura-guard-v1.3/pull/7) — merged.
+- **Merge commit on `main`:** [`386e6c7c4df3a8d29299d9966736705fe6d59e54`](https://github.com/vaidt/aura-guard-v1.3/commit/386e6c7c4df3a8d29299d9966736705fe6d59e54).
+- **PR source revision:** `7e6581a2d480308fbd230636e66544f32220f7a8`; post-merge evidence below is specifically bound to the separate merge commit stated above.
+- **Post-merge main CI:** [run 38646914930](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38646914930) — PASS. All ten jobs completed successfully: build + test; Gate 3 real Core API/hash/replay integration; Gate 4 external-client black-box E2E; D-3 chain evidence export; concurrent HTTP stress + replay (GUARD-RS-001); rustfmt; clippy; cargo-audit; cargo-deny; and CycloneDX SBOM generation.
+- **Post-merge Docker Image CI:** [run 38646914781](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38646914781) — PASS.
+- **Post-merge Rust:** [run 38646914611](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38646914611) — PASS.
+- **Post-merge coverage:** [run 38646914724](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38646914724) — PASS.
+- **Post-merge Semgrep:** [run 38646914839](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38646914839) — PASS.
+- **Exact-revision binding:** all five post-merge workflow runs above report head SHA `386e6c7c4df3a8d29299d9966736705fe6d59e54`.
+- **Pinned Core source:** `vaidt/aura-poc-a-core-v3.3@cdf9bbf2b8420732f85a77197ea753809edbb029`.
+- **External-client result:** real `aura-guard` TCP listener; external `POST /v1/audit`; HTTP 200; Rust policy decision `ALLOW`; `core_measurement.status=COMPLETED`; `ari=100000`; `drift=0`.
+- **Persistence/privacy result:** one `aura-guard.audit.v2` JSONL entry; HTTP response exactly matches the persisted entry; original prompt/response text are absent from the persisted record.
+- **Independent Gate 4 replay:** [post-merge evidence artifact](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38646914930/artifacts/11932323392) contains request, response, JSONL log, Merkle manifest, replay summary, and runtime logs. Replay summary: `status=ok`; `entries=1`; `core_measurements=1`; `segments=1`; `verified_segments=true`; `verified_lineage=false`. The verifier accepted the sole Merkle segment manifest. The absence of policy-lineage verification is explicitly retained as a limitation of this Gate 4 scenario.
+- **Concurrent-write/replay evidence:** within the same successful CI, GUARD-RS-001 reports 500/500 HTTP requests succeeded, 500 JSONL entries, and `aura-replay status=ok` across 10 Merkle segments with `verified_segments=true` and `verified_lineage=true`.
+- **Technical disposition:** Gate 4 external-client E2E and the specified post-merge technical checks — PASS for the stated `main` merge commit.
+- **Tag:** `TECHNICAL_EVIDENCE_ONLY / NORMATIVE_EFFECT_NONE`.
+
+This record binds observed technical execution to the stated merge commit only. It does not prove exhaustive security, general production readiness, full protocol conformance, authority continuity, governance closure, normative ratification, or implementation/deployment authorization. It does not change any governance or normative status. The Gate 4 fixture verifies one representative external-client scenario; it is not a substitute for broader failure-mode, operational-readiness, load-boundary, or governance gates.
