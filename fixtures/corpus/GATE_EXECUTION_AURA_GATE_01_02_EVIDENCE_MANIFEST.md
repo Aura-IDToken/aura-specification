@@ -136,3 +136,21 @@ The source repository's governing `CONSTITUTIONAL_DECREE.md` and `.github/copilo
 - **Tag:** `TECHNICAL_EVIDENCE_ONLY / NORMATIVE_EFFECT_NONE`
 
 This entry records post-merge execution facts for the stated main commit. It does not ratify the selected signed-division semantics, establish protocol conformance, authorize deployment, or close the specification repository's separate GATE-02 / B-VAL-014 / BNC-1. The earlier entry's “not merged into main” wording describes the state at that earlier evidence-recording point and is retained as historical context; this entry records the later integration and validation result.
+
+
+## aura-guard-v1.3 — Gate 3 post-merge technical validation (2026-10-14)
+
+- **Pull request:** [#6 — Gate 3: bind AURA Core measurements into audit chain](https://github.com/vaidt/aura-guard-v1.3/pull/6)
+- **Merge commit:** [ff14f58c6b984653763e9c2e5dea0ba3e51d3826](https://github.com/vaidt/aura-guard-v1.3/commit/ff14f58c6b984653763e9c2e5dea0ba3e51d3826)
+- **Post-merge CI:** [run 38643480694](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38643480694) — PASS; all nine jobs completed successfully, including build + test, real Core API/hash/replay integration, D-3 evidence export, concurrent HTTP stress + replay, rustfmt, clippy, cargo-audit, cargo-deny, and CycloneDX SBOM generation.
+- **Post-merge Docker Image CI:** [run 38643480715](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38643480715) — PASS.
+- **Post-merge Rust build:** [run 38643480803](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38643480803) — PASS.
+- **Post-merge coverage:** [run 38643480655](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38643480655) — PASS.
+- **Post-merge Semgrep:** [run 38643480659](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38643480659) — PASS.
+- **Exact revision verified:** each listed post-merge run reports head SHA `ff14f58c6b984653763e9c2e5dea0ba3e51d3826`.
+- **Core dependency used by CI:** `vaidt/aura-poc-a-core-v3.3@cdf9bbf2b8420732f85a77197ea753809edbb029`.
+- **Observed integrity result:** the real-Core integration test mutates persisted `core_measurement.ari` from `100000` to `99999` while retaining the original `chain_hash`; `aura-replay` exits with code `2` and reports `CHAIN BREAK DETECTED at entry #1`.
+- **Technical disposition:** Gate 3 implementation and specified post-merge CI checks — PASS for the stated commit.
+- **Tag:** `TECHNICAL_EVIDENCE_ONLY / NORMATIVE_EFFECT_NONE`.
+
+This entry records observed technical execution for the stated merge commit only. It does not ratify any protocol contract, prove authority continuity, grant implementation or deployment authorization, establish full protocol conformance, declare production readiness, or claim completion of Gate 4's external-client black-box end-to-end scenario. The existing Gate 3 integration test drives the API router in-process; Gate 4 must separately exercise the listening HTTP service from an external client and verify the persisted log and Merkle segment through the independent `aura-replay` CLI.
