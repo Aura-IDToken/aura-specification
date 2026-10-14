@@ -154,3 +154,21 @@ This entry records post-merge execution facts for the stated main commit. It doe
 - **Tag:** `TECHNICAL_EVIDENCE_ONLY / NORMATIVE_EFFECT_NONE`.
 
 This entry records observed technical execution for the stated merge commit only. It does not ratify any protocol contract, prove authority continuity, grant implementation or deployment authorization, establish full protocol conformance, declare production readiness, or claim completion of Gate 4's external-client black-box end-to-end scenario. The existing Gate 3 integration test drives the API router in-process; Gate 4 must separately exercise the listening HTTP service from an external client and verify the persisted log and Merkle segment through the independent `aura-replay` CLI.
+
+
+## aura-guard-v1.3 — Gate 4 external-client E2E candidate evidence (2026-10-14)
+
+- **Implementation PR:** [#7 — Gate 4: external-client black-box end-to-end validation](https://github.com/vaidt/aura-guard-v1.3/pull/7).
+- **Candidate source branch:** `gate4/external-client-e2e-2026-10-15`.
+- **Exact candidate revision tested:** `7e6581a2d480308fbd230636e66544f32220f7a8`.
+- **Integration status at recording time:** candidate PR branch; not merged to `main`. These results must not be interpreted as post-merge main validation.
+- **Gate 4 CI run:** [run 38645708854](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38645708854) — PASS for the exact candidate revision; all ten jobs completed successfully, including build + test, the Gate 3 real-Core regression, Gate 4 external-client E2E, concurrency stress + replay, D-3 evidence export, rustfmt, clippy, cargo-audit, cargo-deny, and CycloneDX SBOM generation.
+- **Additional candidate checks:** [Docker Image CI run 38645708851](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38645708851) — PASS; [Rust run 38645708890](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38645708890) — PASS; [coverage run 38645708874](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38645708874) — PASS; [Semgrep run 38645708807](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38645708807) — PASS; [CK-003 DQ-002 Hash Domain run 38645708812](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38645708812) — PASS.
+- **Pinned Core revision:** `vaidt/aura-poc-a-core-v3.3@cdf9bbf2b8420732f85a77197ea753809edbb029`.
+- **External HTTP result:** actual listening `aura-guard` TCP service; external client POSTed to `/v1/audit`; HTTP 200; `decision=ALLOW`; `core_measurement.status=COMPLETED`; `ari=100000`; `drift=0`.
+- **Persistence result:** one `aura-guard.audit.v2` JSONL record; HTTP response matched the persisted record; prompt/response text was not present in the persisted entry.
+- **Independent replay result:** [CI evidence artifact](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38645708854/artifacts/11932496569) contains the request, HTTP response, JSONL log, Merkle manifest, replay summary, and runtime logs. The replay summary reports `status=ok`, `entries=1`, `core_measurements=1`, `segments=1`, `verified_segments=true`. The scenario does not claim policy-lineage verification (`verified_lineage=false`).
+- **Technical disposition:** Gate 4 black-box fixture — PASS on the specified candidate branch and revision.
+- **Tag:** `TECHNICAL_EVIDENCE_ONLY / NORMATIVE_EFFECT_NONE`.
+
+This entry records an observed run on a proposed source revision only. It does not establish that Gate 4 is merged into `main`, authorize deployment, establish full security or protocol conformance, prove authority continuity, ratify a normative contract, or declare AURA production-ready. A subsequent post-merge run on the actual merge commit is required before claiming Gate 4 validation on `main`.
