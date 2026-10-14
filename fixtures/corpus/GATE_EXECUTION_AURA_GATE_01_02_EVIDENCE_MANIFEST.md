@@ -87,3 +87,11 @@ Before execution can be closed:
 `CUSTODIAN_GATE = BLOCKED`
 
 No sealing, release, conformance declaration, or constitutional change is performed by this artifact.
+
+## aura-guard-v1.3 — Gate 1b execution evidence
+
+- **Commit SHA:** `1165547204b38cd705e91eaa286d5ad9ff6555cd`
+- **Evidence environment:** GitHub Actions (CI — build, tests and Gate 1b)
+- **Technical result:** 500/500 successful HTTP requests; 500 JSONL entries; 10 Merkle segments
+- **aura-replay verification:** `status=ok`; `verified_lineage=true`; `verified_segments=true`
+- **Tag:** `TECHNICAL_EVIDENCE_ONLY / EXECUTION_UNAUTHORIZED`
