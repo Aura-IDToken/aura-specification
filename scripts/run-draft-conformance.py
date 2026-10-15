@@ -39,11 +39,11 @@ CONF_TITLES = {
     "CONF-015": "Canonical Identity",
 }
 FIX001_CONF_IDS = ["CONF-001", "CONF-002", "CONF-004", "CONF-005", "CONF-006", "CONF-010"]
-NON_EXECUTED_RESULTS = [
+UNRESOLVED_RESULTS = [
     (
         "CONF-003",
         "OPEN",
-        "DQ-006 still needs discriminating cross-language execution evidence for canonical serialization.",
+        "CANONICAL-003 byte/digest/leaf execution is recorded as PASS in the vaidt/* sandbox; CONF-003 remains OPEN pending authoritative RI-RS boundary, source-of-record/reachability reconciliation, prohibited-input controls, and DQ-006 ratification.",
     ),
     (
         "CONF-007",
@@ -262,7 +262,7 @@ def build_report() -> dict:
         results.append(run_conf012_result())
     except Exception as exc:  # pragma: no cover - top-level reporting path
         results.append(make_result("CONF-012", "FAIL", f"CONF-012 draft gate failed: {exc}"))
-    results.extend(make_result(*entry) for entry in NON_EXECUTED_RESULTS)
+    results.extend(make_result(*entry) for entry in UNRESOLVED_RESULTS)
     results.sort(key=lambda item: item["id"])
 
     summary = {"PASS": 0, "FAIL": 0, "ERROR": 0, "OPEN": 0, "BLOCKED": 0, "READY": 0}
