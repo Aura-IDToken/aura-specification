@@ -350,7 +350,7 @@ Explicitly **not** residuals of DQ-006: CFL-001 (cross-corpus governance precede
 
 - **CFL-001** — the specification corpus and the implementation corpus make incompatible statements about canonical encoding, and no cross-corpus precedence rule exists in either. Binding APS-200 §8 settles the question *within the specification corpus*; it does not adjudicate which governance ladder wins cross-corpus. Routed to the Protocol Custodian.
 - **CFL-005** — CANONICAL-001 carries `event_type: "AUDIT_RECORD"`, which the Event-Type Registry does not register, while requiring strict-mode rejection of unregistered tokens. Under the registry's own rule, strict conformance would reject the object this gate rests on. Canonicalization determines representation, never event semantics (APS-200 §8.7), so DQ-006 does not repair this. DQ-004 governs.
-- **DQ-002 dependency** — [`closures/DQ-002_FINAL_CLOSURE.md`](DQ-002_FINAL_CLOSURE.md) records DQ-002 as CLOSED / PASS on the stated basis that DQ-006 is PASS. This reconciliation does not modify DQ-002, but the Custodian should note that DQ-002's evidentiary basis inherits deviation D-1.
+- **DQ-002 dependency** — [`closures/DQ-002_FINAL_CLOSURE.md`](DQ-002_FINAL_CLOSURE.md) records DQ-002 as CLOSED / PASS on the stated basis that DQ-006 is PASS. This package does not modify DQ-002. Its recorded closure basis predates CANONICAL-003 and relies on the historical CANONICAL-001 evidence discussed in D-1. Whether supplemental CANONICAL-003 evidence affects DQ-002's own closure basis requires a separate review; no status transition for DQ-002 or DQ-006 is inferred here.
 
 ---
 
