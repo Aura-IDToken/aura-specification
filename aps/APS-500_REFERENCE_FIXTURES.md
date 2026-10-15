@@ -86,6 +86,7 @@ The repository currently contains three distinct kinds of fixture artifacts:
 | `fixtures/corpus/FIX-INV-015_canonical_identity.json` | WORKING | `CONF-015` | identity semantics not yet finally bound | APS-000 / APS-200 identity closure |
 | `fixtures/corpus/CANONICAL-001_jcs_evidence.json` | WORKING | `CONF-003` | strong evidence vector exists | discriminating RFC 8785 vector for final CONF-003 PASS |
 | `fixtures/corpus/CANONICAL-002_jcs_discriminating.json` | WORKING | `CONF-003` | first discriminating candidate fixture is prepared for cross-language execution | execute on RI-PY + RI-RS and record observed bytes |
+| `fixtures/corpus/CANONICAL-003_jcs_full_discriminator.json` | WORKING | `CONF-003` | [2026-10-15 technical evidence report](../ck003/dq-006-final-closure-execution/DQ-006_CANONICAL-003_TECHNICAL_EVIDENCE_REPORT_2026-10-15.md) records both receivers matching the frozen 577-byte oracle and matching canonical/leaf digests; fixture is non-normative and DQ-006 remains OPEN | reconcile source-of-record/reachability and explicitly promote through APS-500 |
 | `fixtures/ck003/manifest.json` | WORKING | working corpus index | orchestration/support artifact only | promote referenced fixtures individually |
 | `fixtures/ck003/expected_digests.json` | WORKING | serialization support | unresolved digest slots intentionally preserved | freeze canonical-byte / registry / identity dependencies |
 
@@ -95,7 +96,7 @@ Before the full APS-500 corpus is frozen, the first meaningful conformance wave 
 
 1. `FIX-INV-007` with `CONF-011`
 2. `FIX-INV-013` with `CONF-013`
-3. `CANONICAL-001` and `CANONICAL-002` with `CONF-003` plus the DQ-002 hash-domain vectors as supporting serialization evidence
+3. `CANONICAL-001` and `CANONICAL-002` with `CONF-003`, using the recorded CANONICAL-003 RI-PY/RI-RS execution as additional DQ-006 evidence; source-of-record/reachability and ratification gaps remain open, so DQ-006 is not closed.
 
 ### 5.3 Placeholder baseline fixture
 
