@@ -1,6 +1,6 @@
 # CANONICAL-003 — multi-axis JCS discriminator candidate
 
-Status: candidate / experimental / non-normative. RI-PY and RI-RS have not executed this vector. It is not closure evidence by itself. The repository already contains CANONICAL-002 as a sorting-only candidate; this vector uses a new ID instead of silently changing it or reusing an identifier.
+Status at initial preparation: candidate / experimental / non-normative; RI-PY and RI-RS had not yet executed this vector. Current execution status (2026-10-15): RI-PY and RI-RS both executed CANONICAL-003 and matched the pinned oracle byte-for-byte, including canonical SHA-256 and RFC 6962 leaf SHA-256. See [the technical evidence report](../../ck003/dq-006-final-closure-execution/DQ-006_CANONICAL-003_TECHNICAL_EVIDENCE_REPORT_2026-10-15.md). This fixture remains non-normative and this update does not close DQ-006 or perform ratification. The repository already contains CANONICAL-002 as a sorting-only candidate; CANONICAL-003 keeps its distinct identifier.
 
 ## Artifacts
 
