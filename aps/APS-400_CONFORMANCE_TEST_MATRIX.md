@@ -66,7 +66,7 @@ The current repository state distinguishes structural assignment from executable
 | CONF-004 | READY | controlled draft verifier exists for `FIX-001`; implementation-side execution evidence is still missing |
 | CONF-005 | READY | controlled draft verifier exists for `FIX-001`; implementation-side execution evidence is still missing |
 | CONF-006 | READY | controlled draft verifier exists for `FIX-001`; implementation-side cross-platform evidence is still missing |
-| CONF-007 | BLOCKED | error-handling fixture missing |
+| CONF-007 | OPEN | Non-normative FIX-ERROR v0.1 execution passed the explicitly tested cases in `vaidt/aura-guard-v1.3`; full CONF-007 remains unproven because authoritative source-of-record reachability and lineage verification are absent (`verified_lineage=false`), coverage is bounded, and ratification has not been performed |
 | CONF-008 | READY | repository-local draft compatibility matrix, bound FIX-COMPAT-001 fixture, and draft runner now exist; RI-PY / RI-RS evidence is still missing |
 | CONF-009 | OPEN | structural mapping exists, but the full invariant-to-execution gate is not yet evidenced |
 | CONF-010 | READY | controlled draft verifier exists for `FIX-001`; implementation-side execution evidence is still missing |
