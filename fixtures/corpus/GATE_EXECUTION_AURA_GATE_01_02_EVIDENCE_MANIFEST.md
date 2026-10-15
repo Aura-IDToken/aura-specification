@@ -194,3 +194,25 @@ This entry records an observed run on a proposed source revision only. It does n
 - **Tag:** `TECHNICAL_EVIDENCE_ONLY / NORMATIVE_EFFECT_NONE`.
 
 This record binds observed technical execution to the stated merge commit only. It does not prove exhaustive security, general production readiness, full protocol conformance, authority continuity, governance closure, normative ratification, or implementation/deployment authorization. It does not change any governance or normative status. The Gate 4 fixture verifies one representative external-client scenario; it is not a substitute for broader failure-mode, operational-readiness, load-boundary, or governance gates.
+
+
+## aura-guard-v1.3 — Gate 4.1 Hardening Suite — Stage 1 (2026-10-15)
+
+- **Implementation PR:** [#8 — Gate 4.1 Core failure and JSONL privacy probes](https://github.com/vaidt/aura-guard-v1.3/pull/8) — merged to `main`.
+- **Exact tested PR-head revision:** [`6667413d34a46ea0dfdb9f5c80cc425ddc30aab5`](https://github.com/vaidt/aura-guard-v1.3/commit/6667413d34a46ea0dfdb9f5c80cc425ddc30aab5).
+- **Merge commit on `main`:** [`08aa63db0e4fae09289cdbb442c34caabe8e6d5b`](https://github.com/vaidt/aura-guard-v1.3/commit/08aa63db0e4fae09289cdbb442c34caabe8e6d5b).
+- **Pre-merge CI:** [run 38660515574](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38660515574) — PASS for the tested PR-head revision; `build + test`, Gate 3 real-Core integration, Gate 4 external-client E2E, D-3 chain evidence export, concurrent stress/replay, rustfmt, clippy, cargo-audit, cargo-deny, and SBOM jobs completed successfully.
+- **Pre-merge Docker Image CI:** [run 38660515511](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38660515511) — PASS for the tested PR-head revision.
+- **Pre-merge coverage / Gate 4.1 test:** [run 38660516833](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38660516833) — PASS. The log explicitly reports `gate41_core_failures_are_passive_and_raw_jsonl_excludes_prompt_response ... ok`; result: 1 passed, 0 failed.
+- **Post-merge main coverage:** [run 38661076111](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38661076111) — PASS on exact merge SHA `08aa63db0e4fae09289cdbb442c34caabe8e6d5b`. The Gate 4.1 test passed again on `main` (1 passed, 0 failed); all coverage workflow tests completed successfully.
+- **Post-merge Rust workflow:** [run 38661076085](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38661076085) — PASS on the merge SHA.
+- **Post-merge Semgrep:** [run 38661076039](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38661076039) — PASS on the merge SHA.
+- **Post-merge general CI:** [run 38661076127](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38661076127) — IN PROGRESS at the time this entry was recorded; individual jobs already successful included Gate 3, Gate 4 E2E, D-3 evidence export, rustfmt, clippy, cargo-audit, and cargo-deny. The `build + test` release build was still running.
+- **Post-merge Docker Image CI:** [run 38661075975](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38661075975) — IN PROGRESS at the time this entry was recorded. No post-merge Docker PASS is claimed here.
+- **Test scope and observed result:** deterministic local Core-adapter process timeout using the existing 2-second timeout; process spawn failure; malformed JSON; missing required field; wrong field type; preservation of a policy `DENY` on Core timeout; serviceability of `/health` during the pending measurement; raw-byte JSONL scan for `G41_SECRET_PROMPT_7F31` and `G41_SECRET_RESPONSE_9A62`; absence of persisted `"prompt"`/`"response"` fields; deserialization of all 9 entries and successful chain verification.
+- **Timeout scope limitation:** the suite exercises the existing 2-second adapter timeout. It does not verify an injected 200 ms threshold; that remains outside this Stage 1 change.
+- **Production delta:** test-only addition at `tests/gate41_core_failure.rs`; no production source or policy file was modified by PR #8.
+- **Technical disposition:** Gate 4.1 Hardening Suite, Stage 1 — the implemented Core failure and JSONL privacy scenarios PASS on the PR head and again on the merged `main` revision, as evidenced by the coverage runs stated above.
+- **Classification:** `TECHNICAL_EVIDENCE_ONLY / NORMATIVE_EFFECT_NONE`.
+
+This append-only entry records only the observed scope and exact revisions/runs named above. It does not establish exhaustive security, general production readiness, complete External Integration Hardening, full protocol conformance, authority continuity, governance closure, normative ratification, or implementation/deployment authorization. Governance M1 remains BLOCKED. The post-merge general CI and Docker workflows were still in progress when this record was written; this entry does not recast them as successful.
