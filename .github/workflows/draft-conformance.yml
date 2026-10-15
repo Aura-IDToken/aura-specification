@@ -24,11 +24,18 @@ jobs:
       - name: Run Python tests
         run: python -m unittest discover -s tests
 
+      - name: Run repository reference-hygiene check
+        run: python scripts/check-reference-hygiene.py --json-out artifacts/reference-hygiene-report.json
+
       - name: Run draft conformance runner
         run: python scripts/run-draft-conformance.py --json-out artifacts/draft-conformance-report.json
 
-      - name: Upload draft conformance report
+      - name: Upload conformance and reference-hygiene reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: draft-conformance-report
-          path: artifacts/draft-conformance-report.json
+          name: conformance-and-reference-hygiene-reports
+          path: |
+            artifacts/draft-conformance-report.json
+            artifacts/reference-hygiene-report.json
+          if-no-files-found: ignore

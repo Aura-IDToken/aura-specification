@@ -10,10 +10,10 @@ Examples are **informative**, not normative. They illustrate how to work with th
 
 | Example | Description | Status |
 |---------|-------------|--------|
-| [basic-evaluation/](basic-evaluation/) | End-to-end basic evaluation walkthrough | TODO |
-| [evidence-pack-structure/](evidence-pack-structure/) | Anatomy of a complete Evidence Pack | TODO |
-| [replay-verification/](replay-verification/) | How to replay and verify an execution | TODO |
-| [conformance-run/](conformance-run/) | Running the full Conformance Test suite | TODO |
+| basic-evaluation/ (planned) | End-to-end basic evaluation walkthrough | TODO |
+| evidence-pack-structure/ (planned) | Anatomy of a complete Evidence Pack | TODO |
+| replay-verification/ (planned) | How to replay and verify an execution | TODO |
+| conformance-run/ (planned) | Running the full Conformance Test suite | TODO |
 
 ## Status
 

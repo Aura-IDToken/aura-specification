@@ -266,7 +266,7 @@ Expected output:
 
 Recorded in:
 
-- `/home/runner/work/aura-specification/aura-specification/ck003/CK003_BLOCKER_REGISTER.md`
+- [CK-003 blocker register](../../ck003/CK003_BLOCKER_REGISTER.md)
 
 Current minimal set controlling further specification stabilization:
 
