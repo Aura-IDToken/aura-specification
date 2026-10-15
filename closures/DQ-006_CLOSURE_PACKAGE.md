@@ -24,7 +24,7 @@ DQ-006 asked which canonical serialization profile the Aura Protocol uses, and w
 
 The **decision** is settled: the profile is **RFC 8785 JSON Canonicalization Scheme (JCS)** over UTF-8 bytes, with `SHA-256(canonical_bytes)` as the record digest and the RFC 6962 leaf domain `SHA-256(0x00 || canonical_bytes)`. As of this reconciliation the decision is normatively bound in **APS-200 §8** and **APS-300 §5**, and recorded in **ADR-CK003-DQ006**.
 
-The **gate** is not closed. The executed cross-language evidence does not discriminate RFC 8785 from an ordinary sorted-JSON serializer, so it establishes implementation *agreement* rather than *profile conformance*. See §10 and §12.
+The **gate remains OPEN**. The original CROSS-LANGUAGE-001 run used CANONICAL-001, a JCS-degenerate vector; that result alone established implementation *agreement*, not profile discrimination. Supplemental CANONICAL-003 evidence recorded on 2026-10-15 now demonstrates byte-level RFC 8785 discriminator agreement for one multi-axis fixture on both RI-PY and RI-RS in the `vaidt/*` working repositories. This addresses the specific discriminator gap for that tested vector, but does not close DQ-006: evidence reachability under the currently named `Aura-IDToken/*` repository criterion, the authoritative RI-RS boundary, ratification, and the newly recorded RI-PY production-scope deviation remain unresolved. See §§4.1, 9–10, and 12–15.
 
 ---
 
@@ -93,9 +93,45 @@ leaf_sha256 (0x00)  : ce6b36733d97699230f37d80a14e14104c19d2e787526a6fc3aaae6b66
 
 Independently recomputed during this reconciliation from the frozen hex alone, without reference to any recorded constant: all three values reproduce. The wrong-domain control `SHA-256(0x01 || canonical_bytes)` yields `491a8dccdaf280c90d6ce9984ecd8b067c26c994aff7144b0a7606e3119a10b1`, confirming the leaf domain is genuinely `0x00`.
 
+### 4.1 Supplemental discriminator evidence — CANONICAL-003 (2026-10-15)
+
+**Classification:** EVIDENCE — NON-NORMATIVE  
+**Normative effect:** NONE  
+**Ratification:** NOT PERFORMED  
+**Disposition:** PASS for the tested discriminator in the `vaidt/*` working repositories; not a DQ-006 closure verdict.
+
+The technical execution report is [`ck003/dq-006-final-closure-execution/DQ-006_CANONICAL-003_TECHNICAL_EVIDENCE_REPORT_2026-10-15.md`](../ck003/dq-006-final-closure-execution/DQ-006_CANONICAL-003_TECHNICAL_EVIDENCE_REPORT_2026-10-15.md), committed on `vaidt/aura-specification/main` at `d808b2d84097fa326c3ed6793f56491e58ab04e2`. The fixture and expected `.jcs` oracle were not changed by the later metadata reconciliation.
+
+| Field | Recorded value |
+|---|---|
+| Fixture source commit | `b3a6e784d9a6ea2e0b554310e3de80e7d13de859` |
+| Input fixture | `fixtures/corpus/CANONICAL-003_jcs_full_discriminator.json` |
+| Input fixture SHA-256 | `1cde8282d6df99defc16b8652cb0f43a8f327c35b8f356a8612b835ed996ec73` |
+| Canonicalized scope | JSON Pointer `/protocol_object` |
+| Canonical UTF-8 output | 577 bytes, no trailing LF; byte-identical to the frozen oracle on each receiver |
+| SHA-256(canonical bytes) | `9fb648c388c4485575d25c1d6171ba691fec51c1b433b11f4d61197bbe2a5509` |
+| SHA-256(`0x00 || canonical_bytes`) | `38672ea2bd0ea87b2446efce8d4ba4adeb822e0baaecee4a54b73179198d2b3e` |
+| Discriminators covered | ECMAScript-compatible number rendering; UTF-16 code-unit key ordering; JSON escaping and raw UTF-8 output |
+
+**RI-PY — Python working repository**
+
+- Repository: `vaidt/aura-poc-a-core-v3.3`; PR #4 merged to `main` at `1d15ecbed8470476684951e9ff301a3cfc26a46d`.
+- CANONICAL-003 workflow `38679686272`: SUCCESS, 10/10 checks PASS. Post-merge Execution Checks `38680695757` and Docker full suite `38680695701`: SUCCESS.
+- Tested entry point: `core/merkle.py::MerkleAttestor.generate_leaf`.
+- **Scope deviation:** this PR changed the production Core hash/Merkle entry point, although the controlled DQ-006 execution order §5 excludes production `core/` semantic and hash/Merkle changes. The merge is recorded as an observed fact, not as retroactive DQ-006 authorization. Version/profile and historical-evidence compatibility review remains open.
+
+**RI-RS — Rust working repository**
+
+- Repository: `vaidt/aura-guard-v1.3`; PR #9 merged to `main` at `488d267f56fdb9ba58fcafc8bf4d4fe2a6149526`.
+- CI workflow `38678371494` and Rust workflow `38678371567`: SUCCESS. Test: `cargo test --locked --test canonical_003 -- --nocapture`.
+- Tested boundary: `conformance/canonical/canonical_003.rs` through `conformance/canonical/jcs.rs`, using `serde_json_canonicalizer = "=0.3.2"` in the conformance/development boundary.
+- The evidence does not claim production `src/merkle.rs` or production Cargo dependencies were changed.
+
+Both receivers independently emitted 577 bytes matching the pinned oracle and reproduced the same canonical and RFC 6962 leaf hashes. This is a finite test result for CANONICAL-003, not proof of every legal or illegal RFC 8785 input and not, by itself, full CONF-003 or DQ-006 closure. The fixture remains WORKING / EXPERIMENTAL / NON-NORMATIVE.
+
 ---
 
-## 5. RI-PY evidence
+## 5. RI-PY evidence — historical CANONICAL-001 baseline
 
 | Field | Value |
 |---|---|
@@ -115,7 +151,7 @@ Artifact digest and adapter digest were re-verified against the source tree duri
 
 ---
 
-## 6. RI-RS evidence
+## 6. RI-RS evidence — historical CANONICAL-001 baseline
 
 | Field | Value |
 |---|---|
@@ -135,7 +171,7 @@ Artifact digest re-verified during this reconciliation; matches.
 
 ---
 
-## 7. Cross-language equality — CROSS-LANGUAGE-001
+## 7. Cross-language equality — CROSS-LANGUAGE-001 (CANONICAL-001 baseline)
 
 Runner: `conformance/canonical/test_cross_language_canonical_001.py` (RI-PY repository). It loads only the two artifacts; it imports no canonicalizer and never re-serializes the input.
 
@@ -173,36 +209,40 @@ Corpus digests after the controls: unchanged. No mutation remains in either repo
 
 ---
 
-## 9. Production integrity
+## 9. Production integrity and subsequent scope deviation
 
-| Repository | Check | Result |
+The checks below describe two separate execution contexts and must not be collapsed into one statement about the current repositories.
+
+| Context | Repository | Observed production-integrity result |
 |---|---|---|
-| RI-PY | `git diff -- core/ audit/` | empty |
-| RI-RS | `git diff -- src/ Cargo.toml Cargo.lock` | empty |
+| Original CROSS-LANGUAGE-001 / CANONICAL-001 baseline | RI-PY | `git diff -- core/ audit/` was empty at that historical execution point. This does not describe the later CANONICAL-003 merge. |
+| Original CROSS-LANGUAGE-001 / CANONICAL-001 baseline | RI-RS | `git diff -- src/ Cargo.toml Cargo.lock` was empty at that historical execution point. |
+| CANONICAL-003, 2026-10-15 | `vaidt/aura-poc-a-core-v3.3` | PR #4 changed `core/merkle.py::MerkleAttestor.generate_leaf`, including the canonical byte and RFC 6962 leaf-hash behavior. This is a recorded scope deviation from the controlled DQ-006 execution order §5. |
+| CANONICAL-003, 2026-10-15 | `vaidt/aura-guard-v1.3` | Conformance adapter/test only; production `src/merkle.rs` and production Cargo dependency graph were not changed by PR #9. |
 
-The JCS engines are confined to conformance-only package boundaries in both repositories. No production hash, Merkle, event-type or protocol-semantics code was changed by CROSS-LANGUAGE-001.
+The CANONICAL-003 Python test and post-merge workflows succeeded, but passing tests do not resolve compatibility impact. The production Core change can alter digests and downstream certificate/evidence identifiers for semantically identical objects. Before any production release, a separate, reviewable version/profile and historical-evidence compatibility assessment must identify how legacy evidence continues to be verified, how old and new profiles are distinguished, downstream identifier impact, and rollout/rollback controls.
+
+**Current criterion-10 disposition:** NOT MET for the supplemental CANONICAL-003 execution context because RI-PY production hash/Merkle behavior changed. The historical CROSS-LANGUAGE-001 check remains valid for its own execution point only. This package records the deviation; it neither authorizes it retroactively nor changes the normative contract.
 
 ---
 
 ## 10. Known deviations
 
-### D-1 — CANONICAL-001 is JCS-degenerate · **SUBSTANTIVE**
+### D-1 — CANONICAL-001 is JCS-degenerate · **HISTORICAL LIMITATION; DISCRIMINATOR GAP MITIGATED FOR CANONICAL-003 IN THE VAIDT SANDBOX**
 
-For this object, `json.dumps(obj, sort_keys=True, separators=(",", ":"), ensure_ascii=False)` produces bytes identical to the frozen canonical bytes, and therefore the identical SHA-256 and the identical leaf. Verified by execution during this reconciliation.
+The original finding remains correct for CANONICAL-001: for that object, `json.dumps(obj, sort_keys=True, separators=(",", ":"), ensure_ascii=False)` produces bytes identical to the frozen canonical bytes. CROSS-LANGUAGE-001 therefore established agreement on CANONICAL-001, but that fixture alone could not discriminate RFC 8785 from an ordinary sorted-JSON serializer.
 
-A fully conforming RFC 8785 engine and a non-conforming sorted-JSON serializer are indistinguishable on this vector. CROSS-LANGUAGE-001 therefore establishes that RI-PY and RI-RS agree; it does not establish that either implements RFC 8785, which is the decision it is cited for.
+That statement is no longer an accurate description of the complete evidence corpus. The supplemental CANONICAL-003 execution recorded in §4.1 covers ECMAScript-compatible number rendering, UTF-16 code-unit key ordering, and string escaping/raw UTF-8. RI-PY and RI-RS each independently matched the frozen 577-byte oracle and reproduced the same canonical SHA-256 and RFC 6962 leaf digest. Criterion 13 is therefore MET for this tested discriminator in the `vaidt/*` working repositories, without implying exhaustive RFC 8785 conformance or full CONF-003 PASS.
 
-Partial mitigation, RI-PY only: `test_jcs_behavior.py` (13 passed) exercises discriminating behaviour — ES6 number form, non-finite rejection, minimal escaping, raw UTF-8 for non-ASCII. RI-RS has no equivalent executed behavioural suite.
-
-Recorded independently at [`ck003/handover-assessment/10_INDEPENDENT_VERIFICATION.md`](../ck003/handover-assessment/10_INDEPENDENT_VERIFICATION.md) §3.2 and [`05_EVIDENCE_GAPS.md`](../ck003/handover-assessment/05_EVIDENCE_GAPS.md) EG-01.
+The earlier note that only RI-PY had an executed behavioral suite accurately described the prior evidence state. CANONICAL-003 now supplies a cross-language discriminator result, but does not replace comprehensive boundary testing, prohibited-input controls, upstream reachability, or RI-RS source-of-record disposition. Historical verification records remain linked at [`ck003/handover-assessment/10_INDEPENDENT_VERIFICATION.md`](../ck003/handover-assessment/10_INDEPENDENT_VERIFICATION.md) §3.2 and [`05_EVIDENCE_GAPS.md`](../ck003/handover-assessment/05_EVIDENCE_GAPS.md) EG-01.
 
 ### D-2 — Evidence is not reachable from any default branch · **SUBSTANTIVE**
 
-All four cited commits live on branches that are unmerged in their repositories, with no open pull request. A reviewer cloning either reference repository at `main` cannot locate the evidence. The commits were fetched and verified directly during this reconciliation and are intact, but reachability is a release-gate requirement, not a convenience.
+The original CANONICAL-001 evidence commits cited in §§5–6 remain on branches that are unmerged in their named `Aura-IDToken/*` repositories; a reviewer cloning those repositories at `main` cannot locate that historical evidence package. The additional CANONICAL-003 result is reachable from `vaidt/aura-poc-a-core-v3.3/main` and `vaidt/aura-guard-v1.3/main`, but those are distinct working repositories/forks. The controlled execution order explicitly names `Aura-IDToken/aura-poc-a-core-v3.3` and `Aura-IDToken/aura-guard-v1.3`; no formally accepted immutable publication route substituting `vaidt/*` is recorded here. Therefore criterion 14 remains NOT MET. This is an evidence-identity/reachability issue, not a failure of the CANONICAL-003 byte comparison.
 
 ### D-3 — RI-RS conformance boundary of record is not decided · **SUBSTANTIVE**
 
-Three incompatible RI-RS implementations of this gate exist. Only the one cited above isolates the engine correctly; a competing open pull request would place a conformance-only engine in the production dependency graph. Recorded at [`ck003/handover-assessment/04_CONFLICT_REGISTER.md`](../ck003/handover-assessment/04_CONFLICT_REGISTER.md) CFL-003. Disposal of the other two is required.
+The `vaidt/aura-guard-v1.3/main` conformance boundary used for CANONICAL-003 is now identifiable at `conformance/canonical/jcs.rs` with the `canonical_001` and `canonical_003` tests; the JCS engine remains outside the production dependency graph in that working repository. This does not settle the global source-of-record decision. The controlling record still identifies a competing open PR #59 in `Aura-IDToken/aura-guard-v1.3` whose proposed dependency placement conflicts with production isolation. The source-of-record conflict and competing implementations must be explicitly disposed of or the controlling specification must formally accept a different evidence publication route. See [`ck003/handover-assessment/04_CONFLICT_REGISTER.md`](../ck003/handover-assessment/04_CONFLICT_REGISTER.md) CFL-003 and the CANONICAL-003 report.
 
 ### D-4 — Branch naming · **PROCEDURAL**
 
@@ -260,7 +300,7 @@ DQ-006  ── closures/DQ-006_CLOSURE_PACKAGE.md  (this record)
                 └─ RFC 6962 leaf     ce6b3673…6648c039
 ```
 
-Every link above is identified by repository path plus section, test or document identifier. Evidence-side paths resolve on the branches named in §5 and §6, not on `main` (deviation D-2).
+The graph above records the historical CANONICAL-001 baseline. Supplemental CANONICAL-003 evidence is indexed in §4.1 and in `ck003/dq-006-final-closure-execution/DQ-006_CANONICAL-003_TECHNICAL_EVIDENCE_REPORT_2026-10-15.md`; it is reachable from the `vaidt/*` working repositories and `vaidt/aura-specification/main`, but not yet proven reachable from the specifically named `Aura-IDToken/*` default/reviewable branches (deviation D-2).
 
 ---
 
@@ -277,28 +317,30 @@ Every link above is identified by repository path plus section, test or document
 | 7 | RI-RS independent execution | **MET** |
 | 8 | Canonical byte / SHA-256 / RFC 6962 leaf equality, independently recomputed | **MET** |
 | 9 | Discriminating negative controls | **MET** |
-| 10 | Production runtime unchanged | **MET** |
-| 11 | Version and migration semantics recorded | **MET** — APS-200 §8.8, APS-300 §5.3 |
+| 10 | Production runtime unchanged for the executed gate | **NOT MET for the supplemental CANONICAL-003 path** — RI-PY production `core/merkle.py` changed; see §9. Original CROSS-LANGUAGE-001 baseline integrity check remains historical evidence only. |
+| 11 | Version and migration semantics recorded | **MET** — APS-200 §8.8, APS-300 §5.3; implementation-specific impact review remains open before release |
 | 12 | Single normative authority; no competing definition | **MET** — APS-200 §8.2; superseded records marked |
-| 13 | Evidence discriminates RFC 8785 from sorted JSON, cross-language | **NOT MET** — D-1 |
-| 14 | Evidence reachable from each reference repository's default branch | **NOT MET** — D-2 |
+| 13 | Evidence discriminates RFC 8785 from sorted JSON, cross-language | **MET for CANONICAL-003 in `vaidt/*` only** — §4.1; this does not imply exhaustive RFC 8785 or full CONF-003 conformance |
+| 14 | Evidence reachable from each reference repository's default branch or accepted immutable route | **NOT MET** — D-2; `vaidt/*` reachability does not satisfy the named `Aura-IDToken/*` criterion |
 | 15 | RI-RS conformance boundary of record decided, alternatives disposed | **NOT MET** — D-3 |
-| 16 | Chief Architect ratification of the verdict | **NOT MET** — GOVERNANCE.md §2 |
+| 16 | Chief Architect ratification of the verdict | **NOT MET — NOT PERFORMED** — GOVERNANCE.md §2 |
 
-Criteria 1–12 are met. Criteria 13–16 are not.
+Criteria 1–9, 11 and 12 remain met. Criterion 10 is not met for the supplemental CANONICAL-003 path; criterion 13 is met for the tested discriminator in the `vaidt/*` working repositories; criteria 14–16 remain not met.
 
 ---
 
 ## 13. Residuals
 
-Each residual is executable. None requires re-deciding the contract in §3.
+Residual IDs below are aligned to the active `DQ-006_FINAL_CLOSURE_EXECUTION_ORDER.md` (R1 discriminator; R2 RI-RS boundary; R3 evidence reachability; R4 ratification). No normative contract is changed.
 
-| ID | Residual | Owner | Closes |
-|---|---|---|---|
-| **R1** | Add at least one JCS-discriminating cross-language vector to the CANONICAL corpus, execute it on both `rfc8785` 0.1.4 and `serde_json_canonicalizer` 0.3.2, and record the observed bytes. Strongest candidates: UTF-16 code-unit key ordering (e.g. keys `"é"`, `"z"`, `"😀"`, `"ﬀ"`) and ES6 number form (`-0.0` → `0`, `1.0` → `1`). No expected value may be written before it has been produced by execution. | RI-PY + RI-RS | 13 |
-| **R2** | Merge the CANONICAL-001 evidence to the default branch of both reference repositories, or publish an equivalent reachable evidence artifact. | RI-PY + RI-RS | 14 |
-| **R3** | Decide the RI-RS conformance boundary of record; close or dispose of the two competing implementations. | Protocol Custodian | 15 |
-| **R4** | Ratify this verdict. | Chief Architect | 16 |
+| ID | Item / required disposition | Current status | Owner | Criterion |
+|---|---|---|---|---|
+| **R1** | CANONICAL-003 discriminator execution on both RI-PY and RI-RS, recording exact bytes, canonical digest and RFC 6962 leaf digest. The tested vector and its frozen oracle remain unchanged. | **TECHNICAL PASS — `vaidt/*` working repositories only; NON-NORMATIVE** | RI-PY + RI-RS | 13 (tested vector only) |
+| **R2** | Select exactly one authoritative RI-RS conformance boundary and explicitly dispose of competing implementations / the upstream dependency-placement conflict. | **OPEN** — fork-level boundary identifiable; global source-of-record disposition unresolved | Protocol Custodian / operator | 15 |
+| **R3** | Make the required evidence reachable from the named `Aura-IDToken/aura-poc-a-core-v3.3` and `Aura-IDToken/aura-guard-v1.3` default/reviewable branches, or use an immutable publication route formally accepted by the controlling record. | **OPEN** — `vaidt/*` reachability does not satisfy the current repository-identity criterion | RI-PY + RI-RS / operator | 14 |
+| **R4** | Chief Architect reviews the complete evidence and explicitly ratifies the DQ-006 status transition after all required prior conditions have been met. | **OPEN — NOT PERFORMED** | Chief Architect | 16 |
+
+Separate implementation/release control (not a replacement for R1–R4): the RI-PY production hash/Merkle change recorded in §9 requires an explicit version/profile and historical-certificate/evidence compatibility review before a production release. This review must not silently reinterpret historical evidence and does not itself ratify DQ-006.
 
 Explicitly **not** residuals of DQ-006: CFL-001 (cross-corpus governance precedence) and CFL-005 (empty event-type registry). Both are reported in §14; neither is DQ-006's to resolve.
 
@@ -315,15 +357,19 @@ Explicitly **not** residuals of DQ-006: CFL-001 (cross-corpus governance precede
 ## 15. Final verdict
 
 ```text
-Normative specification closure  : CLOSED   (criteria 1–12)
-Conformance evidence closure     : PARTIAL  (criterion 13 not met)
-Procedural closure               : OPEN     (criteria 14–16 not met)
+Normative specification contract   : CLOSED / SETTLED (APS-200 §8; APS-300 §5)
+CANONICAL-003 discriminator result : PASS for tested vector in `vaidt/*`
+Production-integrity criterion 10  : NOT MET for supplemental RI-PY path; scope deviation recorded
+Evidence reachability criterion 14 : NOT MET
+RI-RS boundary criterion 15        : NOT MET
+Chief Architect ratification      : NOT PERFORMED
 
 DQ-006 = OPEN
+CONF-003 = PARTIAL
 ```
 
-DQ-006 is **not BLOCKED**: no unresolved decision stands in the way, and every residual in §13 has a defined executable path. It is **not CLOSED**: the corpus behind the closure cannot distinguish the profile it certifies, and the evidence is not reachable from any default branch.
+DQ-006 remains **OPEN**. The current reason is no longer that the corpus lacks any discriminator: CANONICAL-003 demonstrates the tested RFC 8785 distinctions on both working receivers. Closure remains incomplete because the evidence is not yet reachable under the named `Aura-IDToken/*` repository criterion, the authoritative RI-RS boundary is unresolved, criterion 10's production-integrity/scope condition is not met for the supplemental RI-PY path, and Chief Architect ratification has not been performed.
 
-The contract in §3 is settled and normatively bound. What remains is evidence, reachability and ratification.
+The normative contract in §3 is unchanged. This update reconciles the current evidence and records a scope deviation; it does not authorize production changes retroactively, silently reinterpret historical certificates/evidence, grant normative effect to CANONICAL-003, or perform ratification.
 
-**No production runtime change is implied or authorized by this package.**
+**No production runtime change is authorized or implied by this package.**
