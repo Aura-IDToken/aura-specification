@@ -8,7 +8,7 @@ Authority: APS-400 §4
 Normative source: APS-200 §8 (canonical serialization) · APS-300 §5 (evidence-hash domain)
 Related Invariant: INV-003 (also exercises INV-006, INV-011)
 Related Decision: ADR-CK003-DQ006 · DQ-006
-Last Review: 2026-08-20
+Last Review: 2026-10-15
 
 ---
 
@@ -44,6 +44,7 @@ Bound fixtures:
 
 - **CANONICAL-001** — [`fixtures/corpus/CANONICAL-001_jcs_evidence.json`](../fixtures/corpus/CANONICAL-001_jcs_evidence.json)
 - **CANONICAL-002** — [`fixtures/corpus/CANONICAL-002_jcs_discriminating.json`](../fixtures/corpus/CANONICAL-002_jcs_discriminating.json)
+- **CANONICAL-003** — [`fixtures/corpus/CANONICAL-003_jcs_full_discriminator.json`](../fixtures/corpus/CANONICAL-003_jcs_full_discriminator.json), execution evidence recorded in [`DQ-006_CANONICAL-003_TECHNICAL_EVIDENCE_REPORT_2026-10-15.md`](../ck003/dq-006-final-closure-execution/DQ-006_CANONICAL-003_TECHNICAL_EVIDENCE_REPORT_2026-10-15.md)
 
 ---
 
@@ -144,14 +145,17 @@ Plus: the gate's own output, the negative-control results, and a production-inte
 |---|---|---|
 | CANONICAL-001, RI-PY actual execution | PASS | `rfc8785` 0.1.4 @ `49d0e4f6` |
 | CANONICAL-001, RI-RS actual execution | PASS | `serde_json_canonicalizer` 0.3.2 @ `4e9e2284` |
-| CANONICAL-002 discriminating fixture | READY FOR EXECUTION | working corpus candidate prepared; cross-language execution pending |
+| CANONICAL-002 discriminating fixture | READY FOR EXECUTION | working corpus candidate prepared; no execution result is claimed for CANONICAL-002 |
+| CANONICAL-003, RI-PY execution | PASS for this fixture | [2026-10-15 technical evidence report](../ck003/dq-006-final-closure-execution/DQ-006_CANONICAL-003_TECHNICAL_EVIDENCE_REPORT_2026-10-15.md) |
+| CANONICAL-003, RI-RS execution | PASS for this fixture | [2026-10-15 technical evidence report](../ck003/dq-006-final-closure-execution/DQ-006_CANONICAL-003_TECHNICAL_EVIDENCE_REPORT_2026-10-15.md) |
+| CANONICAL-003 byte / SHA-256 / leaf equality | PASS for this fixture in `vaidt/*` | frozen 577-byte oracle and both digests match; evidence remains non-normative |
 | C1–C8 | PASS | CROSS-LANGUAGE-001 |
 | N1–N3 | PASS (all rejected) | CROSS-LANGUAGE-001 |
 | §4.3 profile discrimination, RI-PY only | PASS | `test_jcs_behavior.py`, 13 passed |
-| §4.3 profile discrimination, cross-language | READY FOR EXECUTION | CANONICAL-002 prepared to discriminate RFC 8785 from naive sorted JSON |
+| §4.3 profile discrimination, cross-language | PASS for CANONICAL-003 in `vaidt/*`; full CONF-003 remains PARTIAL | [2026-10-15 technical evidence report](../ck003/dq-006-final-closure-execution/DQ-006_CANONICAL-003_TECHNICAL_EVIDENCE_REPORT_2026-10-15.md); required source-of-record/reachability and remaining gate controls are still open |
 | §4.5 prohibited-input controls | NOT EXECUTED | — |
 
-**CONF-003 verdict: PARTIAL.** See [`closures/DQ-006_CLOSURE_PACKAGE.md`](../closures/DQ-006_CLOSURE_PACKAGE.md).
+**CONF-003 verdict: PARTIAL (unchanged).** CANONICAL-003 now demonstrates byte, canonical-digest and RFC 6962 leaf-digest agreement for the tested vector in the `vaidt/*` sandbox. This does not close the complete CONF-003 gate: prohibited-input controls remain unexecuted, and the authoritative RI-RS boundary, named-upstream evidence reachability, and DQ-006 ratification remain unresolved. The RI-PY production hash change also requires a separate version/profile and historical-evidence compatibility review. See [`closures/DQ-006_CLOSURE_PACKAGE.md`](../closures/DQ-006_CLOSURE_PACKAGE.md) and the linked technical evidence report.
 
 ---
 
@@ -163,6 +167,6 @@ Plus: the gate's own output, the negative-control results, and a production-inte
 | Invariant | INV-003 (exercises INV-006, INV-011) |
 | Normative source | APS-200 §8 · APS-300 §5 |
 | Decision | ADR-CK003-DQ006 · DQ-006 |
-| Fixture | CANONICAL-001, CANONICAL-002 |
+| Fixture | CANONICAL-001, CANONICAL-002, CANONICAL-003 |
 | Evidence Type | EVID-CORE |
 | Closure record | `closures/DQ-006_CLOSURE_PACKAGE.md` |
