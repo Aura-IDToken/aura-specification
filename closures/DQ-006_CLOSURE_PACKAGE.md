@@ -5,7 +5,8 @@
 **Classification:** DECISION / CLOSURE RECORD
 **Authority:** APS-200 §8 · APS-300 §5 · ADR-CK003-DQ006 · CONF-003
 **Original closure record:** 2026-08-19 (recorded CLOSED / PASS)
-**Reconciled:** 2026-08-20 — DQ-006 CLOSURE RECONCILIATION
+**Reconciled:** 2026-08-20 — DQ-006 CLOSURE RECONCILIATION  
+**Evidence reconciliation:** 2026-10-15 — CANONICAL-003 cross-language results recorded; DQ-006 remains OPEN
 **Ratification:** required — GOVERNANCE.md §2 reserves status transitions to the Chief Architect
 
 > **This is the single authoritative DQ-006 closure record.** Four earlier records
@@ -116,14 +117,14 @@ The technical execution report is [`ck003/dq-006-final-closure-execution/DQ-006_
 **RI-PY — Python working repository**
 
 - Repository: `vaidt/aura-poc-a-core-v3.3`; PR #4 merged to `main` at `1d15ecbed8470476684951e9ff301a3cfc26a46d`.
-- CANONICAL-003 workflow `38679686272`: SUCCESS, 10/10 checks PASS. Post-merge Execution Checks `38680695757` and Docker full suite `38680695701`: SUCCESS.
+- CANONICAL-003 workflow [38679686272](https://github.com/vaidt/aura-poc-a-core-v3.3/actions/runs/38679686272): SUCCESS, 10/10 checks PASS. Post-merge Execution Checks [38680695757](https://github.com/vaidt/aura-poc-a-core-v3.3/actions/runs/38680695757) and Docker full suite [38680695701](https://github.com/vaidt/aura-poc-a-core-v3.3/actions/runs/38680695701): SUCCESS.
 - Tested entry point: `core/merkle.py::MerkleAttestor.generate_leaf`.
 - **Scope deviation:** this PR changed the production Core hash/Merkle entry point, although the controlled DQ-006 execution order §5 excludes production `core/` semantic and hash/Merkle changes. The merge is recorded as an observed fact, not as retroactive DQ-006 authorization. Version/profile and historical-evidence compatibility review remains open.
 
 **RI-RS — Rust working repository**
 
 - Repository: `vaidt/aura-guard-v1.3`; PR #9 merged to `main` at `488d267f56fdb9ba58fcafc8bf4d4fe2a6149526`.
-- CI workflow `38678371494` and Rust workflow `38678371567`: SUCCESS. Test: `cargo test --locked --test canonical_003 -- --nocapture`.
+- CI workflow [38678371494](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38678371494) and Rust workflow [38678371567](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38678371567): SUCCESS. Test: `cargo test --locked --test canonical_003 -- --nocapture`.
 - Tested boundary: `conformance/canonical/canonical_003.rs` through `conformance/canonical/jcs.rs`, using `serde_json_canonicalizer = "=0.3.2"` in the conformance/development boundary.
 - The evidence does not claim production `src/merkle.rs` or production Cargo dependencies were changed.
 
@@ -331,7 +332,7 @@ Criteria 1–9, 11 and 12 remain met. Criterion 10 is not met for the supplement
 
 ## 13. Residuals
 
-Residual IDs below are aligned to the active `DQ-006_FINAL_CLOSURE_EXECUTION_ORDER.md` (R1 discriminator; R2 RI-RS boundary; R3 evidence reachability; R4 ratification). No normative contract is changed.
+Residual IDs below are aligned to the active `DQ-006_FINAL_CLOSURE_EXECUTION_ORDER.md` (R1 discriminator; R2 RI-RS boundary; R3 evidence reachability; R4 ratification). The technical report's earlier R2/R3 discrepancy note was accurate when written; this update reconciles the numbering in this authoritative closure package while leaving the historical evidence report unchanged. No normative contract is changed.
 
 | ID | Item / required disposition | Current status | Owner | Criterion |
 |---|---|---|---|---|
