@@ -1,0 +1,132 @@
+{
+  "artifact_id": "CANONICAL-003",
+  "title": "Multi-axis JCS discriminator candidate for DQ6-R1",
+  "status": "CANDIDATE / EXPERIMENTAL / NON-NORMATIVE / RI-PY AND RI-RS NOT YET EXECUTED",
+  "specification": "RFC 8785 JSON Canonicalization Scheme (JCS)",
+  "repository_path": "fixtures/corpus/CANONICAL-003_jcs_full_discriminator.json",
+  "canonicalization_scope": "JSON Pointer /protocol_object only; fixture metadata is excluded.",
+  "input_fixture": {
+    "path": "CANONICAL-003_jcs_full_discriminator.json",
+    "encoding": "UTF-8",
+    "sha256": "1cde8282d6df99defc16b8652cb0f43a8f327c35b8f356a8612b835ed996ec73",
+    "byte_length": 4230,
+    "final_newline": true
+  },
+  "protocol_object": {
+    "json_pointer": "/protocol_object",
+    "canonical_output_path": "CANONICAL-003_jcs_full_discriminator.expected.jcs",
+    "sha256": "9fb648c388c4485575d25c1d6171ba691fec51c1b433b11f4d61197bbe2a5509",
+    "byte_length": 577,
+    "final_newline": false,
+    "hash_domain": "Exact UTF-8 canonical bytes, no BOM and no trailing LF.",
+    "rfc6962_leaf_sha256": "38672ea2bd0ea87b2446efce8d4ba4adeb822e0baaecee4a54b73179198d2b3e"
+  },
+  "naive_python_baseline": {
+    "path": "CANONICAL-003_jcs_full_discriminator.naive-python.json",
+    "method": "json.dumps(protocol_object, sort_keys=True, separators=(\",\", \":\")) with default ensure_ascii=True",
+    "sha256": "dcecce9fd0514104b6afb85d5e07abbcca7d68fbf3b062d12766cc70f3d07d68",
+    "byte_length": 617,
+    "final_newline": false,
+    "is_expected_jcs": false
+  },
+  "oracle": {
+    "runtime": "v20.20.2",
+    "method": "JSON.parse; recursive key sorting with ECMAScript Array.prototype.sort; JSON.stringify; SHA-256 over UTF-8 bytes.",
+    "rationale": "RFC 8785 requires ECMAScript-compatible primitive serialization and UTF-16 code-unit property sorting.",
+    "independence": "Separate runtime from Python and Rust receivers; not a receiver execution or closure verdict."
+  },
+  "discriminators": [
+    {
+      "id": "NUM-01",
+      "field": "/numbers/ten_float",
+      "input": "10.0",
+      "expected": "10"
+    },
+    {
+      "id": "NUM-02",
+      "field": "/numbers/scientific_positive",
+      "input": "1e5",
+      "expected": "100000"
+    },
+    {
+      "id": "NUM-03",
+      "field": "/numbers/micro_threshold",
+      "input": "1e-6",
+      "expected": "0.000001"
+    },
+    {
+      "id": "NUM-04",
+      "field": "/numbers/sub_micro_threshold",
+      "input": "1e-7",
+      "expected": "1e-7"
+    },
+    {
+      "id": "NUM-05",
+      "field": "/numbers/large_fixed_boundary",
+      "input": "1e20",
+      "expected": "100000000000000000000"
+    },
+    {
+      "id": "NUM-06",
+      "field": "/numbers/large_exponent_boundary",
+      "input": "1e21",
+      "expected": "1e+21"
+    },
+    {
+      "id": "NUM-07",
+      "field": "/numbers/negative_zero",
+      "input": "-0.0",
+      "expected": "0"
+    },
+    {
+      "id": "NUM-08",
+      "field": "/numbers/shortest_rounding",
+      "input": "333333333.33333329",
+      "expected": "333333333.3333333"
+    },
+    {
+      "id": "KEY-01",
+      "field": "/unicode_keys",
+      "expected_order": [
+        "Z",
+        "a",
+        "U+10000",
+        "U+1F600",
+        "U+1FAE0",
+        "U+E000"
+      ],
+      "reason": "UTF-16 order differs from Python code-point order at the supplementary-code-point/U+E000 boundary."
+    },
+    {
+      "id": "STR-01",
+      "field": "/escaping/control",
+      "expected": "short escapes for five predefined control characters; lowercase hex escapes for U+0000 and U+001F"
+    },
+    {
+      "id": "STR-02",
+      "field": "/escaping/slash",
+      "expected": "solidus remains unescaped"
+    },
+    {
+      "id": "STR-03",
+      "field": "/escaping/unicode_text",
+      "expected": "Unicode, emoji, U+2028 and U+2029 are emitted literally in UTF-8"
+    },
+    {
+      "id": "STR-04",
+      "field": "/escaping/quote and /escaping/backslash",
+      "expected": "JSON quote and reverse solidus escapes"
+    }
+  ],
+  "execution_record_requirements": [
+    "receiver repository/commit",
+    "toolchain/runtime",
+    "input fixture SHA-256",
+    "canonical bytes length and hex",
+    "canonical SHA-256",
+    "RFC 6962 leaf hash",
+    "byte-for-byte equality",
+    "exit code and raw logs"
+  ],
+  "rule": "Never change expected bytes/digests to match receiver output; disagreement must be investigated."
+}

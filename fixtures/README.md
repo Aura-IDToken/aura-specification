@@ -30,6 +30,8 @@ fixtures/
 | FIX-INV-013 | Policy Determinism | CORPUS | CONF-013 | READY |
 | FIX-INV-014 | APS-500 Compatibility | CORPUS | CONF-014 | APS500_VERSION_BLOCKED |
 | FIX-INV-015 | Canonical Identity | CORPUS | CONF-015 | APS000_BINDING_BLOCKED |
+| `CANONICAL-002` | JCS Discriminator (UTF-16 ordering) | CORPUS | CONF-003 | WORKING — NOT EXECUTED |
+| `CANONICAL-003` | Multi-axis JCS Discriminator | CORPUS | CONF-003 | WORKING — NOT EXECUTED |
 
 ## Promotion Classes
 
@@ -54,6 +56,7 @@ Use the following promotion classes when deciding whether an artifact belongs in
 | `corpus/FIX-INV-015_canonical_identity.json` | `WORKING` | Identity expectations exist, but canonical fields are not yet normatively fixed | APS-000 / APS-200 identity closure |
 | `corpus/CANONICAL-001_jcs_evidence.json` | `WORKING` | Strong evidence vector, but not yet discriminating enough for final profile closure | discriminating RFC 8785 vector (DQ-006 residual R1) |
 | `corpus/CANONICAL-002_jcs_discriminating.json` | `WORKING` | First JCS-discriminating candidate fixture is prepared for cross-language execution | execute on RI-PY + RI-RS and record observed bytes |
+| `corpus/CANONICAL-003_jcs_full_discriminator.json` | `WORKING` | Multi-axis discriminator for ECMAScript number form, UTF-16 member ordering and string escaping; output bytes and digest are pinned independently | Execute on RI-PY + RI-RS, compare emitted bytes, then record evidence |
 | `ck003/manifest.json` | `WORKING` | Useful working-corpus inventory, not a normative fixture by itself | promote referenced fixtures individually |
 | `ck003/expected_digests.json` | `WORKING` | Explicitly preserves unresolved digest slots without false PASS claims | freeze remaining canonical-byte / registry / identity dependencies |
 
@@ -63,7 +66,7 @@ The minimum fixture set worth executing before the full APS-500 corpus is frozen
 
 1. `FIX-INV-007` with `CONF-011`
 2. `FIX-INV-013` with `CONF-013`
-3. `CANONICAL-001` and `CANONICAL-002` with `CONF-003`, with the DQ-002 hash-domain vectors as supporting serialization evidence
+3. `CANONICAL-001`, `CANONICAL-002` and `CANONICAL-003` with `CONF-003`, with the DQ-002 hash-domain vectors as supporting serialization evidence
 
 This package supports the first meaningful controlled conformance wave for:
 
