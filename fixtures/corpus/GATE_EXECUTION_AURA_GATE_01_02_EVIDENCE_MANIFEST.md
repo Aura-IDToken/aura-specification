@@ -216,3 +216,17 @@ This record binds observed technical execution to the stated merge commit only. 
 - **Classification:** `TECHNICAL_EVIDENCE_ONLY / NORMATIVE_EFFECT_NONE`.
 
 This append-only entry records only the observed scope and exact revisions/runs named above. It does not establish exhaustive security, general production readiness, complete External Integration Hardening, full protocol conformance, authority continuity, governance closure, normative ratification, or implementation/deployment authorization. Governance M1 remains BLOCKED. The post-merge general CI and Docker workflows were still in progress when this record was written; this entry does not recast them as successful.
+
+
+## aura-guard-v1.3 — Gate 4.1 — post-merge required-check closure (2026-10-15)
+
+- **Bound main revision:** [`08aa63db0e4fae09289cdbb442c34caabe8e6d5b`](https://github.com/vaidt/aura-guard-v1.3/commit/08aa63db0e4fae09289cdbb442c34caabe8e6d5b), the squash-merge commit for PR #8.
+- **Post-merge `build + test`:** PASS within [main CI run 38661076127](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38661076127), job `build + test` (job ID `116182195438`). The job completed successfully on the bound main revision.
+- **Post-merge Docker Image CI:** [run 38661075975](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38661075975) — PASS on the same exact main revision.
+- **Post-merge coverage:** [run 38661076111](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38661076111) — PASS on the same revision; the log explicitly confirms `tests/gate41_core_failure.rs` passed (1 passed, 0 failed).
+- **Additional post-merge checks:** Rust [run 38661076085](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38661076085) — PASS; Semgrep [run 38661076039](https://github.com/vaidt/aura-guard-v1.3/actions/runs/38661076039) — PASS.
+- **Overall CI qualification:** main CI run 38661076127 was still `IN_PROGRESS` when this addendum was prepared because job `GUARD-RS-001 concurrent HTTP stress + replay` was still executing its build/startup sequence. All other jobs in that run, including `build + test`, Gate 3, Gate 4 E2E, D-3 export, rustfmt, clippy, cargo-audit, cargo-deny, and SBOM, were reported successful. This addendum claims the required build/test and Docker checks as PASS, but does not claim the overall CI run was already complete.
+- **Technical disposition:** the Gate 4.1 Stage 1 test suite is integrated into `main`; its test passes in post-merge coverage and the post-merge `build + test` and Docker workflows are PASS for the exact merge commit.
+- **Classification:** `TECHNICAL_EVIDENCE_ONLY / NORMATIVE_EFFECT_NONE`.
+
+This is a further append-only status record. It supplements, but does not rewrite, the earlier entry that accurately recorded workflow status at the time it was first appended. It does not assert completion of all Gate 4.1 hardening scenarios, exhaustiveness of security validation, full protocol conformance, production readiness, authority continuity, Governance M1 closure, normative ratification, or implementation/deployment authorization.
