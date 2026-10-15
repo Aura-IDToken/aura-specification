@@ -5,7 +5,7 @@ Version: 1.0-DRAFT
 Status: DRAFT  
 Classification: Normative Specification  
 Authority: APS-001 §9, §11 · APS-100 · APS-200 · APS-300
-Last Review: 2026-09-26
+Last Review: 2026-10-15
 
 ---
 
@@ -62,7 +62,7 @@ The current repository state distinguishes structural assignment from executable
 |---|---|---|
 | CONF-001 | READY | controlled draft verifier exists for `FIX-001`; implementation-side execution evidence is still missing |
 | CONF-002 | READY | controlled draft replay verifier exists for `FIX-001`; implementation-side replay evidence is still missing |
-| CONF-003 | OPEN | cross-language evidence exists, but the corpus still lacks a JCS-discriminating vector |
+| CONF-003 | OPEN | CANONICAL-003 matches the frozen oracle on RI-PY + RI-RS in `vaidt/*`; closure still requires source-of-record/reachability reconciliation, authoritative RI-RS boundary, prohibited-input controls, and ratification |
 | CONF-004 | READY | controlled draft verifier exists for `FIX-001`; implementation-side execution evidence is still missing |
 | CONF-005 | READY | controlled draft verifier exists for `FIX-001`; implementation-side execution evidence is still missing |
 | CONF-006 | READY | controlled draft verifier exists for `FIX-001`; implementation-side cross-platform evidence is still missing |
@@ -72,7 +72,7 @@ The current repository state distinguishes structural assignment from executable
 | CONF-010 | READY | controlled draft verifier exists for `FIX-001`; implementation-side execution evidence is still missing |
 | CONF-011 | READY | working fixture exists; remaining step is controlled execution evidence |
 | CONF-012 | READY | repository-local draft event registry, bound FIX-INV-012 fixture, and draft runner gate now exist; broader vocabulary and RI evidence are still missing |
-| CONF-013 | READY | working fixture exists, but one concrete policy/input binding is still needed before execution |
+| CONF-013 | READY | FIX-INV-013 binds one concrete policy/input pair; controlled execution evidence remains outstanding |
 | CONF-014 | BLOCKED | APS-500 corpus version is not yet normatively frozen |
 | CONF-015 | BLOCKED | APS-000 / APS-200 identity contract still incomplete |
 
