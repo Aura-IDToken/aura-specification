@@ -1,3 +1,6 @@
+> [!WARNING]
+> **PROPOSED DEPRECATION — NON-CONSTITUTIVE; NOT EFFECTIVE.** AURA-ACT-001 proposes to deprecate this record's status determinations for future governance reliance because the reviewed source evidence does not establish the claimed authority continuity and constitutional procedure. This annotation is a review notice only; it does not itself invalidate, revoke, or supersede this record. Proposed G1 disposition: NOT PROVEN / BLOCKED, pending competent ratification, registration, and independent verification.
+
 # AURA PROTOCOL — FORMAL GOVERNANCE CLOSURE RECORD (M1)
 Artifact_ID: AURA-M1-CLOSURE-RECORD-v1.0
 Domain: Governance Gate M1 Closure
