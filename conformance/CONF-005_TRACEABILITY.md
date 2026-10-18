@@ -6,7 +6,7 @@ Status: DRAFT
 Classification: Normative Conformance Test
 Authority: APS-400
 Related Invariant: INV-005
-Last Review: 2026-07-23
+Last Review: 2026-09-26
 
 ---
 
@@ -27,23 +27,25 @@ Verify the complete traceability chain from APS requirement to Evidence.
 
 ## 3. Preconditions
 
-- A conformant implementation is available and running
-- Reference fixture FIX-001 (or applicable fixture) is loaded
-- No prior state from a different test run exists
-
-> **TODO**: Specify exact preconditions once APS-200 schemas and APS-500 fixtures are finalized.
+- The draft working fixture `fixtures/core/FIX-001_BASIC_EVALUATION.json` is available
+- Python 3 is available with `jsonschema`
+- The repository-local verifier `scripts/check-fix001-evidence.py` is available
 
 ---
 
 ## 4. Test Procedure
 
-Inspect an Evidence Pack generated from FIX-001.
+1. Load `FIX-001` and validate its Evidence Pack against the APS-300 draft schema.
+2. Verify that `evidence_object.execution_id`, `evaluation_result.execution_id`, and `attestation.attested_execution_id` resolve to the same execution.
+3. Verify that `evidence_object.policy_reference` resolves to the enclosed Policy Reference object and that the Evaluation Result embeds the same Policy Reference.
+4. Verify that `evidence_object.attestation_reference` resolves to the enclosed Attestation object and that `attestation.evidence_reference` resolves to the enclosing `pack_id`.
+5. Verify that pack-level `requirement_references` include every requirement reference asserted by the enclosed Evidence object.
 
 ---
 
 ## 5. Expected Result
 
-Every required reference field in the Evidence object (execution_id, policy_reference, attestation_reference) MUST be present and resolve to a valid object.
+Every required reference field in the Evidence object and Evidence Pack MUST be present and resolve to the correct enclosed object or execution identity with no broken links.
 
 ---
 
@@ -70,9 +72,9 @@ EVID-CORE
 |-------|-------|
 | Test ID | CONF-005 |
 | Invariant | INV-005 |
-| Related Fixture | FIX-001 (TODO: assign specific fixture) |
+| Related Fixture | `fixtures/core/FIX-001_BASIC_EVALUATION.json` |
 | Evidence Type | EVID-CORE |
 
 ---
 
-> **TODO**: Link to specific fixture file once FIX-xxx canonical fixtures are authored.
+Current controlled draft execution path: `scripts/check-fix001-evidence.py`

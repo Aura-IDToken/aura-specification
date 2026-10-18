@@ -57,17 +57,20 @@ Adding a new event type is a versioned specification change when it affects vali
 
 ## 5. Initial vocabulary decision
 
-This closure package deliberately does **not** invent an arbitrary final business-event vocabulary from implementation names. Existing source material proves the existence and structural role of `event_type`, but does not provide sufficient normative evidence for a complete approved list.
+This closure package still does **not** invent an arbitrary final business-event vocabulary from implementation names. Existing source material proves the existence and structural role of `event_type`, but does not provide sufficient normative evidence for a complete approved list.
 
-Therefore the initial approved vocabulary is:
+However, the repository now defines one controlled draft-local token for the `CONF-012` gate:
 
 ```text
-EMPTY SET
+AUDIT_RECORD
 ```
 
-until the event registry is explicitly populated and approved.
+as recorded in:
 
-An implementation claiming strict ENT-007 conformance MUST reject unknown/unregistered event types. This avoids silently turning observed implementation strings into protocol semantics.
+- `ck003/decisions/DQ-004/CURRENT_EVENT_TYPE_REGISTRY.md`
+- `ck003/decisions/DQ-004/CURRENT_EVENT_TYPE_REGISTRY.json`
+
+This token is sufficient for the repository-local draft gate only. An implementation claiming strict ENT-007 conformance MUST still reject unknown/unregistered event types, and the broader final event vocabulary remains open.
 
 ## 6. Required follow-up to close DQ-004 completely
 
@@ -113,8 +116,11 @@ The registry MUST contain the approved initial event types and their payload con
 
 ## 9. Verdict
 
-**DQ-004 = OPEN → SEMANTIC CONTRACT DEFINED, VOCABULARY NOT YET APPROVED.**
+**DQ-004 = READY AT REPOSITORY-LOCAL DRAFT LEVEL → SEMANTIC CONTRACT DEFINED, ONE CONTROLLED TOKEN REGISTERED, FINAL VOCABULARY STILL OPEN.**
 
-The correct closure state is therefore **BLOCKED FOR FINAL CLOSURE**, not PASS.
+The correct repository posture is therefore:
 
-The blocker is deliberately narrow: the repository has not supplied a normative event-type vocabulary and payload registry. This package resolves the semantics of the field without fabricating implementation-derived values.
+- **READY** for the local `CONF-012` draft gate;
+- **not PASS** for release-grade protocol closure.
+
+The remaining blocker is deliberately narrow: the repository still lacks the broader approved event-type vocabulary and implementation-side evidence needed for final closure.

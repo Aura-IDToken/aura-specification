@@ -4,8 +4,8 @@ Document ID: APS-900
 Version: 1.0-DRAFT  
 Status: DRAFT  
 Classification: Normative Governance Specification  
-Authority: APS-001 · APS-100 · APS-200 · APS-300 · APS-400 · APS-500  
-Last Review: 2026-07-23
+Authority: APS-001 §11 · APS-100 · APS-200 · APS-300 · APS-400 · APS-500
+Last Review: 2026-09-26
 
 ---
 
@@ -14,6 +14,8 @@ Last Review: 2026-07-23
 APS-900 defines the Traceability mechanism for the Aura Protocol.
 
 Every normative requirement MUST be traceable from its source through to proof of its fulfillment.
+
+Structural traceability readiness and executed conformance evidence are distinct. A mapped chain is necessary, but it is not by itself a PASS result.
 
 ---
 
@@ -39,13 +41,11 @@ Protocol Invariant (INV-xxx)
         ↓
 Canonical Data Model Entity (ENT-xxx)
         ↓
-Evidence Model (APS-300)
+Evidence Requirement (EVID-xxx type / APS-300 contract)
         ↓
 Conformance Test (CONF-xxx)
         ↓
 Reference Fixture (FIX-xxx)
-        ↓
-Evidence Pack (EVID-xxx)
         ↓
 Reference Implementation
         ↓
@@ -66,12 +66,12 @@ Each requirement has a compliance record:
 | `aps_reference` | APS document and section |
 | `invariant_reference` | INV-xxx |
 | `data_model_reference` | ENT-xxx |
-| `evidence_reference` | EVID-xxx |
+| `evidence_reference` | EVID-xxx type and/or evidence artifact reference |
 | `conformance_test_reference` | CONF-xxx |
 | `fixture_reference` | FIX-xxx |
 | `implementation_reference` | RI-PY or RI-RS |
 | `release_reference` | REL-xxx |
-| `compliance_status` | PASS / FAIL / PARTIAL / NOT VERIFIED / DEPRECATED |
+| `compliance_status` | OPEN / BLOCKED / READY / NOT VERIFIED / PASS / FAIL / PARTIAL / DEPRECATED |
 
 ---
 
@@ -79,10 +79,13 @@ Each requirement has a compliance record:
 
 | Status | Meaning |
 |--------|---------|
-| PASS | Requirement satisfied |
-| FAIL | Requirement not satisfied |
-| PARTIAL | Partially satisfied |
-| NOT VERIFIED | Not yet verified |
+| OPEN | The intended compliance path exists, but one or more required links are still incomplete |
+| BLOCKED | A prerequisite contract, fixture, registry entry, or approval gate is still missing |
+| READY | Structural path is sufficiently defined for controlled execution, but execution evidence is not yet recorded |
+| NOT VERIFIED | Structural path exists, but no objective execution evidence has been validated |
+| PASS | Requirement is satisfied with objective evidence and no open mandatory gate |
+| FAIL | Requirement is objectively shown not to satisfy the requirement |
+| PARTIAL | Some required evidence exists, but at least one mandatory condition for PASS remains unmet |
 | DEPRECATED | Requirement withdrawn |
 
 ---
@@ -107,9 +110,9 @@ Example entries:
 
 | APS | INV | CONF | FIX | EVID | STATUS |
 |-----|-----|------|-----|------|--------|
-| APS-200 §4 | INV-015 | CONF-003 | FIX-001 | EVID-001 | NOT VERIFIED |
-| APS-300 §5 | INV-004 | CONF-004 | FIX-005 | EVID-005 | NOT VERIFIED |
-| APS-100 INV-001 | INV-001 | CONF-001 | FIX-001 | EVID-001 | NOT VERIFIED |
+| APS-001 §2 | INV-001 | CONF-001 | FIX-001 | EVID-CORE | BLOCKED |
+| APS-200 §8 | INV-003 | CONF-003 | CANONICAL-001 | EVID-CORE | PARTIAL |
+| APS-300 §11 / APS-200 ENT-007 | INV-012 | CONF-012 | FIX-INV-012 | EVID-AUDIT | READY |
 
 ---
 
@@ -121,6 +124,7 @@ Each implementation generates a Compliance Report containing:
 - Test results
 - Evidence Pack identifiers
 - List of satisfied and unsatisfied requirements
+- Explicit records for any remaining `OPEN`, `BLOCKED`, `READY`, or `NOT VERIFIED` rows
 
 Template: [../templates/CONFORMANCE_REPORT_TEMPLATE.md](../templates/CONFORMANCE_REPORT_TEMPLATE.md)
 
@@ -131,6 +135,7 @@ Template: [../templates/CONFORMANCE_REPORT_TEMPLATE.md](../templates/CONFORMANCE
 An implementation MAY be marked Aura Protocol Conformant if:
 - All mandatory compliance records have status PASS
 - No requirements have status FAIL
+- No mandatory row remains OPEN, BLOCKED, READY, PARTIAL, or NOT VERIFIED
 - A complete traceability path exists for every requirement
 
 ---

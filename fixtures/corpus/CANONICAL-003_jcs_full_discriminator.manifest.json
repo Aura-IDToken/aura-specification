@@ -1,0 +1,199 @@
+{
+  "artifact_id": "CANONICAL-003",
+  "title": "Multi-axis JCS discriminator candidate for DQ6-R1",
+  "status": "CANDIDATE / WORKING / EXPERIMENTAL / NON-NORMATIVE; RI-PY + RI-RS EXECUTED — PASS AGAINST PINNED ORACLE; DQ-006 OPEN",
+  "specification": "RFC 8785 JSON Canonicalization Scheme (JCS)",
+  "repository_path": "fixtures/corpus/CANONICAL-003_jcs_full_discriminator.json",
+  "canonicalization_scope": "JSON Pointer /protocol_object only; fixture metadata is excluded.",
+  "input_fixture": {
+    "path": "CANONICAL-003_jcs_full_discriminator.json",
+    "encoding": "UTF-8",
+    "sha256": "1cde8282d6df99defc16b8652cb0f43a8f327c35b8f356a8612b835ed996ec73",
+    "byte_length": 4230,
+    "final_newline": true
+  },
+  "protocol_object": {
+    "json_pointer": "/protocol_object",
+    "canonical_output_path": "CANONICAL-003_jcs_full_discriminator.expected.jcs",
+    "sha256": "9fb648c388c4485575d25c1d6171ba691fec51c1b433b11f4d61197bbe2a5509",
+    "byte_length": 577,
+    "final_newline": false,
+    "hash_domain": "Exact UTF-8 canonical bytes, no BOM and no trailing LF.",
+    "rfc6962_leaf_sha256": "38672ea2bd0ea87b2446efce8d4ba4adeb822e0baaecee4a54b73179198d2b3e"
+  },
+  "naive_python_baseline": {
+    "path": "CANONICAL-003_jcs_full_discriminator.naive-python.json",
+    "method": "json.dumps(protocol_object, sort_keys=True, separators=(\",\", \":\")) with default ensure_ascii=True",
+    "sha256": "dcecce9fd0514104b6afb85d5e07abbcca7d68fbf3b062d12766cc70f3d07d68",
+    "byte_length": 617,
+    "final_newline": false,
+    "is_expected_jcs": false
+  },
+  "oracle": {
+    "runtime": "v20.20.2",
+    "method": "JSON.parse; recursive key sorting with ECMAScript Array.prototype.sort; JSON.stringify; SHA-256 over UTF-8 bytes.",
+    "rationale": "RFC 8785 requires ECMAScript-compatible primitive serialization and UTF-16 code-unit property sorting.",
+    "independence": "Separate runtime from Python and Rust receivers; not a receiver execution or closure verdict."
+  },
+  "execution_evidence": {
+    "recorded_at": "2026-10-15",
+    "record_type": "POST-EXECUTION METADATA RECONCILIATION",
+    "evidence_report": {
+      "path": "ck003/dq-006-final-closure-execution/DQ-006_CANONICAL-003_TECHNICAL_EVIDENCE_REPORT_2026-10-15.md",
+      "commit_sha": "d808b2d84097fa326c3ed6793f56491e58ab04e2",
+      "classification": "EVIDENCE — NON-NORMATIVE",
+      "normative_effect": "NONE",
+      "ratification": "NOT PERFORMED"
+    },
+    "ri_py": {
+      "repository": "vaidt/aura-poc-a-core-v3.3",
+      "pull_request": 4,
+      "main_commit": "1d15ecbed8470476684951e9ff301a3cfc26a46d",
+      "workflow_runs": [
+        {
+          "id": 38679686272,
+          "result": "SUCCESS — 10/10 CANONICAL-003 checks PASS"
+        },
+        {
+          "id": 38680695757,
+          "result": "SUCCESS — post-merge Execution Checks"
+        },
+        {
+          "id": 38680695701,
+          "result": "SUCCESS — post-merge Docker full suite"
+        }
+      ],
+      "tested_entry_point": "core/merkle.py::MerkleAttestor.generate_leaf",
+      "scope_note": "The production Core leaf-hash behavior changed. Version/profile and historical artifact compatibility review remains a separate required release task; this evidence does not authorize a production release."
+    },
+    "ri_rs": {
+      "repository": "vaidt/aura-guard-v1.3",
+      "pull_request": 9,
+      "main_commit": "488d267f56fdb9ba58fcafc8bf4d4fe2a6149526",
+      "workflow_runs": [
+        {
+          "id": 38678371494,
+          "result": "SUCCESS — CI"
+        },
+        {
+          "id": 38678371567,
+          "result": "SUCCESS — Rust workflow"
+        }
+      ],
+      "tested_entry_point": "conformance/canonical/canonical_003.rs via conformance/canonical/jcs.rs",
+      "scope_note": "Conformance adapter only; production src/merkle.rs and production Cargo dependency set remain unchanged."
+    },
+    "observed_result": {
+      "status": "PASS",
+      "canonical_output_byte_length": 577,
+      "final_newline": false,
+      "canonical_output_hex": "7b226573636170696e67223a7b226261636b736c617368223a225c5c222c22636f6e74726f6c223a225c75303030305c625c745c6e5c665c725c7530303166222c2271756f7465223a225c22222c22736c617368223a222f222c22756e69636f64655f74657874223a22636166c3a9202f20e69db1e4baac202f20f09f9880202f20736570617261746f72733ae280a8e280a9227d2c226e756d62657273223a7b226c617267655f6578706f6e656e745f626f756e64617279223a31652b32312c226c617267655f66697865645f626f756e64617279223a3130303030303030303030303030303030303030302c226d6963726f5f7468726573686f6c64223a302e3030303030312c226e656761746976655f7a65726f223a302c22736369656e74696669635f706f736974697665223a3130303030302c2273686f72746573745f726f756e64696e67223a3333333333333333332e333333333333332c227375625f6d6963726f5f7468726573686f6c64223a31652d372c2274656e5f666c6f6174223a31307d2c22756e69636f64655f6b657973223a7b225a223a22415343494920757070657263617365222c2261223a224153434949206c6f77657263617365222c22f0908080223a22537570706c656d656e7461727920552b3130303030222c22f09f9880223a22552b3146363030206772696e6e696e672066616365222c22f09faba0223a22552b3146414530206d656c74696e672066616365222c22ee8080223a22424d5020707269766174652d75736520552b45303030227d7d",
+      "canonical_sha256": "9fb648c388c4485575d25c1d6171ba691fec51c1b433b11f4d61197bbe2a5509",
+      "rfc6962_leaf_sha256": "38672ea2bd0ea87b2446efce8d4ba4adeb822e0baaecee4a54b73179198d2b3e",
+      "ri_py_matches_frozen_oracle_byte_for_byte": true,
+      "ri_rs_matches_frozen_oracle_byte_for_byte": true,
+      "ri_py_and_ri_rs_byte_identical": true
+    },
+    "limits": [
+      "This result is specific to CANONICAL-003; it does not prove correctness for every RFC 8785 input.",
+      "The fixture remains a non-normative working artifact and is not promoted into the APS-500 normative corpus.",
+      "DQ-006 remains OPEN; DQ6-R4 ratification was not performed.",
+      "Evidence is reachable in the vaidt working repository namespace; the controlling execution order's upstream repository identity/source-of-record criteria remain to be reconciled.",
+      "The production RI-PY hash change requires separate version/profile and historical certificate/evidence compatibility review."
+    ]
+  },
+  "discriminators": [
+    {
+      "id": "NUM-01",
+      "field": "/numbers/ten_float",
+      "input": "10.0",
+      "expected": "10"
+    },
+    {
+      "id": "NUM-02",
+      "field": "/numbers/scientific_positive",
+      "input": "1e5",
+      "expected": "100000"
+    },
+    {
+      "id": "NUM-03",
+      "field": "/numbers/micro_threshold",
+      "input": "1e-6",
+      "expected": "0.000001"
+    },
+    {
+      "id": "NUM-04",
+      "field": "/numbers/sub_micro_threshold",
+      "input": "1e-7",
+      "expected": "1e-7"
+    },
+    {
+      "id": "NUM-05",
+      "field": "/numbers/large_fixed_boundary",
+      "input": "1e20",
+      "expected": "100000000000000000000"
+    },
+    {
+      "id": "NUM-06",
+      "field": "/numbers/large_exponent_boundary",
+      "input": "1e21",
+      "expected": "1e+21"
+    },
+    {
+      "id": "NUM-07",
+      "field": "/numbers/negative_zero",
+      "input": "-0.0",
+      "expected": "0"
+    },
+    {
+      "id": "NUM-08",
+      "field": "/numbers/shortest_rounding",
+      "input": "333333333.33333329",
+      "expected": "333333333.3333333"
+    },
+    {
+      "id": "KEY-01",
+      "field": "/unicode_keys",
+      "expected_order": [
+        "Z",
+        "a",
+        "U+10000",
+        "U+1F600",
+        "U+1FAE0",
+        "U+E000"
+      ],
+      "reason": "UTF-16 order differs from Python code-point order at the supplementary-code-point/U+E000 boundary."
+    },
+    {
+      "id": "STR-01",
+      "field": "/escaping/control",
+      "expected": "short escapes for five predefined control characters; lowercase hex escapes for U+0000 and U+001F"
+    },
+    {
+      "id": "STR-02",
+      "field": "/escaping/slash",
+      "expected": "solidus remains unescaped"
+    },
+    {
+      "id": "STR-03",
+      "field": "/escaping/unicode_text",
+      "expected": "Unicode, emoji, U+2028 and U+2029 are emitted literally in UTF-8"
+    },
+    {
+      "id": "STR-04",
+      "field": "/escaping/quote and /escaping/backslash",
+      "expected": "JSON quote and reverse solidus escapes"
+    }
+  ],
+  "execution_record_requirements": [
+    "receiver repository/commit",
+    "toolchain/runtime",
+    "input fixture SHA-256",
+    "canonical bytes length and hex",
+    "canonical SHA-256",
+    "RFC 6962 leaf hash",
+    "byte-for-byte equality",
+    "exit code and raw logs"
+  ],
+  "rule": "Never change expected bytes/digests to match receiver output; disagreement must be investigated."
+}

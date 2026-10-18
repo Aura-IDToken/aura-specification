@@ -7,6 +7,11 @@
 ## Purpose
 Verify that every protocol artifact has a unique canonical identity conformant with the applicable APS-000 and APS-200 identity rules.
 
+## Preconditions
+- The governing APS-000 / APS-200 identity contract is explicitly defined for the artifact types under test.
+- The applicable identity fixture or conformance artifact inventory is available.
+- Canonical serialization is available where identity preservation across serialization is part of the check.
+
 ## Procedure
 1. Enumerate the protocol artifacts produced by the conformance execution.
 2. Validate required `object_id` and `object_type` fields where applicable.
@@ -24,3 +29,14 @@ Every applicable artifact has a valid, unique and traceable canonical identity.
 
 ## Evidence
 EVID-CORE containing the artifact inventory, identity validation results and canonical identifiers.
+
+## Traceability
+| Field | Value |
+|-------|-------|
+| Test ID | CONF-015 |
+| Invariant | INV-015 |
+| Related Fixture | FIX-INV-015 / applicable identity-bound fixture set |
+| Evidence Type | EVID-CORE |
+
+## Current readiness note
+CONF-015 is currently **BLOCKED** in repository planning because the final APS-000 / APS-200 identity contract is not yet normatively closed.

@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/AuraIDToken/aura-specification/fixtures/schemas/evidence-object.schema.json",
+  "title": "APS-300 Canonical Evidence Object",
+  "_status": "DRAFT TOP-LEVEL STRUCTURAL CONTRACT — semantic/profile closure remains governed by APS text and open decision records.",
+  "description": "Draft machine-readable structural contract for the canonical APS-300 Evidence object.",
+  "type": "object",
+  "required": [
+    "evidence_id",
+    "protocol_version",
+    "schema_version",
+    "implementation_id",
+    "execution_id",
+    "timestamp",
+    "policy_reference",
+    "requirement_references",
+    "input_hash",
+    "output_hash",
+    "evidence_hash",
+    "attestation_reference"
+  ],
+  "properties": {
+    "evidence_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "protocol_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schema_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "implementation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "execution_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "policy_reference": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requirement_references": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "input_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "output_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "evidence_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "previous_evidence_hash": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "attestation_reference": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": false
+}

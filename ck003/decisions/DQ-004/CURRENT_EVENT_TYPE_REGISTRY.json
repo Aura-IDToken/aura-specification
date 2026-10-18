@@ -1,0 +1,14 @@
+{
+  "protocol_version": "1.0-DRAFT",
+  "registry_version": "0.1-DRAFT",
+  "event_types": [
+    {
+      "event_type": "AUDIT_RECORD",
+      "description": "Repository-local draft token for the canonical audit-record emission bound to FIX-INV-012 and the current DQ-004 closure slice.",
+      "producer": "AURA-DRAFT-AUDIT-001",
+      "payload_schema": "AURA-DRAFT-AUDIT-001",
+      "introduced_protocol_version": "1.0-DRAFT",
+      "deprecated": false
+    }
+  ]
+}

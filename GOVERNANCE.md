@@ -85,6 +85,18 @@ New requirements, new invariants, new conformance tests, behavioral changes:
 7. Implementation via pull request referencing RFC
 8. ADR created if architectural decision is embedded
 
+### 5.2A Draft-stage canonical working mode
+
+While a canonical document remains in `DRAFT`, repository maintainers MAY close explicitly documented draft gaps directly in pull requests without a separate RFC when all of the following are true:
+
+1. the edited document is still `DRAFT`;
+2. the change does not modify any `FROZEN` document or change any document status;
+3. the change does not claim approval, freeze, deprecation, or certification;
+4. the affected APS/fixture/traceability records are updated together;
+5. any checksum, signature, or integrity value that depends on a not-yet-approved publication boundary remains clearly marked as draft/non-release material.
+
+This working mode exists to let the repository converge on executable draft contracts before approval. It does not reduce the approval requirements for `APPROVED` or `FROZEN` material.
+
 ### 5.3 Constitution Amendments
 
 Per AURA Constitution Article XI:
@@ -147,6 +159,7 @@ Per AURA Constitution Article VIII:
 AI assistants MAY:
 - Analyze and propose
 - Implement changes once an RFC/ADR is approved
+- Edit canonical `DRAFT` documents under §5.2A when a maintainer has authorized draft-stage closure work
 - Prepare tests and documentation
 - Flag specification gaps
 
@@ -155,6 +168,7 @@ AI assistants MUST NOT:
 - Freeze or deprecate documents
 - Override the Chief Architect's decisions
 - Introduce undocumented protocol behavior
+- Modify `FROZEN` documents
 
 ---
 

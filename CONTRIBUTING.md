@@ -20,6 +20,7 @@ Never propose changes to specifications to match existing implementations. Propo
 |------|---------|
 | Typo / formatting fix | Pull request → 1 review |
 | Clarification (non-normative) | Pull request → 1 review |
+| Draft-stage closure of an explicitly open `DRAFT` canonical contract | Pull request updating the affected APS/schema/fixture/traceability files together |
 | New APS section / requirement | RFC → Architecture Review → PR |
 | New Protocol Invariant | RFC → Architecture Review → PR |
 | New Conformance Test | RFC → PR referencing RFC |
@@ -46,6 +47,12 @@ Every pull request that modifies a normative document MUST:
 - [ ] Update the `Last Review` date in affected document headers
 - [ ] Update `compliance/TRACEABILITY_MATRIX.md` if traceability links change
 - [ ] Follow the style guide
+
+For draft-stage canonical closure work, the pull request MUST also:
+
+- [ ] Keep the edited canonical documents in `DRAFT`
+- [ ] Avoid modifying any `FROZEN` artifact
+- [ ] Mark any non-release hash/checksum placeholders as draft-only rather than authoritative publication values
 
 ---
 

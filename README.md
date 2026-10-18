@@ -43,13 +43,28 @@ aura-specification/
 
 ---
 
+## Current Repository State
+
+- **Canonical / active**: `constitution/`, `specification/`, `aps/`, `invariants/`, `conformance/`, `fixtures/`, `evidence/`, `compliance/`, `reference/`, `adrs/`, `rfcs/`, `arc/`
+- **Working / closure support**: `ck003/`, `closures/`, `docs/completion/` — these track remediation, evidence, and planning work; they are not authoritative protocol status by themselves
+- **Historical / provenance-only**: root `*.pdf` / `*.txt` source imports and historical release snapshots under `releases/`; they are retained for provenance and audit, not as the current canonical state
+
+When current status conflicts with a historical snapshot, use the canonical Markdown corpus and the current completion/roadmap documents.
+
+Current status pointers:
+- **Governance / status index**: [`GOVERNANCE_STATUS_INDEX.md`](GOVERNANCE_STATUS_INDEX.md)
+- **Authority binding of record**: [`AUTHORITY_BINDING_RECORD_v1.1.md`](AUTHORITY_BINDING_RECORD_v1.1.md)
+- **DQ-006 closure status of record**: [`closures/DQ-006_CLOSURE_PACKAGE.md`](closures/DQ-006_CLOSURE_PACKAGE.md)
+
+---
+
 ## Specification Documents
 
 | Document | Title | Status |
 |----------|-------|--------|
 | [AURA Constitution](constitution/AURA_CONSTITUTION.md) | Constitutional Governance | FROZEN |
 | [APS-000](aps/APS-000_FOUNDATION_AND_TERMINOLOGY.md) | Foundation & Terminology | DRAFT |
-| [APS-001](aps/APS-001_PROTOCOL_SPECIFICATION.md) | Protocol Specification | TODO |
+| [APS-001](specification/APS-001_PROTOCOL_SPECIFICATION.md) | Protocol Specification | DRAFT — ARCHITECTURE REVIEW REQUIRED |
 | [APS-100](aps/APS-100_PROTOCOL_INVARIANTS.md) | Protocol Invariants | DRAFT |
 | [APS-200](aps/APS-200_CANONICAL_DATA_MODEL.md) | Canonical Data Model | DRAFT |
 | [APS-300](aps/APS-300_EVIDENCE_MODEL.md) | Evidence Model | DRAFT |
@@ -145,7 +160,7 @@ See [invariants/INVARIANT_REGISTRY.md](invariants/INVARIANT_REGISTRY.md) for ful
 | RI-PY | [aura-poc-a-core](https://github.com/AuraIDToken/aura-poc-a-core-v3.3) | Python | Deterministic measurement engine (Layer 0) |
 | RI-RS | [aura-guard](https://github.com/AuraIDToken/aura-guard-v1.3) | Rust | Audit middleware with hash-chained evidence log |
 
-See [reference/REFERENCE_IMPLEMENTATIONS.md](reference/REFERENCE_IMPLEMENTATIONS.md) for conformance status.
+See [reference/README.md](reference/README.md) for conformance status.
 
 ---
 

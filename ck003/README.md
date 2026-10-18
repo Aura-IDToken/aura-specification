@@ -21,6 +21,8 @@ Normative authority remains with the approved Constitution, APS documents, appro
 
 DQ-002 already has a dedicated evidence package under `ck003/dq-002-hash-domain/`. DQ-003 work is maintained on its dedicated branch until consolidated into the closure branch.
 
+The current consolidated DQ status register is [`ck003/CK003_BLOCKER_REGISTER.md`](CK003_BLOCKER_REGISTER.md).
+
 ## DQ-006 closure
 
 The single authoritative DQ-006 record is [`closures/DQ-006_CLOSURE_PACKAGE.md`](../closures/DQ-006_CLOSURE_PACKAGE.md). Everything under `ck003/dq-006-closure/` and `ck003/dq-006-canonical-serialization/` is superseded working history and MUST NOT be cited as current status.

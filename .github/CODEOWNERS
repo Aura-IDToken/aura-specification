@@ -2,10 +2,9 @@
 # Every file in this repository requires review by the Chief Architect.
 * @vaidt
 
-/constitution/ @vaidt
+/constitution/ @vaidt @Custodian
 /aps/ @vaidt
-/governance/ @vaidt
-* @vaidt
+/governance/ @vaidt @Custodian
 
-
-
+# Protect the CODEOWNERS file itself.
+/.github/CODEOWNERS @vaidt

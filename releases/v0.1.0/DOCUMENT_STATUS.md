@@ -3,6 +3,10 @@
 Release: v0.1.0  
 Date: 2026-07-23
 
+> **Historical snapshot.**
+> This file preserves the status table published with `v0.1.0`.
+> It is not the source of current repository status; use the canonical document headers plus the current roadmap/completion records for present-state assessment.
+
 ---
 
 | Document | ID | Version | Status |

@@ -6,7 +6,7 @@ Status: DRAFT
 Classification: Normative Conformance Test
 Authority: APS-400
 Related Invariant: INV-002
-Last Review: 2026-07-23
+Last Review: 2026-09-26
 
 ---
 
@@ -27,23 +27,26 @@ Verify that an execution can be replayed from its Evidence Pack to produce an id
 
 ## 3. Preconditions
 
-- A conformant implementation is available and running
-- Reference fixture FIX-001 (or applicable fixture) is loaded
-- No prior state from a different test run exists
-
-> **TODO**: Specify exact preconditions once APS-200 schemas and APS-500 fixtures are finalized.
+- The draft working fixture `fixtures/core/FIX-001_BASIC_EVALUATION.json` is available
+- Python 3 is available with `jsonschema`
+- The repository-local verifier `scripts/check-fix001-evidence.py` is available
+- `FIX-001` declares `_draft_replay_materialization` for the replay evidence-chain derivative
 
 ---
 
 ## 4. Test Procedure
 
-1. Execute a protocol run and capture the Evidence Pack. 2. Using only the Evidence Pack, replay the execution on the same implementation.
+1. Load `FIX-001` and validate the request, result, and original Evidence Pack against the current draft schemas.
+2. Using the original `FIX-001` Evidence Pack and its bound replay metadata, execute the repository-local replay path in `scripts/check-fix001-evidence.py`.
+3. Re-materialize the `ENT-003` result from the same bound request/policy inputs and verify byte-identical parity with the original Evidence Pack result.
+4. Materialize a replay `EPR-CORE` Evidence Pack from the original Evidence Pack result and bound replay metadata, with `previous_evidence_hash` pointing to the original Evidence object hash.
+5. Compare the replayed Evaluation Result to the original result byte-for-byte and verify the replay chain linkage.
 
 ---
 
 ## 5. Expected Result
 
-Replayed Evaluation Result MUST be byte-identical to the original. output_hash MUST match.
+Replayed Evaluation Result MUST be byte-identical to the original. `output_hash` MUST match, and the replay Evidence Pack MUST carry a valid `previous_evidence_hash` chain link to the original Evidence object.
 
 ---
 
@@ -70,9 +73,9 @@ EVID-CORE, EVID-CHAIN
 |-------|-------|
 | Test ID | CONF-002 |
 | Invariant | INV-002 |
-| Related Fixture | FIX-001 (TODO: assign specific fixture) |
+| Related Fixture | `fixtures/core/FIX-001_BASIC_EVALUATION.json` |
 | Evidence Type | EVID-CORE, EVID-CHAIN |
 
 ---
 
-> **TODO**: Link to specific fixture file once FIX-xxx canonical fixtures are authored.
+Current controlled draft execution path: `scripts/check-fix001-evidence.py`

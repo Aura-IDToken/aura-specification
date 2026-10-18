@@ -14,6 +14,9 @@ ADRs are permanent records. They are never deleted. A superseded ADR is marked S
 |----|-------|--------|------|
 | [ADR-001](ADR-001_REPOSITORY_STRUCTURE.md) | Canonical Repository Structure | ACCEPTED | 2026-07-23 |
 
+Only ADRs listed in this index are active records for current repository policy.
+Archived drafts or duplicate historical representations may remain in the repository for traceability, but they are non-active unless reintroduced through the normal ADR process.
+
 ## Process
 
 1. Copy [`../templates/ADR_TEMPLATE.md`](../templates/ADR_TEMPLATE.md)

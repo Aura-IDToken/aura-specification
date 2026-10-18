@@ -4,8 +4,8 @@ Document ID: APS-100
 Version: 1.0-DRAFT  
 Status: DRAFT  
 Classification: Normative Specification  
-Authority: APS-001 — Aura Protocol Specification  
-Last Review: 2026-07-23
+Authority: APS-001 §2, §8, §9, §11 — Aura Protocol Specification
+Last Review: 2026-09-26
 
 ---
 
@@ -31,7 +31,7 @@ Every Invariant MUST define:
 - Related ADRs
 - Related Conformance Tests
 
-Full definitions: [../invariants/INVARIANT_REGISTRY.md](../invariants/INVARIANT_REGISTRY.md)
+Full invariant definitions, verification methods, required evidence, and current conformance assignments are maintained in [../invariants/INVARIANT_REGISTRY.md](../invariants/INVARIANT_REGISTRY.md). The catalogue below is the normative index; the registry is the authoritative detailed record for invariant-level verification metadata.
 
 ---
 
@@ -45,15 +45,15 @@ Full definitions: [../invariants/INVARIANT_REGISTRY.md](../invariants/INVARIANT_
 | INV-004 | Immutable Evidence | Critical | CONF-004 |
 | INV-005 | Evidence Traceability | Critical | CONF-005 |
 | INV-006 | Platform Independence | Critical | CONF-006 |
-| INV-007 | Zero Float Runtime | Critical | — |
+| INV-007 | Zero Float Runtime | Critical | CONF-011 |
 | INV-008 | Fail Closed | Critical | CONF-007 |
 | INV-009 | Version Consistency | Major | CONF-008 |
 | INV-010 | Conformance Completeness | Critical | CONF-009 |
 | INV-011 | Cryptographic Integrity | Critical | CONF-010 |
-| INV-012 | Auditability | Critical | — |
-| INV-013 | Policy Determinism | Critical | — |
-| INV-014 | Reference Compatibility | Critical | — |
-| INV-015 | Canonical Identity | Major | — |
+| INV-012 | Auditability | Critical | CONF-012 |
+| INV-013 | Policy Determinism | Critical | CONF-013 |
+| INV-014 | Reference Compatibility | Critical | CONF-014 |
+| INV-015 | Canonical Identity | Major | CONF-015 |
 
 ### INV-001 — Deterministic Evaluation
 **MUST**: Identical inputs MUST produce identical outputs.
@@ -118,15 +118,19 @@ Full definitions: [../invariants/INVARIANT_REGISTRY.md](../invariants/INVARIANT_
 Every Invariant MUST have links:
 
 ```
-INV
- ↓
 APS Requirement
  ↓
+Invariant (INV-xxx)
+ ↓
 Conformance Test (CONF-xxx)
+ ↓
+Reference Fixture (FIX-xxx)
  ↓
 Evidence (EVID-xxx)
  ↓
 ADR
+ ↓
+Reference Implementation
  ↓
 Release (REL-xxx)
 ```
@@ -138,7 +142,7 @@ Full matrix: [../compliance/TRACEABILITY_MATRIX.md](../compliance/TRACEABILITY_M
 ## 6. Compliance Rules
 
 An implementation MAY be marked Aura Protocol Conformant only when:
-- All Invariants have status PASS
+- All applicable Invariants are objectively evidenced as PASS
 - All required Conformance Tests have passed
 - A complete Evidence Pack has been generated
 - No Critical-class violations exist

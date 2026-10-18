@@ -12,7 +12,7 @@ This directory contains conformance status and documentation for Aura Protocol R
 
 ## Conformance Summary
 
-> **Status**: Neither implementation is yet fully conformant with the complete APS. See individual files for detailed gap analysis.
+> **Status**: Neither implementation is yet fully conformant with the complete APS. The specification remains authoritative; RI-PY and RI-RS are assessed against it and do not redefine it. See individual files for detailed gap analysis.
 
 ## Adding a New Implementation
 

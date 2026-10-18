@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/AuraIDToken/aura-specification/fixtures/schemas/policy-reference.schema.json",
+  "title": "APS-200 ENT-004 Policy Reference",
+  "_status": "DRAFT TOP-LEVEL STRUCTURAL CONTRACT — semantic/profile closure remains governed by APS text and open decision records.",
+  "description": "Draft machine-readable top-level contract for a canonical Policy Reference.",
+  "type": "object",
+  "required": [
+    "object_id",
+    "object_type",
+    "protocol_version",
+    "schema_version",
+    "created_at",
+    "integrity_hash",
+    "policy_id",
+    "policy_version",
+    "policy_hash"
+  ],
+  "properties": {
+    "object_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "object_type": { "const": "PolicyReference" },
+    "protocol_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schema_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "integrity_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "policy_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "policy_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "policy_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "unevaluatedProperties": false
+}

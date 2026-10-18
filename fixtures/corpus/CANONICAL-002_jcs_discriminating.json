@@ -1,0 +1,28 @@
+{
+  "fixture_id": "CANONICAL-002",
+  "fixture_version": "0.1-DRAFT",
+  "profile": "RFC8785-JCS",
+  "purpose": "First JCS-discriminating cross-language vector for CONF-003 using UTF-16 member ordering.",
+  "protocol_object": {
+    "😀": "grin",
+    "ﬀ": "lig",
+    "é": "eacute",
+    "z": "z"
+  },
+  "execution_contract": {
+    "bound_conf": "CONF-003",
+    "cross_language_requirement": "RI-PY and RI-RS MUST emit identical canonical bytes, SHA-256 digest, and RFC-6962 leaf hash",
+    "discriminating_requirement": "Observed RFC8785-JCS output MUST differ from naive sorted JSON output that sorts by Unicode code point"
+  },
+  "profile_discrimination": {
+    "jcs_discriminating": true,
+    "basis": "UTF-16 code-unit member ordering",
+    "expected_difference_note": "RFC 8785 JCS must order keys as z, é, 😀, ﬀ. A naive Unicode code-point sort orders z, é, ﬀ, 😀."
+  },
+  "oracle_status": "PENDING_CROSS_LANGUAGE_EXECUTION",
+  "implementation_status": {
+    "RI-PY": "NOT_EXECUTED",
+    "RI-RS": "NOT_EXECUTED",
+    "cross_language_equality": "NOT_EXECUTED"
+  }
+}

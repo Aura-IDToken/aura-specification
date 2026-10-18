@@ -1,7 +1,7 @@
 ---
 ADR: ADR-001
 Title: Document Model — ARC → SPEC → APS
-Status: DRAFT
+Status: ARCHIVED
 Version: 1.0
 Date: 2026-08-02
 Authors: Chief Specification Architect
@@ -9,6 +9,10 @@ Decision Owner: Protocol Custodian
 Canonical language: English
 
 ---
+
+> **ARCHIVED DUPLICATE REPRESENTATION.**
+> This file is retained only as a historical duplicate of [`../../adrs/ADR-001_DOCUMENT_MODEL.md`](../../adrs/ADR-001_DOCUMENT_MODEL.md).
+> It is not an active ADR record and must not be cited as current policy.
 
 ## Context
 

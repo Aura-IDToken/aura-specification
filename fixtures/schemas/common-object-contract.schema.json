@@ -1,9 +1,9 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/AuraIDToken/aura-specification/fixtures/schemas/common-object-contract.schema.json",
   "title": "APS-200 Common Object Contract",
-  "_status": "TODO — pending finalization of APS-200",
-  "description": "Schema for the Common Object Contract fields required on every APS-200 entity (APS-200 Section 4).",
+  "_status": "DRAFT TOP-LEVEL STRUCTURAL CONTRACT — semantic/profile closure remains governed by APS text and open decision records.",
+  "description": "Draft machine-readable contract for the common APS-200 object envelope required on every entity. Concrete entity schemas are responsible for closing unknown top-level fields explicitly.",
   "type": "object",
   "required": [
     "object_id",
@@ -16,11 +16,11 @@
   "properties": {
     "object_id": {
       "type": "string",
-      "description": "Globally unique identifier. TODO: define format (UUID v4 recommended)."
+      "minLength": 1,
+      "description": "Canonical identifier. Exact syntax remains bound to the applicable entity/profile contract."
     },
     "object_type": {
       "type": "string",
-      "description": "APS-000 canonical type name.",
       "enum": [
         "ProtocolHeader",
         "EvaluationRequest",
@@ -34,20 +34,23 @@
     },
     "protocol_version": {
       "type": "string",
-      "description": "APS version this object conforms to. TODO: define version format."
+      "minLength": 1,
+      "description": "Normative protocol contract version."
     },
     "schema_version": {
       "type": "string",
-      "description": "Schema version of this entity definition."
+      "minLength": 1,
+      "description": "Representation/schema contract version for the entity."
     },
     "created_at": {
       "type": "string",
       "format": "date-time",
-      "description": "ISO 8601 UTC timestamp of object creation."
+      "description": "UTC ISO 8601 creation timestamp."
     },
     "integrity_hash": {
       "type": "string",
-      "description": "SHA-256 hash of the canonical serialization of this object. TODO: define canonical serialization algorithm."
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "Lowercase hexadecimal SHA-256 digest of the canonical object, excluding the integrity_hash member itself."
     }
   }
 }

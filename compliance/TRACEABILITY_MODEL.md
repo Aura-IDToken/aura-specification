@@ -74,19 +74,16 @@ When a document changes, the following MUST be assessed:
 
 ## Gap Registry
 
-Current known traceability gaps (as of v0.1.0):
+Current known traceability gaps:
 
 | Gap | Blocking | Priority |
 |-----|----------|----------|
-| APS-001 does not exist | Yes — voids normative authority | Critical |
-| INV-007 has no CONF test | Yes — violates INV-010 | High |
-| INV-012 has no CONF test | Yes — violates INV-010 | High |
-| INV-013 has no CONF test | Yes — violates INV-010 | High |
-| INV-014 has no CONF test | Yes — violates INV-010 | Critical |
-| INV-015 has no CONF test | Yes — violates INV-010 | High |
-| FIX-001 content is TODO | Yes — blocks CONF-001 | High |
-| APS-200 entity schemas are TODO | Yes — blocks CONF-003, CONF-008, CONF-009 | High |
-| APS-300 Evidence Pack format is TODO | Yes — blocks CONF-004, CONF-005, CONF-009, CONF-010 | High |
+| APS-001 remains DRAFT and requires Architecture Review before approval | Yes — root normative authority remains open | Critical |
+| CONF-011 through CONF-015 are assigned but not yet evidenced through an executable conformance gate | Yes — prevents objective PASS claims for INV-007 and INV-012…INV-015 | High |
+| FIX-001 is now a concrete working draft fixture and supports a repository-local draft request/result/evidence/replay/platform gate for CONF-001/002/004/005/006/010, but it still lacks implementation-side controlled evidence and APS-500 promotion | Yes — blocks release-grade closure even though the draft request/result/evidence contract is now bound | High |
+| APS-200 entity schemas now close the current working-profile ENT-002/ENT-003 payloads, but additional profile contracts, identity closure, and registry-bound semantics remain incomplete | Yes — still blocks CONF-003, CONF-008, CONF-009 from full objective closure | High |
+| APS-300 Evidence Pack schema now closes the current draft `EPR-CORE` content contract, but additional profile vocabularies and attestation-lifecycle closure remain incomplete | Yes — still blocks CONF-004, CONF-005, CONF-009, CONF-010 from full objective closure | High |
 | No Attestation (ENT-006) implementation | Yes — blocks CONF-005, CONF-009 | High |
+| No repository-native CI conformance gate | Yes — blocks release-ready automated verification | High |
 
-See [../../ROADMAP.md](../../ROADMAP.md) for remediation schedule.
+See [../ROADMAP.md](../ROADMAP.md) for remediation schedule.

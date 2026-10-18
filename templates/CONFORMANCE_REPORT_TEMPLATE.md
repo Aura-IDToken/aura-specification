@@ -16,6 +16,7 @@ Status: [PASS | FAIL | PARTIAL]
 | Tests Executed | N |
 | PASS | N |
 | FAIL | N |
+| PARTIAL | N |
 | NOT APPLICABLE | N |
 | ERROR | N |
 | Overall Status | PASS / FAIL / PARTIAL |
@@ -26,16 +27,21 @@ Status: [PASS | FAIL | PARTIAL]
 
 | Test ID | Name | Result | Notes |
 |---------|------|--------|-------|
-| CONF-001 | Deterministic Evaluation | [PASS/FAIL/N/A/ERROR] | |
-| CONF-002 | Replay Verification | [PASS/FAIL/N/A/ERROR] | |
-| CONF-003 | Canonical Serialization | [PASS/FAIL/N/A/ERROR] | |
-| CONF-004 | Evidence Integrity | [PASS/FAIL/N/A/ERROR] | |
-| CONF-005 | Traceability | [PASS/FAIL/N/A/ERROR] | |
-| CONF-006 | Platform Independence | [PASS/FAIL/N/A/ERROR] | |
-| CONF-007 | Fail Closed | [PASS/FAIL/N/A/ERROR] | |
-| CONF-008 | Version Compatibility | [PASS/FAIL/N/A/ERROR] | |
-| CONF-009 | Evidence Completeness | [PASS/FAIL/N/A/ERROR] | |
-| CONF-010 | Cryptographic Verification | [PASS/FAIL/N/A/ERROR] | |
+| CONF-001 | Deterministic Evaluation | [PASS/FAIL/PARTIAL/N/A/ERROR] | |
+| CONF-002 | Replay Verification | [PASS/FAIL/PARTIAL/N/A/ERROR] | |
+| CONF-003 | Canonical Serialization | [PASS/FAIL/PARTIAL/N/A/ERROR] | |
+| CONF-004 | Evidence Integrity | [PASS/FAIL/PARTIAL/N/A/ERROR] | |
+| CONF-005 | Traceability | [PASS/FAIL/PARTIAL/N/A/ERROR] | |
+| CONF-006 | Platform Independence | [PASS/FAIL/PARTIAL/N/A/ERROR] | |
+| CONF-007 | Fail Closed | [PASS/FAIL/PARTIAL/N/A/ERROR] | |
+| CONF-008 | Version Compatibility | [PASS/FAIL/PARTIAL/N/A/ERROR] | |
+| CONF-009 | Conformance Completeness | [PASS/FAIL/PARTIAL/N/A/ERROR] | |
+| CONF-010 | Cryptographic Verification | [PASS/FAIL/PARTIAL/N/A/ERROR] | |
+| CONF-011 | Zero Float Runtime | [PASS/FAIL/PARTIAL/N/A/ERROR] | |
+| CONF-012 | Auditability | [PASS/FAIL/PARTIAL/N/A/ERROR] | |
+| CONF-013 | Policy Determinism | [PASS/FAIL/PARTIAL/N/A/ERROR] | |
+| CONF-014 | Reference Compatibility | [PASS/FAIL/PARTIAL/N/A/ERROR] | |
+| CONF-015 | Canonical Identity | [PASS/FAIL/PARTIAL/N/A/ERROR] | |
 
 ---
 

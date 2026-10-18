@@ -4,8 +4,8 @@ Document ID: APS-950
 Version: 1.0-DRAFT  
 Status: DRAFT  
 Classification: Normative Implementation Specification  
-Authority: APS-001 · APS-100 · APS-200 · APS-300 · APS-400 · APS-500 · APS-900  
-Last Review: 2026-07-23
+Authority: APS-001 §9, §13 · APS-100 · APS-200 · APS-300 · APS-400 · APS-500 · APS-900  
+Last Review: 2026-09-26
 
 ---
 

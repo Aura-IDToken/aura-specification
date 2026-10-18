@@ -6,7 +6,7 @@ Status: DRAFT
 Classification: Normative Conformance Test
 Authority: APS-400
 Related Invariant: INV-001
-Last Review: 2026-07-23
+Last Review: 2026-09-26
 
 ---
 
@@ -27,23 +27,25 @@ Verify that identical inputs produce identical Evaluation Results.
 
 ## 3. Preconditions
 
-- A conformant implementation is available and running
-- Reference fixture FIX-001 (or applicable fixture) is loaded
-- No prior state from a different test run exists
-
-> **TODO**: Specify exact preconditions once APS-200 schemas and APS-500 fixtures are finalized.
+- The draft working fixture `fixtures/core/FIX-001_BASIC_EVALUATION.json` is available
+- Python 3 is available with `jsonschema`
+- The repository-local verifier `scripts/check-fix001-evidence.py` is available
 
 ---
 
 ## 4. Test Procedure
 
-Execute the same Evaluation Request (FIX-001 input) twice consecutively with the same policy version.
+1. Load `FIX-001` and validate the request, result, and Evidence Pack against the current draft schemas.
+2. Execute the repository-local deterministic materialization path in `scripts/check-fix001-evidence.py` twice using the same `ENT-002.request_fields` and the same bound policy reference.
+3. Compare the two generated `ENT-003` objects byte-for-byte.
+4. Compare the two generated `EPR-CORE` Evidence Packs byte-for-byte.
+5. Compare the generated artifacts to the published `FIX-001` expected result and expected evidence objects.
 
 ---
 
 ## 5. Expected Result
 
-Both executions MUST produce byte-identical Evaluation Result objects (ENT-003). output_hash values MUST be identical.
+Both executions MUST produce byte-identical Evaluation Result objects and byte-identical Evidence Pack objects. `output_hash`, `evidence_hash`, and `pack_hash` values MUST be identical across both executions and match the published `FIX-001` draft fixture.
 
 ---
 
@@ -70,9 +72,9 @@ EVID-CORE
 |-------|-------|
 | Test ID | CONF-001 |
 | Invariant | INV-001 |
-| Related Fixture | FIX-001 (TODO: assign specific fixture) |
+| Related Fixture | `fixtures/core/FIX-001_BASIC_EVALUATION.json` |
 | Evidence Type | EVID-CORE |
 
 ---
 
-> **TODO**: Link to specific fixture file once FIX-xxx canonical fixtures are authored.
+Current controlled draft execution path: `scripts/check-fix001-evidence.py`

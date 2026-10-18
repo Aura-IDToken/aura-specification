@@ -4,6 +4,8 @@
 **Date (UTC):** 2026-08-25
 **Disposition:** **AUDIT COMPLETE — DIAGNOSTIC. NOTHING RESOLVED, NOTHING REPAIRED.**
 
+> Navigation: this is a diagnostic audit only; see [`GOVERNANCE_STATUS_INDEX.md`](GOVERNANCE_STATUS_INDEX.md) for the current routing of governance/status records.
+
 | Item | State |
 |---|---|
 | Document class of this record | AUDIT (observational) |

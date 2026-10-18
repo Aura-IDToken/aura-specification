@@ -1,14 +1,31 @@
 {
   "fixture_id": "FIX-INV-013",
+  "fixture_version": "0.2-DRAFT",
+  "protocol_version": "1.0-DRAFT",
   "invariant": "INV-013",
+  "conformance_requirement": "CONF-013",
   "purpose": "Verify identical policy version and identical inputs produce identical decisions.",
+  "policy_reference": {
+    "policy_id": "POL-DET-001",
+    "policy_version": "1.0.0",
+    "policy_hash_algorithm": "SHA-256",
+    "policy_hash": "2bfef69be7487c13f800ddb69828dad9eb4b13a69df10014bf264398f02dbb19",
+    "policy_rule": "ALLOW when measurement_value <= 500; DENY otherwise"
+  },
   "input": {
-    "policy_version": "FIXTURE-UNBOUND",
-    "canonical_input": "FIXTURE_INPUT_REQUIRED"
+    "policy_version": "1.0.0",
+    "canonical_input": {
+      "subject_id": "SUBJECT-DET-001",
+      "measurement_value": 450,
+      "actor_tier": "standard"
+    },
+    "canonical_input_hash_algorithm": "SHA-256",
+    "canonical_input_hash": "ae5d0a4ee95fe00f5100e10acfba95c1cfb3c79936a77bb8de46fdfe521bcc87"
   },
   "expected": {
+    "decision": "ALLOW",
     "repeat_evaluations_equal": true,
     "decision_digest_equal": true
   },
-  "status": "PARAMETRIC_FIXTURE_PENDING_CONCRETE_CORE_POLICY"
+  "status": "READY"
 }

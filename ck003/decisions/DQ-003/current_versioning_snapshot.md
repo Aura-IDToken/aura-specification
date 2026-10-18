@@ -1,7 +1,7 @@
 # DQ-003 — Current Versioning Snapshot
 
 **Classification:** EVIDENCE
-**Status:** OPEN
+**Status:** READY
 **Review date:** 2026-08-18
 
 ## Verified current contract
@@ -19,8 +19,14 @@ APS-200 §4 independently requires both `protocol_version` and `schema_version` 
 
 ## Closure status
 
-The semantic distinction is present and therefore no longer undefined at the top-level protocol layer. However, the repository still needs the executable compatibility matrix and version-binding fixtures required to demonstrate that the distinction is enforceable across implementations.
+The semantic distinction is present and therefore no longer undefined at the top-level protocol layer. The repository now also contains:
+
+- an explicit compatibility matrix in `CURRENT_VERSION_COMPATIBILITY_MATRIX.md` and `CURRENT_VERSION_COMPATIBILITY_MATRIX.json`;
+- a bound compatibility fixture in `fixtures/compatibility/FIX-COMPAT-001_VERSION_MATRIX.json`;
+- a repo-native draft conformance runner that executes `CONF-008` locally.
+
+This is sufficient to move DQ-003 to **READY** at repository-local draft level. Cross-implementation execution evidence and approval/promotion remain outstanding.
 
 ## Decision boundary
 
-This evidence does not introduce a compatibility policy. The final matrix must be approved as part of DQ-003 closure before APS-001 v1.0 approval.
+This snapshot now points to the active compatibility policy artifact, but the final matrix still requires approval and RI evidence before APS-001 v1.0 approval.

@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/AuraIDToken/aura-specification/fixtures/schemas/evaluation-request.schema.json",
+  "title": "APS-200 ENT-002 Evaluation Request",
+  "_status": "DRAFT CONTRACT — top-level structure is closed and the current working profile AURA-DRAFT-CORE-001 payload is closed; other future profiles remain version-bound.",
+  "description": "Draft machine-readable contract for an Evaluation Request, including the current working-profile payload.",
+  "type": "object",
+  "required": [
+    "object_id",
+    "object_type",
+    "protocol_version",
+    "schema_version",
+    "created_at",
+    "integrity_hash",
+    "input_hash",
+    "input_schema",
+    "request_fields"
+  ],
+  "properties": {
+    "object_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "object_type": { "const": "EvaluationRequest" },
+    "protocol_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schema_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "integrity_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "input_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "input_schema": {
+      "const": "AURA-DRAFT-CORE-001"
+    },
+    "request_fields": {
+      "$ref": "#/$defs/current_profile_request_fields"
+    }
+  },
+  "$defs": {
+    "current_profile_request_fields": {
+      "type": "object",
+      "description": "Closed request payload for the current working profile AURA-DRAFT-CORE-001.",
+      "required": [
+        "profile_id",
+        "subject_id",
+        "measurement_value",
+        "actor_tier"
+      ],
+      "properties": {
+        "profile_id": {
+          "const": "AURA-DRAFT-CORE-001"
+        },
+        "subject_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "measurement_value": {
+          "type": "integer"
+        },
+        "actor_tier": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "unevaluatedProperties": false
+}

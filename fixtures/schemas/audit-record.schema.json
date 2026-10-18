@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/AuraIDToken/aura-specification/fixtures/schemas/audit-record.schema.json",
+  "title": "APS-200 ENT-007 Audit Record",
+  "_status": "DRAFT TOP-LEVEL STRUCTURAL CONTRACT — semantic/profile closure remains governed by APS text and open decision records.",
+  "description": "Draft machine-readable top-level contract for an Audit Record. event_type token approval remains governed by the versioned event registry.",
+  "type": "object",
+  "allOf": [
+    { "$ref": "common-object-contract.schema.json" }
+  ],
+  "required": ["event_type", "sequence_number", "previous_record_hash", "event_payload_hash"],
+  "properties": {
+    "object_type": { "const": "AuditRecord" },
+    "event_type": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]*$"
+    },
+    "sequence_number": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "previous_record_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "event_payload_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "unevaluatedProperties": false
+}

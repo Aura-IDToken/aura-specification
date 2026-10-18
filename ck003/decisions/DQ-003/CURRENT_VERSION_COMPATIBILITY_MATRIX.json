@@ -1,0 +1,43 @@
+{
+  "matrix_id": "AURA-DRAFT-COMPAT-001",
+  "matrix_version": "0.1-DRAFT",
+  "status": "WORKING",
+  "scope": "Repository-local draft compatibility gate for current APS-001/APS-200/APS-300 closure work.",
+  "rules": [
+    {
+      "protocol_version": "1.0-DRAFT",
+      "allowed_input_schemas": [
+        "AURA-DRAFT-CORE-001"
+      ],
+      "allowed_evidence_profiles": [
+        "EPR-CORE"
+      ],
+      "allowed_object_schema_versions": {
+        "EvaluationRequest": [
+          "1.0-DRAFT"
+        ],
+        "EvaluationResult": [
+          "1.0-DRAFT"
+        ],
+        "PolicyReference": [
+          "1.0-DRAFT"
+        ],
+        "Attestation": [
+          "1.0-DRAFT"
+        ],
+        "EvidencePack": [
+          "1.0-DRAFT"
+        ]
+      },
+      "allowed_fixture_bindings": {
+        "FIX-001": [
+          "0.2-DRAFT"
+        ],
+        "FIX-COMPAT-001": [
+          "0.1-DRAFT"
+        ]
+      },
+      "notes": "This rule binds the current draft FIX-001 request/result/evidence path and the matching FIX-COMPAT-001 compatibility fixture. Compatibility is explicit; no numeric ordering rule is implied."
+    }
+  ]
+}

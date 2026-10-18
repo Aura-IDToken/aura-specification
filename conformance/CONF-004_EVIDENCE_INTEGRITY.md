@@ -6,7 +6,7 @@ Status: DRAFT
 Classification: Normative Conformance Test
 Authority: APS-400
 Related Invariant: INV-004
-Last Review: 2026-07-23
+Last Review: 2026-09-26
 
 ---
 
@@ -27,23 +27,24 @@ Verify that any modification of an Evidence object is detectable.
 
 ## 3. Preconditions
 
-- A conformant implementation is available and running
-- Reference fixture FIX-001 (or applicable fixture) is loaded
-- No prior state from a different test run exists
-
-> **TODO**: Specify exact preconditions once APS-200 schemas and APS-500 fixtures are finalized.
+- The draft working fixture `fixtures/core/FIX-001_BASIC_EVALUATION.json` is available
+- Python 3 is available with `jsonschema`
+- The repository-local verifier `scripts/check-fix001-evidence.py` is available
 
 ---
 
 ## 4. Test Procedure
 
-Generate an Evidence Pack. Modify one byte in the Evidence object. Re-run integrity check.
+1. Load `FIX-001` and validate its Evidence Pack against the APS-300 draft schema.
+2. Recompute the published `input_hash`, `output_hash`, `evidence_hash`, and `pack_hash`.
+3. Execute the repository-local negative control in `scripts/check-fix001-evidence.py`, which mutates one Evidence-object field without updating the stored digest values.
+4. Confirm that the mutated object is rejected while the original object still passes.
 
 ---
 
 ## 5. Expected Result
 
-Integrity check MUST fail. The original unmodified Evidence MUST pass integrity check.
+Integrity check MUST fail for the mutated Evidence object. The original unmodified `FIX-001` Evidence Pack MUST pass the same verification run.
 
 ---
 
@@ -70,9 +71,9 @@ EVID-CORE
 |-------|-------|
 | Test ID | CONF-004 |
 | Invariant | INV-004 |
-| Related Fixture | FIX-001 (TODO: assign specific fixture) |
+| Related Fixture | `fixtures/core/FIX-001_BASIC_EVALUATION.json` |
 | Evidence Type | EVID-CORE |
 
 ---
 
-> **TODO**: Link to specific fixture file once FIX-xxx canonical fixtures are authored.
+Current controlled draft execution path: `scripts/check-fix001-evidence.py`

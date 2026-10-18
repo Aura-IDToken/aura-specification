@@ -1,0 +1,80 @@
+{
+  "fixture_id": "CANONICAL-003",
+  "fixture_version": "0.1-DRAFT",
+  "profile": "RFC8785-JCS",
+  "purpose": "Multi-axis DQ6-R1 discriminator: ECMAScript number serialization, UTF-16 key sorting, and RFC 8785 string escaping.",
+  "protocol_object": {
+    "numbers": {
+      "ten_float": 10.0,
+      "scientific_positive": 1e5,
+      "micro_threshold": 1e-6,
+      "sub_micro_threshold": 1e-7,
+      "large_fixed_boundary": 1e20,
+      "large_exponent_boundary": 1e21,
+      "negative_zero": -0.0,
+      "shortest_rounding": 333333333.33333329
+    },
+    "unicode_keys": {
+      "Z": "ASCII uppercase",
+      "a": "ASCII lowercase",
+      "\uE000": "BMP private-use U+E000",
+      "𐀀": "Supplementary U+10000",
+      "😀": "U+1F600 grinning face",
+      "🫠": "U+1FAE0 melting face"
+    },
+    "escaping": {
+      "slash": "/",
+      "quote": "\"",
+      "backslash": "\\",
+      "control": "\u0000\b\t\n\f\r\u001f",
+      "unicode_text": "café / 東京 / 😀 / separators:\u2028\u2029"
+    }
+  },
+  "execution_contract": {
+    "bound_conf": "CONF-003",
+    "cross_language_requirement": "RI-PY and RI-RS MUST emit byte-identical RFC 8785 canonical output; recompute the canonical SHA-256 and RFC 6962 leaf hash independently.",
+    "hash_domain": {
+      "canonical_digest": "SHA-256(canonical_bytes)",
+      "leaf_digest": "SHA-256(0x00 || canonical_bytes)",
+      "input_to_hash": "Exact UTF-8 bytes of protocol_object JCS output; no BOM, token whitespace or trailing LF."
+    },
+    "expected_output_path": "fixtures/corpus/CANONICAL-003_jcs_full_discriminator.expected.jcs",
+    "manifest_path": "fixtures/corpus/CANONICAL-003_jcs_full_discriminator.manifest.json"
+  },
+  "profile_discrimination": {
+    "jcs_discriminating": true,
+    "axes": [
+      "ECMAScript-compatible number rendering",
+      "UTF-16 code-unit property ordering",
+      "string escaping and UTF-8 output"
+    ],
+    "key_sort_order": [
+      "Z",
+      "a",
+      "U+10000",
+      "U+1F600",
+      "U+1FAE0",
+      "U+E000"
+    ],
+    "important_note": "Z-before-a is included for coverage but does not by itself distinguish JCS from Python json.dumps(sort_keys=True); supplementary-code-point versus U+E000 does.",
+    "naive_comparison": "Python json.dumps(protocol_object, sort_keys=True, separators=(\",\", \":\")) with default ensure_ascii=True"
+  },
+  "canonicalization": {
+    "algorithm": "RFC8785-JCS",
+    "encoding": "UTF-8",
+    "canonical_bytes_length": 577,
+    "canonical_bytes_hex": "7b226573636170696e67223a7b226261636b736c617368223a225c5c222c22636f6e74726f6c223a225c75303030305c625c745c6e5c665c725c7530303166222c2271756f7465223a225c22222c22736c617368223a222f222c22756e69636f64655f74657874223a22636166c3a9202f20e69db1e4baac202f20f09f9880202f20736570617261746f72733ae280a8e280a9227d2c226e756d62657273223a7b226c617267655f6578706f6e656e745f626f756e64617279223a31652b32312c226c617267655f66697865645f626f756e64617279223a3130303030303030303030303030303030303030302c226d6963726f5f7468726573686f6c64223a302e3030303030312c226e656761746976655f7a65726f223a302c22736369656e74696669635f706f736974697665223a3130303030302c2273686f72746573745f726f756e64696e67223a3333333333333333332e333333333333332c227375625f6d6963726f5f7468726573686f6c64223a31652d372c2274656e5f666c6f6174223a31307d2c22756e69636f64655f6b657973223a7b225a223a22415343494920757070657263617365222c2261223a224153434949206c6f77657263617365222c22f0908080223a22537570706c656d656e7461727920552b3130303030222c22f09f9880223a22552b3146363030206772696e6e696e672066616365222c22f09faba0223a22552b3146414530206d656c74696e672066616365222c22ee8080223a22424d5020707269766174652d75736520552b45303030227d7d",
+    "canonical_sha256_hex": "9fb648c388c4485575d25c1d6171ba691fec51c1b433b11f4d61197bbe2a5509",
+    "leaf_algorithm": "SHA-256(0x00 || canonical_bytes)",
+    "merkle_leaf_hash_hex": "38672ea2bd0ea87b2446efce8d4ba4adeb822e0baaecee4a54b73179198d2b3e",
+    "final_newline": false
+  },
+  "oracle_status": "INDEPENDENT_ORACLE_CALCULATED_NOT_EXECUTED_AGAINST_RECEIVERS",
+  "implementation_status": {
+    "RI-PY": "NOT_EXECUTED",
+    "RI-RS": "NOT_EXECUTED",
+    "cross_language_equality": "NOT_EXECUTED"
+  },
+  "normative_authority": "APS-200 §8",
+  "conformance_requirement": "CONF-003"
+}

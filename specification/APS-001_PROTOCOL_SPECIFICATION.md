@@ -62,6 +62,8 @@ Protocol-critical computation MUST NOT depend on uncontrolled randomness or muta
 
 An Evaluation Request is APS-200 `ENT-002`. A valid request MUST satisfy the APS-200 common object contract, identify its `object_type`, contain valid `protocol_version` and `schema_version`, contain a valid `object_id`, satisfy field constraints, and contain all data required by the applicable execution profile.
 
+For the current repository working profile, the applicable execution profile is `AURA-DRAFT-CORE-001`. That profile closes `request_fields` to `profile_id`, `subject_id`, `measurement_value`, and `actor_tier`; implementations MUST reject extra or missing members rather than infer semantics.
+
 Malformed, ambiguous, unsupported or version-incompatible input MUST be rejected. Invalid protocol data MUST NOT be silently coerced into a different semantic value.
 
 Protocol-critical numeric fields MUST use the exact APS-200 representation. The default Aura conformance profile uses integer/fixed-point representations where numeric determinism is required; floating-point arithmetic MUST NOT enter the protocol execution path where it violates INV-006/INV-007.
@@ -69,6 +71,8 @@ Protocol-critical numeric fields MUST use the exact APS-200 representation. The 
 ## 4. Output Requirements
 
 An Evaluation Result is APS-200 `ENT-003`. It MUST satisfy the APS-200 common object contract, contain deterministic normative result fields, be serializable to canonical bytes, be linked to the execution and applicable policy reference, and be suitable for the required Evidence Pack.
+
+For the current repository working profile, `ENT-003.decision` is closed to `ALLOW`, `DENY`, `MEASURE`, or `NOT_APPLICABLE`, and `result_fields` is closed to `profile_id`, `subject_id`, `measurement_value`, and `matched_policy_rule`. A fail-closed execution MUST emit no Evaluation Result.
 
 Normative behaviour MUST NOT depend on undocumented internal state. Closed vocabularies defined by an applicable APS/schema MUST reject unknown values in strict conformance mode.
 
@@ -178,6 +182,8 @@ A requirement without a verification path is OPEN and MUST NOT be represented as
 
 Compatibility MUST be defined by an explicit version-compatibility matrix; implementations MUST NOT infer compatibility solely from numeric ordering.
 
+The current repository-local draft compatibility matrix is maintained under `ck003/decisions/DQ-003/` and is exercised by `CONF-008` / `FIX-COMPAT-001`. This draft-local gate does not by itself constitute release-grade implementation evidence.
+
 Changes affecting canonical bytes, hash domains, required fields, field interpretation or conformance outcomes MUST be version-bound and accompanied by impact analysis.
 
 ## 13. Release Gate
@@ -199,11 +205,10 @@ This draft does not itself grant approval.
 
 The following must be closed before APS-001 can be approved:
 
-1. machine-readable APS-200 entity schemas — *the canonical serialization profile itself is closed: APS-200 §8 binds RFC 8785 JCS, UTF-8 canonical bytes and the SHA-256 / RFC 6962 domains*;
-2. exact APS-300 Evidence Pack schema — *the cryptographic binding is closed: APS-300 §5.1 binds `evidence_hash` to APS-200 §8 canonical bytes*;
-3. DQ-004 event-type semantics;
-4. conformance coverage for all 15 invariants;
-5. canonical APS-500 fixture corpus;
-6. executable cross-language conformance runner;
-7. repository-native CI gate;
-8. Architecture Review and approval of this APS-001 draft.
+1. exact APS-300 Evidence Pack schema — *the cryptographic binding is closed: APS-300 §5.1 binds `evidence_hash` to APS-200 §8 canonical bytes*;
+2. broader DQ-004 event-type vocabulary and implementation evidence beyond the current repository-local draft gate;
+3. conformance coverage for all 15 invariants;
+4. canonical APS-500 fixture corpus;
+5. executable cross-language conformance runner;
+6. repository-native CI gate;
+7. Architecture Review and approval of this APS-001 draft.

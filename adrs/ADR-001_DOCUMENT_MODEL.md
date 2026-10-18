@@ -1,12 +1,18 @@
 ---
 ADR: ADR-001
 Title: Document Model — ARC → SPEC → APS
-Status: PROPOSED
+Status: ARCHIVED
 Date: 2026-08-02
 Authors: Chief Specification Architect
 Decision Owner: Protocol Custodian
 
 ---
+
+> **ARCHIVED DRAFT.**
+> This proposal was not accepted and is not part of the active ADR index.
+> Do not treat it as current repository policy.
+> The accepted repository-structure ADR is [`ADR-001_REPOSITORY_STRUCTURE.md`](ADR-001_REPOSITORY_STRUCTURE.md).
+> Current ARC/SPEC workflow lives in [`../arc/README.md`](../arc/README.md) and [`../specification/README.md`](../specification/README.md).
 
 ## Context
 

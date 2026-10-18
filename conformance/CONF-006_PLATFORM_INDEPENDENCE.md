@@ -6,7 +6,7 @@ Status: DRAFT
 Classification: Normative Conformance Test
 Authority: APS-400
 Related Invariant: INV-006
-Last Review: 2026-07-23
+Last Review: 2026-09-26
 
 ---
 
@@ -27,23 +27,26 @@ Verify that results are identical on different hardware platforms.
 
 ## 3. Preconditions
 
-- A conformant implementation is available and running
-- Reference fixture FIX-001 (or applicable fixture) is loaded
-- No prior state from a different test run exists
-
-> **TODO**: Specify exact preconditions once APS-200 schemas and APS-500 fixtures are finalized.
+- The draft working fixture `fixtures/core/FIX-001_BASIC_EVALUATION.json` is available
+- Python 3 is available with `jsonschema`
+- The repository-local verifier `scripts/check-fix001-evidence.py` is available
+- `FIX-001` declares at least two `_draft_execution_contexts` representing distinct platform contexts
 
 ---
 
 ## 4. Test Procedure
 
-Run FIX-001 on two different hardware architectures (e.g., x86_64 and aarch64).
+1. Load `FIX-001` and validate the request, result, and Evidence Pack against the current draft schemas.
+2. Read the fixture's `_draft_execution_contexts`, which model distinct artifact-level platform contexts (for example `linux-x86_64` and `linux-aarch64`) with different request-field insertion orders and environment labels.
+3. Execute the repository-local deterministic materialization path in `scripts/check-fix001-evidence.py` once per context using the same semantic request payload and the same bound policy reference.
+4. Compare the generated `ENT-003` objects byte-for-byte across contexts.
+5. Compare the generated `EPR-CORE` Evidence Packs byte-for-byte across contexts.
 
 ---
 
 ## 5. Expected Result
 
-output_hash and evidence_hash MUST be identical on both platforms.
+`output_hash`, `evidence_hash`, and `pack_hash` MUST be identical across all declared draft execution contexts. The generated `ENT-003` and `EPR-CORE` artifacts MUST remain byte-identical even when platform labels and object-member insertion order differ.
 
 ---
 
@@ -70,9 +73,9 @@ EVID-CORE
 |-------|-------|
 | Test ID | CONF-006 |
 | Invariant | INV-006 |
-| Related Fixture | FIX-001 (TODO: assign specific fixture) |
+| Related Fixture | `fixtures/core/FIX-001_BASIC_EVALUATION.json` |
 | Evidence Type | EVID-CORE |
 
 ---
 
-> **TODO**: Link to specific fixture file once FIX-xxx canonical fixtures are authored.
+Current controlled draft execution path: `scripts/check-fix001-evidence.py`

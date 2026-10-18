@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/AuraIDToken/aura-specification/fixtures/schemas/evidence-pack.schema.json",
+  "title": "APS-300 Evidence Pack",
+  "_status": "DRAFT CONTRACT — top-level structure is closed and the current draft EPR-CORE integrity-metadata vocabulary is closed; other profile-specific semantics remain version-bound.",
+  "description": "Draft machine-readable contract for the canonical APS-300 Evidence Pack envelope.",
+  "type": "object",
+  "required": [
+    "pack_id",
+    "pack_version",
+    "protocol_version",
+    "schema_version",
+    "evidence_profile",
+    "requirement_references",
+    "evidence_object",
+    "evaluation_result",
+    "policy_reference",
+    "attestation",
+    "integrity_metadata",
+    "pack_hash"
+  ],
+  "properties": {
+    "pack_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pack_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "protocol_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schema_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence_profile": {
+      "type": "string",
+      "enum": ["EPR-CORE", "EPR-AUDIT", "EPR-COMPLIANCE", "EPR-REL"]
+    },
+    "requirement_references": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "evidence_object": {
+      "$ref": "evidence-object.schema.json"
+    },
+    "evaluation_result": {
+      "$ref": "evaluation-result.schema.json"
+    },
+    "policy_reference": {
+      "$ref": "policy-reference.schema.json"
+    },
+    "attestation": {
+      "$ref": "attestation.schema.json"
+    },
+    "integrity_metadata": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "Pack-scoped integrity metadata. The current draft EPR-CORE vocabulary is closed; other profile vocabularies remain profile-bound."
+    },
+    "pack_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "evidence_profile": { "const": "EPR-CORE" }
+        }
+      },
+      "then": {
+        "properties": {
+          "integrity_metadata": {
+            "$ref": "#/$defs/epr_core_integrity_metadata"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "epr_core_integrity_metadata": {
+      "type": "object",
+      "required": [
+        "canonicalization_profile",
+        "digest_algorithm",
+        "request_integrity_hash",
+        "result_integrity_hash",
+        "policy_integrity_hash",
+        "attestation_integrity_hash"
+      ],
+      "properties": {
+        "canonicalization_profile": {
+          "const": "RFC8785-JCS"
+        },
+        "digest_algorithm": {
+          "const": "SHA-256"
+        },
+        "request_integrity_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "result_integrity_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "policy_integrity_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "attestation_integrity_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

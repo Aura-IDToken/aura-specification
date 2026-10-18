@@ -7,7 +7,7 @@ This directory contains all numbered Aura Protocol Specification documents.
 | Document | Title | Version | Status |
 |----------|-------|---------|--------|
 | [APS-000](APS-000_FOUNDATION_AND_TERMINOLOGY.md) | Foundation & Terminology | 1.0-DRAFT | DRAFT |
-| [APS-001](../specification/APS-001_PROTOCOL_SPECIFICATION.md) | Protocol Specification | 0.1-DRAFT | TODO |
+| [APS-001](../specification/APS-001_PROTOCOL_SPECIFICATION.md) | Protocol Specification | 0.2-DRAFT | DRAFT — ARCHITECTURE REVIEW REQUIRED |
 | [APS-100](APS-100_PROTOCOL_INVARIANTS.md) | Protocol Invariants | 1.0-DRAFT | DRAFT |
 | [APS-200](APS-200_CANONICAL_DATA_MODEL.md) | Canonical Data Model | 1.0-DRAFT | DRAFT |
 | [APS-300](APS-300_EVIDENCE_MODEL.md) | Evidence Model | 1.0-DRAFT | DRAFT |

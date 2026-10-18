@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/AuraIDToken/aura-specification/fixtures/schemas/protocol-header.schema.json",
+  "title": "APS-200 ENT-001 Protocol Header",
+  "_status": "DRAFT TOP-LEVEL STRUCTURAL CONTRACT — semantic/profile closure remains governed by APS text and open decision records.",
+  "description": "Draft machine-readable top-level contract for the Protocol Header execution envelope.",
+  "type": "object",
+  "allOf": [
+    { "$ref": "common-object-contract.schema.json" }
+  ],
+  "required": ["execution_id", "implementation_id", "policy_reference", "started_at", "completed_at"],
+  "properties": {
+    "object_type": { "const": "ProtocolHeader" },
+    "execution_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "implementation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "policy_reference": {
+      "$ref": "policy-reference.schema.json"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "unevaluatedProperties": false
+}

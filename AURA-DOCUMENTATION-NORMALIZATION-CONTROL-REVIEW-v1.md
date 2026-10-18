@@ -9,6 +9,8 @@
 **Date (UTC):** 2026-08-25
 **Prepared in role:** Custodian Evidence / Documentation Auditor — **not** implementer, **not** Chief Architect, **not** authority decider.
 
+> Navigation: this is a controlled analysis record only; see [`GOVERNANCE_STATUS_INDEX.md`](GOVERNANCE_STATUS_INDEX.md) for the current routing of governance/status records.
+
 | Item | State |
 |---|---|
 | Decisions taken | **NONE** |

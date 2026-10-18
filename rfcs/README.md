@@ -13,11 +13,9 @@ An RFC is a formal proposal for a protocol change. It is the mandatory process f
 
 ## Index
 
-*No RFCs submitted yet.*
-
 | ID | Title | Status | Date |
 |----|-------|--------|------|
-| — | — | — | — |
+| [RFC-001](RFC-001_APS001_MILESTONE1_EXECUTION_SCOPE.md) | APS-001 Milestone 1 Execution Scope | DRAFT | 2026-09-26 |
 
 ## RFC Lifecycle
 

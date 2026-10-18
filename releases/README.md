@@ -19,7 +19,9 @@ releases/
 
 | Version | Date | Status |
 |---------|------|--------|
-| [v0.1.0](v0.1.0/) | 2026-07-23 | Published |
+| [v0.1.0](v0.1.0/) | 2026-07-23 | Published — historical snapshot |
+
+> `v0.1.0` is a preserved release artifact. It does not override the repository's current draft statuses or current completion state.
 
 ## Release Requirements (APS-950 §9)
 

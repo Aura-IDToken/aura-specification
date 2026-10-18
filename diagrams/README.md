@@ -24,7 +24,7 @@ This directory contains architecture and flow diagrams for the Aura Protocol.
 ```mermaid
 graph TD
     CON["AURA Constitution (FROZEN)"]
-    APS001["APS-001 Protocol Specification (TODO)"]
+    APS001["APS-001 Protocol Specification (DRAFT)"]
     APS100["APS-100 Protocol Invariants"]
     APS200["APS-200 Canonical Data Model"]
     APS300["APS-300 Evidence Model"]

@@ -1,0 +1,53 @@
+{
+  "fixture_id": "FIX-COMPAT-001",
+  "fixture_version": "0.1-DRAFT",
+  "protocol_version": "1.0-DRAFT",
+  "description": "Validate the explicit DQ-003 compatibility matrix against the current FIX-001 draft version envelope.",
+  "category": "FIX-COMPAT",
+  "related_invariants": [
+    "INV-009"
+  ],
+  "related_conformance_tests": [
+    "CONF-008"
+  ],
+  "compatibility_matrix_id": "AURA-DRAFT-COMPAT-001",
+  "source_fixture": "fixtures/core/FIX-001_BASIC_EVALUATION.json",
+  "cases": [
+    {
+      "case_id": "CURRENT_DRAFT_FIX001",
+      "expected": "PASS",
+      "artifact_versions": {
+        "fixture_id": "FIX-001",
+        "fixture_version": "0.2-DRAFT",
+        "protocol_version": "1.0-DRAFT",
+        "input_schema": "AURA-DRAFT-CORE-001",
+        "evidence_profile": "EPR-CORE",
+        "object_schema_versions": {
+          "EvaluationRequest": "1.0-DRAFT",
+          "EvaluationResult": "1.0-DRAFT",
+          "PolicyReference": "1.0-DRAFT",
+          "Attestation": "1.0-DRAFT",
+          "EvidencePack": "1.0-DRAFT"
+        }
+      }
+    },
+    {
+      "case_id": "UNAPPROVED_EVIDENCE_SCHEMA",
+      "expected": "FAIL",
+      "artifact_versions": {
+        "fixture_id": "FIX-001",
+        "fixture_version": "0.2-DRAFT",
+        "protocol_version": "1.0-DRAFT",
+        "input_schema": "AURA-DRAFT-CORE-001",
+        "evidence_profile": "EPR-CORE",
+        "object_schema_versions": {
+          "EvaluationRequest": "1.0-DRAFT",
+          "EvaluationResult": "1.0-DRAFT",
+          "PolicyReference": "1.0-DRAFT",
+          "Attestation": "1.0-DRAFT",
+          "EvidencePack": "2.0-DRAFT"
+        }
+      }
+    }
+  ]
+}

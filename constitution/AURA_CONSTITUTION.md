@@ -195,6 +195,10 @@ In cases of ambiguity, precedence is:
 
 ---
 
+## Article XIII — Genesis and Succession
+
+In the event that the role of Chief Architect remains vacant prior to the full launch of the protocol (M1/G0), the Original Creator and Genesis Owner, possessing proven cryptographic control over the canonical repository, shall hold the exclusive, meta-constitutional authority to appoint the initial Chief Architect, bypassing the standard procedure outlined in Article XI. Such an act shall be final, shall close the gap in the continuity of authority, and shall vest the appointed individual with full constitutional rights.
+
 ## Motto
 
 > *Specification creates trust.*

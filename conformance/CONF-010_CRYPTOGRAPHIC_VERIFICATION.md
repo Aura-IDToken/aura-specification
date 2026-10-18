@@ -6,7 +6,7 @@ Status: DRAFT
 Classification: Normative Conformance Test
 Authority: APS-400
 Related Invariant: INV-011
-Last Review: 2026-07-23
+Last Review: 2026-09-26
 
 ---
 
@@ -27,23 +27,29 @@ Verify that all cryptographic hashes in the Evidence Pack are independently comp
 
 ## 3. Preconditions
 
-- A conformant implementation is available and running
-- Reference fixture FIX-001 (or applicable fixture) is loaded
-- No prior state from a different test run exists
-
-> **TODO**: Specify exact preconditions once APS-200 schemas and APS-500 fixtures are finalized.
+- The draft working fixture `fixtures/core/FIX-001_BASIC_EVALUATION.json` is available
+- Python 3 is available with `jsonschema`
+- The repository-local verifier `scripts/check-fix001-evidence.py` is available
 
 ---
 
 ## 4. Test Procedure
 
-Take an Evidence Pack. Independently compute: evidence_hash, input_hash, output_hash. Compare to stored values.
+1. Load `FIX-001` and validate its Evidence Pack against the APS-300 draft schema.
+2. Independently recompute:
+   - `input_hash` from `ENT-002.request_fields`
+   - `output_hash` from `{ decision, result_fields }`
+   - `integrity_hash` for the enclosed request, result, policy, and attestation objects
+   - `evidence_hash` for the Evidence object
+   - `pack_hash` for the enclosing Evidence Pack
+3. Compare each recomputed digest to the stored fixture value.
+4. Confirm that `integrity_metadata` mirrors the enclosed object-level `integrity_hash` values exactly.
 
 ---
 
 ## 5. Expected Result
 
-All independently computed hashes MUST match stored values. Any mismatch is a FAIL.
+All independently computed digest values MUST match the stored fixture values exactly. Any mismatch is a FAIL.
 
 ---
 
@@ -70,9 +76,9 @@ EVID-CORE
 |-------|-------|
 | Test ID | CONF-010 |
 | Invariant | INV-011 |
-| Related Fixture | FIX-001 (TODO: assign specific fixture) |
+| Related Fixture | `fixtures/core/FIX-001_BASIC_EVALUATION.json` |
 | Evidence Type | EVID-CORE |
 
 ---
 
-> **TODO**: Link to specific fixture file once FIX-xxx canonical fixtures are authored.
+Current controlled draft execution path: `scripts/check-fix001-evidence.py`

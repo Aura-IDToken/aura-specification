@@ -20,9 +20,10 @@
     {"id":"CK003-010","expected_digest":null,"reason":"legacy fixture identity/path not resolved"},
     {"id":"FIX-INV-007","expected_digest":null,"reason":"canonical serialization profile not frozen"},
     {"id":"FIX-INV-012","expected_digest":null,"reason":"event vocabulary not normatively closed"},
-    {"id":"FIX-INV-013","expected_digest":null,"reason":"concrete policy fixture not bound"},
+    {"id":"FIX-INV-013","expected_digest":null,"reason":"fixture is bound; execution evidence is not yet recorded"},
     {"id":"FIX-INV-014","expected_digest":null,"reason":"APS-500 corpus/version binding not frozen"},
     {"id":"FIX-INV-015","expected_digest":null,"reason":"APS-000 identity binding not frozen"},
+    {"id":"CANONICAL-002","expected_digest":null,"reason":"discriminating cross-language execution is prepared but not yet recorded"},
     {"id":"FIX-CK003-DQ002-RFC6962-2LEAF","expected_digest":"fixture-defined","reason":"use the explicit expected values contained by the normative DQ-002 fixture"},
     {"id":"FIX-CK003-DQ002-CROSS-LANGUAGE","expected_digest":"fixture-defined","reason":"use the explicit cross-language expected values from the DQ-002 fixture"}
   ],

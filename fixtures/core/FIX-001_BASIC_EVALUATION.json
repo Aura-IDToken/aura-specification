@@ -1,35 +1,212 @@
 {
-  "_comment": "FIX-001 — Basic Evaluation (PLACEHOLDER)",
-  "_status": "TODO",
-  "_note": "This fixture is a placeholder. Canonical input/output data requires APS-200 entity schemas to be finalized. See ROADMAP.md Milestone 2.",
-
+  "_comment": "FIX-001 \u2014 Basic Evaluation (WORKING)",
+  "_status": "WORKING",
+  "_note": "This fixture now binds the current draft ENT-002/ENT-003 working-profile payload (`AURA-DRAFT-CORE-001`) and the current draft APS-300 `EPR-CORE` evidence content. Values are concrete draft examples, not release certification evidence.",
   "fixture_id": "FIX-001",
-  "fixture_version": "0.1-DRAFT",
-  "protocol_version": "TODO",
+  "fixture_version": "0.2-DRAFT",
+  "protocol_version": "1.0-DRAFT",
   "description": "Basic protocol evaluation with a valid input and policy. Validates INV-001 (Deterministic Evaluation) and INV-014 (Reference Compatibility).",
   "category": "FIX-CORE",
-  "related_invariants": ["INV-001", "INV-014"],
-  "related_conformance_tests": ["CONF-001"],
-
+  "related_invariants": [
+    "INV-001",
+    "INV-014"
+  ],
+  "related_conformance_tests": [
+    "CONF-001",
+    "CONF-002",
+    "CONF-004",
+    "CONF-005",
+    "CONF-006",
+    "CONF-010"
+  ],
+  "_draft_execution_contexts": [
+    {
+      "context_id": "linux-x86_64-cpython",
+      "architecture": "x86_64",
+      "os": "linux",
+      "locale": "C",
+      "request_field_order": [
+        "profile_id",
+        "subject_id",
+        "measurement_value",
+        "actor_tier"
+      ]
+    },
+    {
+      "context_id": "linux-aarch64-cpython",
+      "architecture": "aarch64",
+      "os": "linux",
+      "locale": "pl_PL.UTF-8",
+      "request_field_order": [
+        "actor_tier",
+        "measurement_value",
+        "subject_id",
+        "profile_id"
+      ]
+    }
+  ],
+  "_draft_replay_materialization": {
+    "pack_id": "FIX-001-PACK-REPLAY-001",
+    "pack_version": "1.0-DRAFT",
+    "evidence_id": "FIX-001-EVID-REPLAY-001",
+    "attestation_id": "FIX-001-ATT-REPLAY-001",
+    "timestamp": "2026-09-26T00:05:00Z",
+    "evidence_requirement_references": [
+      "APS-001 §6",
+      "APS-300 §5",
+      "APS-300 §8",
+      "INV-002",
+      "CONF-002"
+    ],
+    "pack_requirement_references": [
+      "APS-001 §6",
+      "APS-300 §5",
+      "APS-300 §6",
+      "APS-300 §8",
+      "INV-002",
+      "CONF-002"
+    ]
+  },
   "input_data": {
-    "_todo": "TODO: Define canonical Evaluation Request (ENT-002) once APS-200 schemas are finalized.",
+    "object_id": "FIX-001-REQ-001",
     "object_type": "EvaluationRequest",
-    "protocol_version": "TODO",
-    "schema_version": "TODO",
-    "input_hash": "TODO",
-    "request_fields": {}
+    "protocol_version": "1.0-DRAFT",
+    "schema_version": "1.0-DRAFT",
+    "created_at": "2026-09-26T00:00:00Z",
+    "input_hash": "a538f19466d0c357671c2c91afccd058816eb38b9df2e81d185f9fd50af94336",
+    "input_schema": "AURA-DRAFT-CORE-001",
+    "request_fields": {
+      "profile_id": "AURA-DRAFT-CORE-001",
+      "subject_id": "SUBJECT-DET-001",
+      "measurement_value": 450,
+      "actor_tier": "standard"
+    },
+    "integrity_hash": "0d84358f38165d2e860cbdb9bafa0994661de006b7190af1a2c6c4606ddeeb90"
   },
-
   "expected_output": {
-    "_todo": "TODO: Define canonical Evaluation Result (ENT-003) once APS-200 schemas are finalized.",
+    "object_id": "FIX-001-RES-001",
     "object_type": "EvaluationResult",
-    "decision": "TODO",
-    "output_hash": "TODO"
+    "protocol_version": "1.0-DRAFT",
+    "schema_version": "1.0-DRAFT",
+    "created_at": "2026-09-26T00:00:00Z",
+    "execution_id": "FIX-001-EXEC-001",
+    "decision": "ALLOW",
+    "output_hash": "32c267fcf8a8adbaab9a95955b65b52766bc6b9e841782f7a400d50f86b2d2a3",
+    "policy_reference": {
+      "object_id": "FIX-001-POL-001",
+      "object_type": "PolicyReference",
+      "protocol_version": "1.0-DRAFT",
+      "schema_version": "1.0-DRAFT",
+      "created_at": "2026-09-26T00:00:00Z",
+      "policy_id": "POL-DET-001",
+      "policy_version": "1.0.0",
+      "policy_hash": "2bfef69be7487c13f800ddb69828dad9eb4b13a69df10014bf264398f02dbb19",
+      "integrity_hash": "9605ebbd78f523af9b04edc8604aaf752b3e36be9a373db0f07decbf6e58ec35"
+    },
+    "result_fields": {
+      "profile_id": "AURA-DRAFT-CORE-001",
+      "subject_id": "SUBJECT-DET-001",
+      "measurement_value": 450,
+      "matched_policy_rule": "ALLOW when measurement_value <= 500; DENY otherwise"
+    },
+    "integrity_hash": "bc89c4122ceeb74b9d0b21c8004420c81632b6d6a2c26dae0a7f23705eef3afc"
   },
-
   "expected_evidence": {
-    "_todo": "TODO: Define canonical Evidence Pack once APS-300 Evidence Pack format is finalized.",
-    "evidence_id": "TODO",
-    "evidence_hash": "TODO"
+    "pack_id": "FIX-001-PACK-001",
+    "pack_version": "1.0-DRAFT",
+    "protocol_version": "1.0-DRAFT",
+    "schema_version": "1.0-DRAFT",
+    "evidence_profile": "EPR-CORE",
+    "requirement_references": [
+      "APS-001 \u00a76",
+      "APS-300 \u00a75",
+      "APS-300 \u00a76",
+      "INV-001",
+      "INV-004",
+      "INV-005",
+      "INV-011",
+      "CONF-001"
+    ],
+    "evidence_object": {
+      "evidence_id": "FIX-001-EVID-001",
+      "protocol_version": "1.0-DRAFT",
+      "schema_version": "1.0-DRAFT",
+      "implementation_id": "RI-DRAFT-REFERENCE",
+      "execution_id": "FIX-001-EXEC-001",
+      "timestamp": "2026-09-26T00:00:00Z",
+      "policy_reference": "FIX-001-POL-001",
+      "requirement_references": [
+        "APS-001 \u00a76",
+        "APS-300 \u00a75",
+        "INV-001",
+        "INV-005",
+        "CONF-001"
+      ],
+      "input_hash": "a538f19466d0c357671c2c91afccd058816eb38b9df2e81d185f9fd50af94336",
+      "output_hash": "32c267fcf8a8adbaab9a95955b65b52766bc6b9e841782f7a400d50f86b2d2a3",
+      "previous_evidence_hash": null,
+      "attestation_reference": "FIX-001-ATT-001",
+      "evidence_hash": "bbcc5f320f63f19aaf773fc51c42bf3b23a1dd575b3119d476b5c340d174857a"
+    },
+    "evaluation_result": {
+      "object_id": "FIX-001-RES-001",
+      "object_type": "EvaluationResult",
+      "protocol_version": "1.0-DRAFT",
+      "schema_version": "1.0-DRAFT",
+      "created_at": "2026-09-26T00:00:00Z",
+      "execution_id": "FIX-001-EXEC-001",
+      "decision": "ALLOW",
+      "output_hash": "32c267fcf8a8adbaab9a95955b65b52766bc6b9e841782f7a400d50f86b2d2a3",
+      "policy_reference": {
+        "object_id": "FIX-001-POL-001",
+        "object_type": "PolicyReference",
+        "protocol_version": "1.0-DRAFT",
+        "schema_version": "1.0-DRAFT",
+        "created_at": "2026-09-26T00:00:00Z",
+        "policy_id": "POL-DET-001",
+        "policy_version": "1.0.0",
+        "policy_hash": "2bfef69be7487c13f800ddb69828dad9eb4b13a69df10014bf264398f02dbb19",
+        "integrity_hash": "9605ebbd78f523af9b04edc8604aaf752b3e36be9a373db0f07decbf6e58ec35"
+      },
+      "result_fields": {
+        "profile_id": "AURA-DRAFT-CORE-001",
+        "subject_id": "SUBJECT-DET-001",
+        "measurement_value": 450,
+        "matched_policy_rule": "ALLOW when measurement_value <= 500; DENY otherwise"
+      },
+      "integrity_hash": "bc89c4122ceeb74b9d0b21c8004420c81632b6d6a2c26dae0a7f23705eef3afc"
+    },
+    "policy_reference": {
+      "object_id": "FIX-001-POL-001",
+      "object_type": "PolicyReference",
+      "protocol_version": "1.0-DRAFT",
+      "schema_version": "1.0-DRAFT",
+      "created_at": "2026-09-26T00:00:00Z",
+      "policy_id": "POL-DET-001",
+      "policy_version": "1.0.0",
+      "policy_hash": "2bfef69be7487c13f800ddb69828dad9eb4b13a69df10014bf264398f02dbb19",
+      "integrity_hash": "9605ebbd78f523af9b04edc8604aaf752b3e36be9a373db0f07decbf6e58ec35"
+    },
+    "attestation": {
+      "object_id": "FIX-001-ATT-001",
+      "object_type": "Attestation",
+      "protocol_version": "1.0-DRAFT",
+      "schema_version": "1.0-DRAFT",
+      "created_at": "2026-09-26T00:00:00Z",
+      "attestation_type": "EXECUTION",
+      "attested_execution_id": "FIX-001-EXEC-001",
+      "evidence_reference": "FIX-001-PACK-001",
+      "attestation_hash": "7bfc65e6abe56b14f8bf0d076cac8ce4130f8cba72e559733cfa8aa0f20e32a1",
+      "integrity_hash": "33ce78677aad266a7afa822e83106d2e33b2a616754ba0e62b7b240edbf633c3"
+    },
+    "integrity_metadata": {
+      "canonicalization_profile": "RFC8785-JCS",
+      "digest_algorithm": "SHA-256",
+      "request_integrity_hash": "0d84358f38165d2e860cbdb9bafa0994661de006b7190af1a2c6c4606ddeeb90",
+      "result_integrity_hash": "bc89c4122ceeb74b9d0b21c8004420c81632b6d6a2c26dae0a7f23705eef3afc",
+      "policy_integrity_hash": "9605ebbd78f523af9b04edc8604aaf752b3e36be9a373db0f07decbf6e58ec35",
+      "attestation_integrity_hash": "33ce78677aad266a7afa822e83106d2e33b2a616754ba0e62b7b240edbf633c3"
+    },
+    "pack_hash": "3d9541040b425f3d6041359dca7b5a0791d8b4f61d2ddbc30129bbdeb2d776ec"
   }
 }

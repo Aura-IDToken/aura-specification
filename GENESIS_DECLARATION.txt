@@ -1,0 +1,15 @@
+AURA GENESIS BOOTSTRAPPING DECLARATION
+Date: 2026-09-24
+Location: Ilawa, Poland
+
+I, the undersigned, holder of this cryptographic key, hereby declare and prove that I am the Original Creator of the technical repositories initiating the AURA protocol (including Kamil1230xd/aura-sign-mvp and Aura-IDToken/aura-poc-a-core-v3.3 since January 2026).
+
+By this cryptographic signature, I formally convert my technical ownership into constitutional Genesis Authority.
+
+Acting as the Genesis Authority, I hereby:
+1. Enact Article XIII of the AURA Constitution.
+2. Appoint Kamil Krasiński as the initial Chief Architect of the AURA Protocol, effective immediately.
+3. Grant the Chief Architect full constitutional competence to ratify protocol changes, resolve decision gaps (including P-008, NOT_APPLICABLE, and Error Taxonomy), and authorize implementations.
+
+This act supersedes all previous unverified historical claims and serves as the primary constitutive evidence for M1 Governance Closure.
+

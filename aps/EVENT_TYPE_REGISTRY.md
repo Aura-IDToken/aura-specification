@@ -50,13 +50,23 @@ Every normative registry entry MUST define:
 | `deprecated` | Boolean/status |
 | `replacement` | Required when deprecated |
 
-## 5. Current normative vocabulary
+## 5. Current vocabulary posture
 
-**No individual event token is promoted to final normative status by this document yet.**
+### 5.1 Release-grade normative vocabulary
 
-Reason: the current APS corpus establishes the existence and role of `ENT-007.event_type`, but does not provide sufficient normative evidence for a complete closed vocabulary. Adding tokens from implementation code alone would convert implementation behaviour into protocol authority.
+The full release-grade event vocabulary is **not yet complete**. The current APS corpus still lacks the broader approved list needed for final DQ-004 closure across all audit-event semantics.
 
-Until entries are registered, strict conformance implementations MUST reject an `event_type` value that is not present in an approved versioned registry.
+### 5.2 Repository-local draft gate vocabulary
+
+The repository now registers one controlled draft token for the local `CONF-012` gate:
+
+| event_type | Scope | Source |
+|---|---|---|
+| `AUDIT_RECORD` | repository-local draft auditability gate only | `ck003/decisions/DQ-004/CURRENT_EVENT_TYPE_REGISTRY.md` |
+
+This token is sufficient for the current local draft gate because it is now explicitly registered and bound to `FIX-INV-012`. It does **not** imply that the complete protocol event vocabulary is finished or release-ready.
+
+Strict conformance implementations MUST reject an `event_type` value that is not present in the applicable approved versioned registry.
 
 ## 6. Version binding
 
@@ -83,9 +93,9 @@ The token's canonical byte representation is therefore the UTF-8 encoding of the
 
 ## 9. Closure status
 
-**DQ-004:** `SEMANTIC CONTRACT DEFINED / VOCABULARY REGISTRY PENDING NORMATIVE ENTRIES`.
+**DQ-004:** `READY AT REPOSITORY-LOCAL DRAFT LEVEL / FINAL VOCABULARY STILL OPEN`.
 
-This document MUST NOT be used to claim DQ-004 PASS until the approved event vocabulary and corresponding fixtures exist.
+This document MUST NOT be used to claim release-grade DQ-004 PASS until the broader approved event vocabulary and corresponding implementation evidence exist.
 
 ## 10. Source constraint
 

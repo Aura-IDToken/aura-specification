@@ -42,6 +42,8 @@ DRAFT → REVIEW → APPROVED → FROZEN
 | DEPRECATED | Superseded; retained for reference | No |
 | ARCHIVED | No longer active; historical record only | No |
 
+Draft-stage authoring MAY use explicit draft-only placeholder digest/checksum values inside working fixtures or unpublished contracts when the final publication boundary is not yet approved. Such placeholders MUST be replaced or superseded before approval, freeze, or release evidence publication.
+
 ### Transition Rules
 
 - `DRAFT → REVIEW`: Author submits document for review via pull request
@@ -90,6 +92,23 @@ A FROZEN document **never receives a new version number**. A revision creates a 
 - A fixture whose Expected Output changes is a new fixture (new ID).
 - Old fixture IDs are deprecated, not overwritten.
 - Fixture IDs (FIX-xxx) are **never reused**.
+
+### 7.1 Current draft compatibility matrix
+
+Compatibility decisions are explicit and version-bound. They MUST NOT be inferred from numeric ordering, lexical ordering, or partial field overlap.
+
+The current repository-local draft compatibility matrix is maintained in:
+
+- `ck003/decisions/DQ-003/CURRENT_VERSION_COMPATIBILITY_MATRIX.md`
+- `ck003/decisions/DQ-003/CURRENT_VERSION_COMPATIBILITY_MATRIX.json`
+
+For the current draft working path:
+
+| Protocol version | Allowed schema versions | Allowed input schema | Allowed evidence profile | Allowed fixture bindings |
+|---|---|---|---|---|
+| `1.0-DRAFT` | `EvaluationRequest=1.0-DRAFT`, `EvaluationResult=1.0-DRAFT`, `PolicyReference=1.0-DRAFT`, `Attestation=1.0-DRAFT`, `EvidencePack=1.0-DRAFT` | `AURA-DRAFT-CORE-001` | `EPR-CORE` | `FIX-001@0.2-DRAFT`, `FIX-COMPAT-001@0.1-DRAFT` |
+
+Any combination outside the matrix is incompatible in strict conformance mode until explicitly added by a versioned specification change with impact analysis.
 
 ---
 

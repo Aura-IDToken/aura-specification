@@ -1,7 +1,7 @@
 # DQ-004 — Current Event-Type Snapshot
 
 **Classification:** EVIDENCE
-**Status:** OPEN
+**Status:** READY (historical snapshot + superseding local registry)
 **Review date:** 2026-08-18
 
 ## Verified source
@@ -18,7 +18,12 @@ The current source does not define a closed vocabulary, exact grammar, registry,
 
 ## Consequence
 
-The field is structurally required but its semantic decision space is incomplete. This is sufficient to establish that DQ-004 remains OPEN; it is not sufficient to choose a new event-type vocabulary without an approved decision.
+At the time of this snapshot, the field was structurally required but semantically incomplete. That evidence remains valid historically. Since then, the repository has added a controlled local registry slice for `CONF-012` under:
+
+- `ck003/decisions/DQ-004/CURRENT_EVENT_TYPE_REGISTRY.md`
+- `ck003/decisions/DQ-004/CURRENT_EVENT_TYPE_REGISTRY.json`
+
+This snapshot therefore remains evidence of the earlier gap, not the latest status of the local draft gate.
 
 ## Required closure decision
 
