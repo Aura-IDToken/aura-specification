@@ -1,6 +1,14 @@
 # Aura Protocol Specification
 
-> **The single canonical source of truth for the Aura Protocol.**
+> **Repository role:** protocol specification, contract records, and governance documentation.
+
+This repository is intended to hold the AURA Protocol's specification materials and associated governance records. Normative effect must be assessed **per document and exact revision**, using the applicable authority, ratification, and effective-date evidence.
+
+Repository presence, a README statement, status badge, branch name, signature, release, or passing CI job is not by itself proof of constitutional authority or effective normative status. Where that status has not been independently established, report it as **NOT ESTABLISHED** rather than infer it from repository labels.
+
+GitHub upstream/fork metadata describes repository lineage only. It does not, by itself, adjudicate authority continuity or decide which revision has current normative effect.
+
+> **Scope boundary:** this README describes the repository's intended function; it does not itself ratify or amend the protocol.
 
 [![Status: Active](https://img.shields.io/badge/status-active-green.svg)](CHANGELOG.md)
 [![Constitution: FROZEN](https://img.shields.io/badge/constitution-FROZEN-blue.svg)](constitution/AURA_CONSTITUTION.md)
@@ -10,13 +18,11 @@
 
 ## What Is This Repository?
 
-`aura-specification` is the normative documentation repository for the **Aura Protocol** — an open, deterministic trust layer for AI systems. It contains no implementation code.
+This repository hosts specification materials and governance records for the **AURA Protocol**. Normative effect must be assessed per document and exact revision, using the applicable authority, ratification, and effective-date evidence. Repository presence, a README statement, status badge, branch name, signature, release, or passing CI job does not by itself prove constitutional authority or effective normative status.
 
-It is designed in the tradition of IETF RFCs, W3C specifications, and Kubernetes Enhancement Proposals: every protocol behavior is fully specified, versioned, and traceable before any implementation is written or changed.
+It is designed in the tradition of IETF RFCs, W3C specifications, and Kubernetes Enhancement Proposals: its aim is to make intended protocol behavior specified, versioned, and traceable before implementations are changed.
 
-**If documentation and implementation disagree, documentation wins.**
-
----
+**If documentation and implementation disagree, documentation wins.** This is a published precedence statement; this README change does not independently establish its authority, ratification, or effective normative effect.
 
 ## Repository Map
 
